@@ -95,7 +95,6 @@ public class ConnectionFrame extends JFrame {
 		JButton btnSignIn = new JButton("Sign In");
 		btnSignIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
 				InscriptionFrame frame = new InscriptionFrame();
 				frame.setVisible(true);
 				dispose();
