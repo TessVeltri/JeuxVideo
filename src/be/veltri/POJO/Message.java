@@ -1,15 +1,23 @@
 package be.veltri.POJO;
 
-public class Messages {
-	
-    private String textMessage;
+import java.io.Serializable;
+
+import be.veltri.DAO.AbstractDAOFactory;
+import be.veltri.DAO.DAO;
+
+public class Message implements Serializable{
+	private static final long serialVersionUID = -3612908683506989354L;
+	private String textMessage;
     private Player player;
     
+    private static AbstractDAOFactory dao = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+	private static DAO<Message> messageDAO = dao.getMessageDAO();
+    
     // Constructeur par défaut
-	public Messages() {}
+	public Message() {}
 
 	// Constructeur avec arguments
-	public Messages(String textMessage, Player player) {
+	public Message(String textMessage, Player player) {
 		this.textMessage = textMessage;
 		this.player = player;
 	}

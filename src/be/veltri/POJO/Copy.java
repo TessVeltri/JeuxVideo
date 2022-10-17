@@ -1,14 +1,23 @@
 package be.veltri.POJO;
 
-public class Copy {
+import java.io.Serializable;
+
+import be.veltri.DAO.AbstractDAOFactory;
+import be.veltri.DAO.DAO;
+
+public class Copy implements Serializable{
+	private static final long serialVersionUID = -5295891430835243265L;
 	private Player owner;
-	private Games game;
+	private Game game;
+	
+	private static AbstractDAOFactory dao = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+	private static DAO<Copy> copyDAO = dao.getCopyDAO();
 	
 	// Constructeur par défaut
 	public Copy () {}
 	
 	// Constructeur avec arguments
-	public Copy(Player owner, Games game) {
+	public Copy(Player owner, Game game) {
 		this.owner = owner;
 		this.game = game;
 	}
@@ -22,11 +31,11 @@ public class Copy {
 		this.owner = owner;
 	}
 
-	public Games getGame() {
+	public Game getGame() {
 		return game;
 	}
 
-	public void setGame(Games game) {
+	public void setGame(Game game) {
 		this.game = game;
 	}
 

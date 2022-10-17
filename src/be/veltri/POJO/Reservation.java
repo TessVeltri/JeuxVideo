@@ -1,18 +1,26 @@
 package be.veltri.POJO;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Reservation {
+import be.veltri.DAO.AbstractDAOFactory;
+import be.veltri.DAO.DAO;
+
+public class Reservation implements Serializable{
+	private static final long serialVersionUID = 5780975148202725087L;
 	private LocalDate dateReservation;
     private String statusReservation;
     private Player borrower;
-    private Games game;
+    private Game game;
+    
+    private static AbstractDAOFactory dao = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+	private static DAO<Reservation> reservationDAO = dao.getReservationDAO();
     
     // Constructeur par défaut 
     public Reservation () {}
 	
     // Constructeur avec arguments
-	public Reservation(LocalDate dateReservation, String statusReservation, Player borrower, Games game) {
+	public Reservation(LocalDate dateReservation, String statusReservation, Player borrower, Game game) {
 		this.dateReservation = dateReservation;
 		this.statusReservation = statusReservation;
 		this.borrower = borrower;
@@ -44,11 +52,11 @@ public class Reservation {
 		this.borrower = borrower;
 	}
 
-	public Games getGame() {
+	public Game getGame() {
 		return game;
 	}
 
-	public void setGame(Games game) {
+	public void setGame(Game game) {
 		this.game = game;
 	}
     

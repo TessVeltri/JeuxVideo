@@ -1,9 +1,17 @@
 package be.veltri.POJO;
 
-public abstract class User {
+import java.io.Serializable;
 
+import be.veltri.DAO.AbstractDAOFactory;
+import be.veltri.DAO.DAO;
+
+public abstract class User implements Serializable{
+	private static final long serialVersionUID = 4378927386956734076L;
 	private String username;
 	private String password;
+	
+	private static AbstractDAOFactory dao = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+	private static DAO<User> userDAO = dao.getUserDAO();
 
 	// Constructeur par défaut
 	public User() {}
@@ -35,5 +43,6 @@ public abstract class User {
 	public void Login() {
 		// TODO implement here
 	}
+	
 
 }

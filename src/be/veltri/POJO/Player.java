@@ -1,17 +1,26 @@
 package be.veltri.POJO;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Player extends User {
+import be.veltri.DAO.AbstractDAOFactory;
+import be.veltri.DAO.DAO;
+
+public class Player extends User implements Serializable{
+	private static final long serialVersionUID = -8309693069723806111L;
 	private String pseudo;
-    private LocalDate dateOfBirth;
-    private LocalDate dateInscription;
-    private int balance;
+	private LocalDate dateOfBirth;
+	private LocalDate dateInscription;
+	private int balance;
+	
+	private static AbstractDAOFactory dao = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+	private static DAO<Player> playerDAO = dao.getPlayerDAO();
 
-    // Constructeur par défaut
-    public Player() {}
+	// Constructeur par défaut
+	public Player() {
+	}
 
-    // Constructeur avec arguments
+	// Constructeur avec arguments
 	public Player(String username, String password, String pseudo, LocalDate dateOfBirth, LocalDate dateInscription,
 			int balance) {
 		super(username, password);
@@ -21,7 +30,7 @@ public class Player extends User {
 		this.balance = balance;
 	}
 
-    // Getters et Setters
+	// Getters et Setters
 	public String getPseudo() {
 		return pseudo;
 	}
@@ -55,14 +64,30 @@ public class Player extends User {
 	}
 
 	// Méthodes
-	public boolean LocationAllowed() {
-        // TODO implement here
-        return false;
-    }
+	
+	public boolean create () {
+		return playerDAO.create(this);
+	}
+	public Player find () {
+		Player player = playerDAO.find(this);
+		return player;
+	}
 
-    public void AddBirthdayBonus() {
-        // TODO implement here
-        
-    }
+	public boolean LocationAllowed() {
+		// TODO implement here
+		return false;
+	}
+
+	@Override
+	public String toString() {
+		return "Player [username= " + super.getUsername() + ", password=" + super.getPassword() + ", pseudo=" + pseudo
+				+ ", dateOfBirth=" + dateOfBirth + ", dateInscription=" + dateInscription + ", balance=" + balance
+				+ "]";
+	}
+
+	public void AddBirthdayBonus() {
+		// TODO implement here
+
+	}
 
 }

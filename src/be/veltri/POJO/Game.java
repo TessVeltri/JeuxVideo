@@ -1,16 +1,25 @@
 package be.veltri.POJO;
 
-public class Games {
+import java.io.Serializable;
+
+import be.veltri.DAO.AbstractDAOFactory;
+import be.veltri.DAO.DAO;
+
+public class Game implements Serializable{
+	private static final long serialVersionUID = -1601507844842915600L;
 	private String nameGame;
 	private int units;
 	private String nameConsole;
 	private String nameVersion;
+	
+	private static AbstractDAOFactory dao = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+	private static DAO<Game> gameDAO = dao.getGameDAO();
 
 	// Constructeur par défaut
-	public Games() {}
+	public Game() {}
 
 	// Constructeur avec arguments
-	public Games(String nameGame, int units, String nameConsole, String nameVersion) {
+	public Game(String nameGame, int units, String nameConsole, String nameVersion) {
 		this.nameGame = nameGame;
 		this.units = units;
 		this.nameConsole = nameConsole;

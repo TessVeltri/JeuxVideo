@@ -1,8 +1,13 @@
 package be.veltri.POJO;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Location {
+import be.veltri.DAO.AbstractDAOFactory;
+import be.veltri.DAO.DAO;
+
+public class Location implements Serializable{
+	private static final long serialVersionUID = -2602965353131941195L;
 	private LocalDate dateBeginLocation;
     private LocalDate dateEndLocation;
     private int totalUnits;
@@ -10,6 +15,9 @@ public class Location {
     private Player owner; 
     private Player borrower;
     private Copy copy;
+    
+    private static AbstractDAOFactory dao = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+	private static DAO<Location> locationDAO = dao.getLocationDAO();
     
     // Constructeur par défaut
     public Location() {}
