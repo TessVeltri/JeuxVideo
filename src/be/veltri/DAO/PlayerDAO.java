@@ -43,28 +43,15 @@ public class PlayerDAO extends DAO<Player> {
 	@Override
 	public Player find(Player obj) {
 		Player player = null;
-		ResultSet result;
 		try {
-			if (obj.getPassword() == null) {
-				result = this.connect
-						.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
-						.executeQuery("SELECT userName, pseudo, password, dateBirth, dateInscription, "
-								+ "balance, discriminator FROM User WHERE userName = '" + obj.getUsername() + "'");
-			} else {
-				result = this.connect
-						.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
-						.executeQuery("SELECT userName, pseudo, password, dateBirth, dateInscription, "
-								+ "balance, discriminator FROM User WHERE userName = '" + obj.getUsername() + "' "
-								+ "AND password = '" + obj.getPassword() + "'");
-			}
-			
+			ResultSet result = this.connect
+					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+					.executeQuery("SELECT userName, pseudo, password, dateBirth, dateInscription, "
+							+ "balance, discriminator FROM User WHERE userName = '" + obj.getUsername() + "'");
 			if (result.first())
-				player = new Player(result.getString("userName"), 
-						result.getString("pseudo"),
-						result.getString("password"),
-						result.getDate("dateBirth").toLocalDate(),
-						result.getDate("dateInscription").toLocalDate(),
-						result.getInt("balance"));
+				player = new Player(result.getString("userName"), result.getString("password"),
+						result.getString("pseudo"), result.getDate("dateBirth").toLocalDate(),
+						result.getDate("dateInscription").toLocalDate(), result.getInt("balance"));
 			return player;
 		} catch (SQLException e) {
 			e.printStackTrace();
