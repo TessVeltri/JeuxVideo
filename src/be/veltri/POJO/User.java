@@ -5,7 +5,7 @@ import java.io.Serializable;
 import be.veltri.DAO.AbstractDAOFactory;
 import be.veltri.DAO.DAO;
 
-public abstract class User implements Serializable{
+public class User implements Serializable{
 	private static final long serialVersionUID = 4378927386956734076L;
 	private String username;
 	private String password;
@@ -40,6 +40,10 @@ public abstract class User implements Serializable{
 	}
 
 	// Méthodes
+	public User find () {
+		return userDAO.find(this);
+	}
+	
 	public void Login() {
 		// TODO implement here
 	}
