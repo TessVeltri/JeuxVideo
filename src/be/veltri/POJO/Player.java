@@ -55,7 +55,7 @@ public class Player extends User implements Serializable{
 		this.dateInscription = dateInscription;
 	}
 
-	public float getBalance() {
+	public int getBalance() {
 		return balance;
 	}
 

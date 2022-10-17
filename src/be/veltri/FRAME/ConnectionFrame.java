@@ -22,9 +22,6 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.UIManager;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -52,19 +49,10 @@ public class ConnectionFrame extends JFrame {
 			}
 		});
 	}
-
-	/**
-	 * Create the application.
-	 */
-	public ConnectionFrame() {
-		initialize();
-		setFocusable(true);
-	}
-
 	/**
 	 * Create the frame.
 	 */
-	private void initialize() {
+	public ConnectionFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 800, 500);
 		contentPane = new JPanel();

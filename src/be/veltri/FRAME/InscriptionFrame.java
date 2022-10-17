@@ -56,17 +56,9 @@ public class InscriptionFrame extends JFrame {
 	}
 
 	/**
-	 * Create the application.
-	 */
-	public InscriptionFrame() {
-		initialize();
-		setFocusable(true);
-	}
-
-	/**
 	 * Create the frame.
 	 */
-	private void initialize() {
+	public InscriptionFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 800, 500);
 		contentPane = new JPanel();
@@ -173,6 +165,9 @@ public class InscriptionFrame extends JFrame {
 		contentPane.add(btnSignIn);
 
 		JButton btnBack = new JButton("");
+		btnBack.setOpaque(false);
+		btnBack.setContentAreaFilled(false);
+		btnBack.setBorderPainted(false);
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ConnectionFrame conn = new ConnectionFrame();
