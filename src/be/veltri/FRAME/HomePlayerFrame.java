@@ -42,6 +42,7 @@ public class HomePlayerFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public HomePlayerFrame(Player player) {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 800, 500);
 		contentPane = new JPanel();
@@ -54,7 +55,7 @@ public class HomePlayerFrame extends JFrame {
 		lblBalance.setText(player.getBalance() + " units");
 		lblBalance.setHorizontalAlignment(SwingConstants.LEFT);
 		lblBalance.setFont(new Font("Stencil", Font.PLAIN, 20));
-		lblBalance.setBounds(27, 11, 135, 38);
+		lblBalance.setBounds(35, 28, 135, 38);
 		contentPane.add(lblBalance);
 		
 		JButton btnDisconnect = new JButton("");

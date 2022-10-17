@@ -35,6 +35,7 @@ public class SeeAllGamesFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public SeeAllGamesFrame(Player player) {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 800, 500);
 		contentPane = new JPanel();

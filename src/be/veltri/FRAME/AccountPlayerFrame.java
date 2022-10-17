@@ -34,6 +34,7 @@ public class AccountPlayerFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public AccountPlayerFrame(Player player) {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 800, 500);
 		contentPane = new JPanel();
