@@ -76,6 +76,10 @@ public class Player extends User implements Serializable{
 		return playerDAO.findIdByName(getUsername(), "");
 	}
 
+	public Player findById(int i) {
+		return playerDAO.findById(i);
+	}
+	
 	public boolean LocationAllowed() {
 		// TODO implement here
 		return false;

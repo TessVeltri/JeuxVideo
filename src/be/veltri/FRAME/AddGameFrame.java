@@ -86,9 +86,9 @@ public class AddGameFrame extends JFrame {
 		btnBack.setBounds(46, 379, 50, 47);
 		contentPane.add(btnBack);
 
-		ArrayList<String> lstGames = Game.getAll("Game", "");
+		ArrayList<String> lstGames = Game.getAllName("Game", "");
 		lstGames.add(0, "Select a game");
-		ArrayList<String> lstConsoles = Game.getAll("Console", "");
+		ArrayList<String> lstConsoles = Game.getAllName("Console", "");
 		lstConsoles.add(0, "Select a console");
 
 		Object[] lstG = lstGames.toArray();
@@ -115,7 +115,7 @@ public class AddGameFrame extends JFrame {
 
 				} else {
 					btnAskVersion.setEnabled(true);
-					ArrayList<String> lstVersions = Game.getAll("Version", cbConsole.getSelectedItem().toString());
+					ArrayList<String> lstVersions = Game.getAllName("Version", cbConsole.getSelectedItem().toString());
 					lstVersions.add(0, "Select a version");
 					Object[] lstV = lstVersions.toArray();
 					cbVersion.setModel(new DefaultComboBoxModel(lstV));

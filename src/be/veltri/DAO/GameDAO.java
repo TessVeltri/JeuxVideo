@@ -16,9 +16,9 @@ public class GameDAO extends DAO<Game> {
 	@Override
 	public boolean create(Game obj) {
 		try {
-			this.connect.createStatement().executeUpdate(
-					"INSERT INTO Game(gameName, units, idVersion) "
-							+ "Values('" + obj.getNameGame() + "', '" + this.returnUnits(obj.getNameGame()) + "', '"
+			this.connect.createStatement()
+					.executeUpdate("INSERT INTO Game(gameName, units, idVersion) " + "Values('" + obj.getNameGame()
+							+ "', '" + this.returnUnits(obj.getNameGame()) + "', '"
 							+ this.findIdByName("Version", obj.getNameVersion()) + "')");
 			return true;
 		} catch (SQLException e) {
@@ -44,11 +44,12 @@ public class GameDAO extends DAO<Game> {
 		Game game = null;
 		try {
 			ResultSet result = this.connect
-					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(
-							"SELECT gameName, units FROM Game WHERE gameName = '" + obj.getNameGame() + "' "
-									+ "AND idVersion = '" + this.findIdByName("Version", obj.getNameVersion()) + "'");
+					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+					.executeQuery("SELECT gameName, units FROM Game WHERE gameName = '" + obj.getNameGame() + "' "
+							+ "AND idVersion = '" + this.findIdByName("Version", obj.getNameVersion()) + "'");
 			if (result.first()) {
-				game = new Game(result.getString("gameName"), result.getInt("units"), obj.getNameConsole(), obj.getNameVersion());
+				game = new Game(result.getString("gameName"), result.getInt("units"), obj.getNameConsole(),
+						obj.getNameVersion());
 			}
 			return game;
 		} catch (SQLException e) {
@@ -58,7 +59,7 @@ public class GameDAO extends DAO<Game> {
 	}
 
 	@Override
-	public ArrayList<String> getAll(String str1, String str2) {
+	public ArrayList<String> getAllName(String str1, String str2) {
 		ArrayList<String> all = new ArrayList<>();
 		if (str1.equals("Game") && str2.equals("")) {
 			try {
@@ -120,7 +121,7 @@ public class GameDAO extends DAO<Game> {
 				e.printStackTrace();
 				return -1;
 			}
-		} else if (str1.equals("Version")){
+		} else if (str1.equals("Version")) {
 			try {
 				ResultSet result = this.connect
 						.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
@@ -167,6 +168,97 @@ public class GameDAO extends DAO<Game> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return -1;
+		}
+	}
+
+	@Override
+	public ArrayList<Game> getAll(String str) {
+		ArrayList<Game> all = new ArrayList<Game>();
+		if (str.equals("")) {
+			try {
+				ResultSet result = this.connect
+						.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+						.executeQuery("SELECT gameName, units, idVersion FROM Game");
+				while (result.next()) {
+					all.add(new Game(result.getString("gameName"), result.getInt("units"),
+							this.find(result.getInt("idVersion"), "Console"),
+							this.find(result.getInt("idVersion"), "")));
+				}
+				return all;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
+			}
+		} else {
+			try {
+				ResultSet result = this.connect
+						.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+						.executeQuery("SELECT gameName, units, idVersion FROM Game " + "WHERE idVersion = '"
+								+ this.findIdByName("Version", str) + "'");
+				while (result.next()) {
+					all.add(new Game(result.getString("gameName"), result.getInt("units"),
+							this.find(result.getInt("idVersion"), "Console"),
+							this.find(result.getInt("idVersion"), "")));
+				}
+				return all;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+	}
+
+	@Override
+	public String find(int i, String str) {
+		String find = "";
+		if (str.equals("")) {
+			try {
+				ResultSet result = this.connect
+						.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+						.executeQuery("SELECT versionName FROM Version WHERE idVersion = '" + i + "'");
+				if (result.first()) {
+					find = result.getString(1);
+				}
+				return find;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
+			}
+		} else {
+			try {
+				ResultSet result = this.connect
+						.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+						.executeQuery("SELECT consoleName FROM Console "
+								+ "INNER JOIN Version ON Version.idConsole = Console.idConsole " + "WHERE idVersion = '"
+								+ i + "'");
+				if (result.first()) {
+					find = result.getString(1);
+				}
+				return find;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+
+	}
+
+	@Override
+	public Game findById(int i) {
+		Game game = null;
+		try {
+			ResultSet result = this.connect
+					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(
+							"SELECT gameName, units, idVersion FROM Game WHERE idGame = '" + i + "'");
+			if (result.first()) {
+				game = new Game(result.getString("gameName"), result.getInt("units"),
+						this.find(result.getInt("idVersion"), "Console"),
+						this.find(result.getInt("idVersion"), ""));
+			}
+			return game;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 

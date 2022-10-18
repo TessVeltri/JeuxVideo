@@ -72,7 +72,7 @@ public class HomePlayerFrame extends JFrame {
 		Image imgDisconnect = new ImageIcon(this.getClass().getResource("/be/veltri/IMG/logOut.png")).getImage();
 		btnDisconnect.setIcon(new ImageIcon(imgDisconnect));
 		btnDisconnect.setFont(new Font("Stencil", Font.PLAIN, 20));
-		btnDisconnect.setBounds(726, 19, 50, 47);
+		btnDisconnect.setBounds(726, 19, 50, 50);
 		contentPane.add(btnDisconnect);
 		
 		JButton btnAccount = new JButton("");
@@ -89,7 +89,7 @@ public class HomePlayerFrame extends JFrame {
 		Image imgAccount = new ImageIcon(this.getClass().getResource("/be/veltri/IMG/account.png")).getImage();
 		btnAccount.setIcon(new ImageIcon(imgAccount));
 		btnAccount.setFont(new Font("Stencil", Font.PLAIN, 20));
-		btnAccount.setBounds(666, 19, 50, 47);
+		btnAccount.setBounds(666, 19, 50, 50);
 		contentPane.add(btnAccount);
 		
 		JLabel lblWelcome = new JLabel("Welcome");

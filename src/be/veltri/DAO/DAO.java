@@ -18,7 +18,13 @@ public abstract class DAO<T> {
 	
 	public abstract T find(T obj);
 	
-	public abstract ArrayList<String> getAll (String str1, String str2);
+	public abstract T findById (int i);
+	
+	public abstract String find (int i, String str);
+	
+	public abstract ArrayList<T> getAll (String str1);
+	
+	public abstract ArrayList<String> getAllName (String str1, String str2);
 	
 	public abstract int findIdByName(String str1, String str2);
 	

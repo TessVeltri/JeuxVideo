@@ -7,6 +7,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 
 import be.veltri.POJO.Player;
+import be.veltri.POJO.User;
 
 public class PlayerDAO extends DAO<Player> {
 
@@ -61,7 +62,7 @@ public class PlayerDAO extends DAO<Player> {
 	}
 
 	@Override
-	public ArrayList<String> getAll(String str1, String str2) {
+	public ArrayList<String> getAllName(String str1, String str2) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -87,6 +88,38 @@ public class PlayerDAO extends DAO<Player> {
 	public int returnUnits(String name) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public String find(int i, String str) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Player> getAll(String str1) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Player findById(int i) {
+		Player player = null;
+		try {
+			ResultSet result = this.connect
+					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+					.executeQuery("SELECT username, password, pseudo, dateBirth, dateInscription, balance "
+							+ "FROM User WHERE idUser = '" + i + "'");
+			if (result.first()) {
+				player = new Player(result.getString("username"), result.getString("password"),
+						result.getString("pseudo"), result.getDate("dateBirth").toLocalDate(),
+						result.getDate("dateInscription").toLocalDate(), result.getInt("balance"));
+			}
+			return player;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

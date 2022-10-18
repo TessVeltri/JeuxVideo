@@ -44,6 +44,10 @@ public class Copy implements Serializable{
 		return copyDAO.create(this);
 	}
 	
+	public Copy find () {
+		return copyDAO.find(this);
+	}
+	
 	public void ReleaseCopy() {
         // TODO implement here
     }
@@ -52,7 +56,17 @@ public class Copy implements Serializable{
         // TODO implement here
     }
     public boolean IsAvailable() {
-        // TODO implement here
-        return false;
+        Copy copy = copyDAO.find(this);
+        if(copy != null) 
+        	return true;
+        else
+        	return false;
     }
+
+	@Override
+	public String toString() {
+		return "Copy [owner=" + owner + ", game=" + game + "]";
+	}
+    
+    
 }

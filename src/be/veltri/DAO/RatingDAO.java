@@ -36,7 +36,7 @@ public class RatingDAO extends DAO<Rating>{
 	}
 
 	@Override
-	public ArrayList<String> getAll(String str1, String str2) {
+	public ArrayList<String> getAllName(String str1, String str2) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -51,6 +51,24 @@ public class RatingDAO extends DAO<Rating>{
 	public int returnUnits(String name) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public String find(int i, String str) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Rating> getAll(String str1) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Rating findById(int i) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

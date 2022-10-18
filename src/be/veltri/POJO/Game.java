@@ -71,12 +71,20 @@ public class Game implements Serializable{
 		return gameDAO.findIdByName(getNameGame(), getNameVersion());
 	}
 	
-	public static ArrayList<String> getAll (String str1, String str2){
-		return gameDAO.getAll(str1, str2);
+	public static ArrayList<String> getAllName (String str1, String str2){
+		return gameDAO.getAllName(str1, str2);
 	}
 	
-	public Copy CopyAvailable() {
-		return null;
+	public static ArrayList<Game> getAll (String str1){
+		return gameDAO.getAll(str1);
+	}
+	
+	public Game findById(int i) {
+		return gameDAO.findById(i);
+	}
+	
+	public Copy CopyAvailable(Copy copy) {
+		return copy.find();
 	}
 
 	public void SelectBooking() {
