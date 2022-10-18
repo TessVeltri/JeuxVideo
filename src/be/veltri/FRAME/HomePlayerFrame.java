@@ -111,7 +111,7 @@ public class HomePlayerFrame extends JFrame {
 		contentPane.add(btnPut);
 		
 		JButton btnSee = new JButton("See all games for rent");
-		if (player.getBalance()<=0) {
+		if (!player.checkBalance()) {
 			btnSee.setEnabled(false);
 		}
 		btnSee.addActionListener(new ActionListener() {

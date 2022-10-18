@@ -1,6 +1,7 @@
 package be.veltri.POJO;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import be.veltri.DAO.AbstractDAOFactory;
 import be.veltri.DAO.DAO;
@@ -60,6 +61,20 @@ public class Game implements Serializable{
 	}
 
 	// Méthodes
+	public boolean create() {
+		return gameDAO.create(this);
+	}
+	public Game find () {
+		return gameDAO.find(this);
+	}
+	public int findIdByName () {
+		return gameDAO.findIdByName(getNameGame(), getNameVersion());
+	}
+	
+	public static ArrayList<String> getAll (String str1, String str2){
+		return gameDAO.getAll(str1, str2);
+	}
+	
 	public Copy CopyAvailable() {
 		return null;
 	}

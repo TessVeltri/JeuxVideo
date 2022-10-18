@@ -40,6 +40,10 @@ public class Copy implements Serializable{
 	}
 
 	// Méthodes
+	public boolean create () {
+		return copyDAO.create(this);
+	}
+	
 	public void ReleaseCopy() {
         // TODO implement here
     }

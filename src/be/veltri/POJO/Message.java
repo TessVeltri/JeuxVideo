@@ -5,21 +5,26 @@ import java.io.Serializable;
 import be.veltri.DAO.AbstractDAOFactory;
 import be.veltri.DAO.DAO;
 
-public class Message implements Serializable{
+public class Message implements Serializable {
 	private static final long serialVersionUID = -3612908683506989354L;
 	private String textMessage;
-    private Player player;
-    
-    private static AbstractDAOFactory dao = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+	private boolean read;
+	private User sender;
+	private User receiver;
+
+	private static AbstractDAOFactory dao = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 	private static DAO<Message> messageDAO = dao.getMessageDAO();
-    
-    // Constructeur par défaut
-	public Message() {}
+
+	// Constructeur par défaut
+	public Message() {
+	}
 
 	// Constructeur avec arguments
-	public Message(String textMessage, Player player) {
+	public Message(String textMessage, boolean read, User sender, User receiver) {
 		this.textMessage = textMessage;
-		this.player = player;
+		this.read = read;
+		this.sender = sender;
+		this.receiver = receiver;
 	}
 
 	// Getters et Setters
@@ -31,14 +36,33 @@ public class Message implements Serializable{
 		this.textMessage = textMessage;
 	}
 
-	public Player getPlayer() {
-		return player;
+	public User getSender() {
+		return sender;
 	}
 
-	public void setPlayer(Player player) {
-		this.player = player;
+	public void setSender(User sender) {
+		this.sender = sender;
 	}
-	
+
+	public User getReceiver() {
+		return receiver;
+	}
+
+	public void setReceiver(User receiver) {
+		this.receiver = receiver;
+	}
+
+	public boolean isRead() {
+		return read;
+	}
+
+	public void setRead(boolean read) {
+		this.read = read;
+	}
+
 	// Méthodes
+	public boolean create () {
+		return messageDAO.create(this);
+	}
 	
 }

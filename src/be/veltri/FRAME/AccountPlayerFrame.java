@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 
 import be.veltri.POJO.Player;
 import javax.swing.JLabel;
+import javax.swing.JComboBox;
 
 public class AccountPlayerFrame extends JFrame {
 	
@@ -47,5 +48,4 @@ public class AccountPlayerFrame extends JFrame {
 		lblNewLabel.setBounds(299, 220, 49, 14);
 		contentPane.add(lblNewLabel);
 	}
-
 }

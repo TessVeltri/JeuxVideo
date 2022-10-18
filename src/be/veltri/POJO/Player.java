@@ -64,7 +64,6 @@ public class Player extends User implements Serializable{
 	}
 
 	// Méthodes
-	
 	public boolean create () {
 		return playerDAO.create(this);
 	}
@@ -72,10 +71,21 @@ public class Player extends User implements Serializable{
 		Player player = playerDAO.find(this);
 		return player;
 	}
+	
+	public int findIdByName () {
+		return playerDAO.findIdByName(getUsername(), "");
+	}
 
 	public boolean LocationAllowed() {
 		// TODO implement here
 		return false;
+	}
+	
+	public boolean checkBalance () {
+		if (this.getBalance()<=0)
+			return false;
+		else
+			return true;
 	}
 
 	@Override
