@@ -1,5 +1,6 @@
 package be.veltri.FRAME;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -52,35 +53,79 @@ public class AccountPlayerFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		JLabel lblBalance = new JLabel();
+		if (player.getBalance()<=0) {
+			lblBalance.setForeground(Color.red);
+			lblBalance.setText("0 units");
+		} else {
+			lblBalance.setText(player.getBalance() + " units");
+		}
+		
+		lblBalance.setHorizontalAlignment(SwingConstants.LEFT);
+		lblBalance.setFont(new Font("Stencil", Font.PLAIN, 20));
+		lblBalance.setBounds(35, 28, 135, 38);
+		contentPane.add(lblBalance);
+		
 		JLabel lblYourAccount = new JLabel("Your Account");
 		lblYourAccount.setHorizontalAlignment(SwingConstants.CENTER);
 		lblYourAccount.setFont(new Font("Stencil", Font.PLAIN, 30));
 		lblYourAccount.setBounds(253, 29, 279, 79);
 		contentPane.add(lblYourAccount);
 		
-		JButton btnPut = new JButton("Put a new game on rent");
-		btnPut.setFont(new Font("Stencil", Font.PLAIN, 20));
-		btnPut.setBounds(231, 119, 324, 58);
-		contentPane.add(btnPut);
+		JButton btnMessages = new JButton("My messages");
+		btnMessages.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PlayerMessagesFrame frame = new PlayerMessagesFrame(player);
+				frame.setVisible(true);
+				dispose();
+			}
+		});
+		btnMessages.setFont(new Font("Stencil", Font.PLAIN, 20));
+		btnMessages.setBounds(231, 119, 324, 58);
+		contentPane.add(btnMessages);
 		
-		JButton btnPut_1 = new JButton("Put a new game on rent");
-		btnPut_1.setFont(new Font("Stencil", Font.PLAIN, 20));
-		btnPut_1.setBounds(231, 187, 324, 58);
-		contentPane.add(btnPut_1);
+		JButton btnGames = new JButton("My games");
+		btnGames.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PlayerGamesFrame frame = new PlayerGamesFrame(player);
+				frame.setVisible(true);
+				dispose();
+			}
+		});
+		btnGames.setFont(new Font("Stencil", Font.PLAIN, 20));
+		btnGames.setBounds(231, 187, 324, 58);
+		contentPane.add(btnGames);
 		
-		JButton btnPut_2 = new JButton("Put a new game on rent");
-		btnPut_2.setFont(new Font("Stencil", Font.PLAIN, 20));
-		btnPut_2.setBounds(231, 256, 324, 58);
-		contentPane.add(btnPut_2);
+		JButton btnRentals = new JButton("My rentals");
+		btnRentals.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PlayerRentalsFrame frame = new PlayerRentalsFrame(player);
+				frame.setVisible(true);
+				dispose();
+			}
+		});
+		btnRentals.setFont(new Font("Stencil", Font.PLAIN, 20));
+		btnRentals.setBounds(231, 256, 324, 58);
+		contentPane.add(btnRentals);
 		
-		JButton btnPut_3 = new JButton("Put a new game on rent");
-		btnPut_3.setFont(new Font("Stencil", Font.PLAIN, 20));
-		btnPut_3.setBounds(231, 325, 324, 58);
-		contentPane.add(btnPut_3);
+		JButton btnReservations = new JButton("My reservations");
+		btnReservations.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PlayerReservationsFrame frame = new PlayerReservationsFrame(player);
+				frame.setVisible(true);
+				dispose();
+			}
+		});
+		btnReservations.setFont(new Font("Stencil", Font.PLAIN, 20));
+		btnReservations.setBounds(231, 325, 324, 58);
+		contentPane.add(btnReservations);
 		
 		JButton btnBack = new JButton("");
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				HomePlayerFrame frame = new HomePlayerFrame(player);
+				frame.setVisible(true);
+				dispose();
 			}
 		});
 		Image imgBack = new ImageIcon(this.getClass().getResource("/be/veltri/IMG/back.png")).getImage();
@@ -108,5 +153,11 @@ public class AccountPlayerFrame extends JFrame {
 		btnDisconnect.setBorderPainted(false);
 		btnDisconnect.setBounds(726, 11, 50, 50);
 		contentPane.add(btnDisconnect);
+		
+		JLabel image = new JLabel("");
+		Image img = new ImageIcon(this.getClass().getResource("/be/veltri/IMG/background.jpg")).getImage();
+		image.setIcon(new ImageIcon(img));
+		image.setBounds(0, 0, 790, 470);
+		getContentPane().add(image);
 	}
 }
