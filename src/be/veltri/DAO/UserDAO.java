@@ -65,7 +65,7 @@ public class UserDAO extends DAO<User> {
 	}
 
 	@Override
-	public int findIdByName(String str1, String str2) {
+	public int findIdByName(String str1, String str2, String str3) {
 		int id = 0;
 		if (str1.equals("Admin")) {
 			try {

@@ -44,6 +44,14 @@ public class Copy implements Serializable{
 		return copyDAO.create(this);
 	}
 	
+	public boolean update () {
+		return copyDAO.update(this);
+	}
+	
+	public int findIdByName() {
+		return copyDAO.findIdByName(owner.getUsername(), game.getNameGame(), game.getNameVersion());
+	}
+	
 	public Copy find () {
 		return copyDAO.find(this);
 	}

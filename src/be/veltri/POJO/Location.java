@@ -6,36 +6,35 @@ import java.time.LocalDate;
 import be.veltri.DAO.AbstractDAOFactory;
 import be.veltri.DAO.DAO;
 
-public class Location implements Serializable{
+public class Location implements Serializable {
 	private static final long serialVersionUID = -2602965353131941195L;
 	private LocalDate dateBeginLocation;
-    private LocalDate dateEndLocation;
-    private int totalUnits;
-    private boolean onGoing;
-    private Player owner; 
-    private Player borrower;
-    private Copy copy;
-    
-    private static AbstractDAOFactory dao = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
-	private static DAO<Location> locationDAO = dao.getLocationDAO();
-    
-    // Constructeur par défaut
-    public Location() {}
+	private LocalDate dateEndLocation;
+	private int totalUnits;
+	private boolean onGoing;
+	private Player borrower;
+	private Copy copy;
 
-    // Constructeur avec arguments
+	private static AbstractDAOFactory dao = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+	private static DAO<Location> locationDAO = dao.getLocationDAO();
+
+	// Constructeur par défaut
+	public Location() {
+	}
+
+	// Constructeur avec arguments
 	public Location(LocalDate dateBeginLocation, LocalDate dateEndLocation, int totalUnits, boolean onGoing,
-			Player owner, Player borrower, Copy copy) {
+			Player borrower, Copy copy) {
 		this.dateBeginLocation = dateBeginLocation;
 		this.dateEndLocation = dateEndLocation;
 		this.totalUnits = totalUnits;
 		this.onGoing = onGoing;
-		this.owner = owner;
 		this.borrower = borrower;
 		this.copy = copy;
 	}
-    
-    // Getters et Setters
-    public LocalDate getDateBeginLocation() {
+
+	// Getters et Setters
+	public LocalDate getDateBeginLocation() {
 		return dateBeginLocation;
 	}
 
@@ -67,14 +66,6 @@ public class Location implements Serializable{
 		this.onGoing = onGoing;
 	}
 
-	public Player getOwner() {
-		return owner;
-	}
-
-	public void setOwner(Player owner) {
-		this.owner = owner;
-	}
-
 	public Player getBorrower() {
 		return borrower;
 	}
@@ -92,11 +83,15 @@ public class Location implements Serializable{
 	}
 
 	// Méthodes
-	public void CalculateBalance() {
-        // TODO implement here
-    }
+	public boolean create () {
+		return locationDAO.create(this);
+	}
 	
+	public void CalculateBalance() {
+		// TODO implement here
+	}
+
 	public void EndLocation() {
-        // TODO implement here
-    }
+		// TODO implement here
+	}
 }

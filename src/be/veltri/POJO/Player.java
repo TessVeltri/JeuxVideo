@@ -73,7 +73,7 @@ public class Player extends User implements Serializable{
 	}
 	
 	public int findIdByName () {
-		return playerDAO.findIdByName(getUsername(), "");
+		return playerDAO.findIdByName(getUsername(), "", "");
 	}
 
 	public Player findById(int i) {

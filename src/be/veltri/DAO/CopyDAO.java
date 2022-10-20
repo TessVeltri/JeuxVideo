@@ -36,8 +36,22 @@ public class CopyDAO extends DAO<Copy> {
 
 	@Override
 	public boolean update(Copy obj) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			int result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+					.executeUpdate("UPDATE Copy SET available = CASE available "
+							+ "WHEN 'true' THEN 'false' "
+							+ "WHEN 'false' THEN 'true' "
+							+ "END WHERE idCopy = '"
+							+ findIdByName(obj.getOwner().getUsername(), obj.getGame().getNameGame(),
+									obj.getGame().getNameVersion())+ "'");
+			if (result == 1)
+				return true;
+			else
+				return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
@@ -51,7 +65,7 @@ public class CopyDAO extends DAO<Copy> {
 					.executeQuery("SELECT available, idOwner, idGame FROM Copy WHERE idGame = '"
 							+ obj.getGame().findIdByName() + "' AND available = 'true'");
 			if (result.first()) {
-				copy = new Copy(player.findById(result.getInt("idOwner")),game.findById(result.getInt("idGame")));
+				copy = new Copy(player.findById(result.getInt("idOwner")), game.findById(result.getInt("idGame")));
 			}
 			return copy;
 		} catch (SQLException e) {
@@ -60,10 +74,28 @@ public class CopyDAO extends DAO<Copy> {
 		}
 	}
 
+	// str1 = ownerName, str2 = gameName, str3 = gameVersion
 	@Override
-	public int findIdByName(String str1, String str2) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int findIdByName(String str1, String str2, String str3) {
+		int id = 0;
+		Player owner = new Player();
+		owner.setUsername(str1);
+		Game game = new Game();
+		game.setNameGame(str2);
+		game.setNameVersion(str3);
+		try {
+			ResultSet result = this.connect
+					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+					.executeQuery("SELECT idCopy FROM Copy WHERE idOwner = '" + owner.findIdByName()
+							+ "' AND idGame = '" + game.findIdByName() + "' AND available = 'true'");
+			if (result.first()) {
+				id = result.getInt(1);
+			}
+			return id;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
 	}
 
 	@Override

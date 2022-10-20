@@ -42,7 +42,7 @@ public class AdminDAO extends DAO<Admin>{
 	}
 
 	@Override
-	public int findIdByName(String str1, String str2) {
+	public int findIdByName(String str1, String str2, String str3) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

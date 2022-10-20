@@ -68,7 +68,7 @@ public class Game implements Serializable{
 		return gameDAO.find(this);
 	}
 	public int findIdByName () {
-		return gameDAO.findIdByName(getNameGame(), getNameVersion());
+		return gameDAO.findIdByName(getNameGame(), getNameVersion(), "");
 	}
 	
 	public static ArrayList<String> getAllName (String str1, String str2){

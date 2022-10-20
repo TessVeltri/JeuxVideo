@@ -68,7 +68,7 @@ public class PlayerDAO extends DAO<Player> {
 	}
 
 	@Override
-	public int findIdByName(String str1, String str2) {
+	public int findIdByName(String str1, String str2, String str3) {
 		int id = 0;
 		try {
 			ResultSet result = this.connect

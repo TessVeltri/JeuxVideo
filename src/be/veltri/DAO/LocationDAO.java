@@ -1,6 +1,7 @@
 package be.veltri.DAO;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import be.veltri.POJO.Location;
@@ -13,8 +14,17 @@ public class LocationDAO extends DAO<Location>{
 
 	@Override
 	public boolean create(Location obj) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			this.connect.createStatement()
+					.executeUpdate("INSERT INTO Location(dateBeginLoc, dateEndLoc, onGoing, totalUnits, idBorrower, "
+							+ "idCopy) Values('" + obj.getDateBeginLocation() + "', '" + obj.getDateEndLocation() + "', '"
+							+ obj.isOnGoing() + "', '" + obj.getTotalUnits() + "', '" + obj.getBorrower().findIdByName()
+							+ "', '"+ obj.getCopy().findIdByName() +"')");
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
@@ -42,7 +52,7 @@ public class LocationDAO extends DAO<Location>{
 	}
 
 	@Override
-	public int findIdByName(String str1, String str2) {
+	public int findIdByName(String str1, String str2, String str3) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

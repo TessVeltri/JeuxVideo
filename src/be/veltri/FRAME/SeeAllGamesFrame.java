@@ -218,6 +218,7 @@ public class SeeAllGamesFrame extends JFrame {
 					Game game = new Game (gameName, units, consoleName, versionName);
 					Copy copy = new Copy (null, game);
 					boolean checkCopy = copy.IsAvailable();
+					
 					if (checkCopy) {
 						Copy copyChecked = game.CopyAvailable(copy);
 						ConfirmLocationFrame frame = new ConfirmLocationFrame(copyChecked, player);
