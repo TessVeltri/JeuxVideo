@@ -1,5 +1,6 @@
 package be.veltri.FRAME;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -104,17 +105,17 @@ public class ConfirmLocationFrame extends JFrame {
 		txtWeeks.setColumns(10);
 
 		JLabel lblRentTheGame = new JLabel();
-		lblRentTheGame.setText("Rent the game : ");
+		lblRentTheGame.setText("Name of the game : ");
 		lblRentTheGame.setHorizontalAlignment(SwingConstants.LEFT);
 		lblRentTheGame.setFont(new Font("Stencil", Font.PLAIN, 20));
-		lblRentTheGame.setBounds(103, 192, 180, 38);
+		lblRentTheGame.setBounds(103, 192, 212, 38);
 		contentPane.add(lblRentTheGame);
 
 		JLabel lblGameName = new JLabel();
 		lblGameName.setText(copy.getGame().getNameGame());
 		lblGameName.setHorizontalAlignment(SwingConstants.LEFT);
 		lblGameName.setFont(new Font("Stencil", Font.PLAIN, 20));
-		lblGameName.setBounds(282, 192, 212, 38);
+		lblGameName.setBounds(324, 192, 212, 38);
 		contentPane.add(lblGameName);
 
 		JLabel lblUnits = new JLabel();

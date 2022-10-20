@@ -1,5 +1,6 @@
 package be.veltri.FRAME;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -52,7 +53,13 @@ public class HomePlayerFrame extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblBalance = new JLabel();
-		lblBalance.setText(player.getBalance() + " units");
+		if (player.getBalance()<=0) {
+			lblBalance.setForeground(Color.red);
+			lblBalance.setText("0 units");
+		} else {
+			lblBalance.setText(player.getBalance() + " units");
+		}
+		
 		lblBalance.setHorizontalAlignment(SwingConstants.LEFT);
 		lblBalance.setFont(new Font("Stencil", Font.PLAIN, 20));
 		lblBalance.setBounds(35, 28, 135, 38);

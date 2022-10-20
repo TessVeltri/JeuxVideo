@@ -1,11 +1,12 @@
 package be.veltri.DAO;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import be.veltri.POJO.Reservation;
 
-public class ReservationDAO extends DAO<Reservation>{
+public class ReservationDAO extends DAO<Reservation> {
 
 	public ReservationDAO(Connection conn) {
 		super(conn);
@@ -13,8 +14,16 @@ public class ReservationDAO extends DAO<Reservation>{
 
 	@Override
 	public boolean create(Reservation obj) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			this.connect.createStatement().executeUpdate(
+					"INSERT INTO Reservation(dateReservation, statusReservation, idBorrower, idGame) Values('"
+							+ obj.getDateReservation() + "', '" + obj.getStatusReservation() + "', '" + obj.getBorrower().findIdByName()
+							+ "', '" + obj.getGame().findIdByName() + "')");
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override

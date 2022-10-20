@@ -61,7 +61,9 @@ public class Reservation implements Serializable{
 	}
     
 	// Méthodes
-	
+	public boolean create () {
+		return reservationDAO.create(this);
+	}
     
     
 }
