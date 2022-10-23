@@ -45,7 +45,7 @@ public class User implements Serializable{
 	}
 	
 	public int findIdByName(String str1, String str2) {
-		return userDAO.findIdByName(str1, str2, "");
+		return userDAO.findIdByName(str1, str2, "", "");
 	}
 	
 	public void Login() {

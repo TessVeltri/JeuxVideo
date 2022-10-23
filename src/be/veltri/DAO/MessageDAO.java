@@ -69,7 +69,7 @@ public class MessageDAO extends DAO<Message> {
 	}
 
 	@Override
-	public int findIdByName(String str1, String str2, String str3) {
+	public int findIdByName(String str1, String str2, String str3, String str4) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -87,7 +87,7 @@ public class MessageDAO extends DAO<Message> {
 	}
 
 	@Override
-	public ArrayList<Message> getAll(String str1) {
+	public ArrayList<Message> getAll(String str1, String str2) {
 		// TODO Auto-generated method stub
 		return null;
 	}

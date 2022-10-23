@@ -206,7 +206,6 @@ public class SeeAllGamesFrame extends JFrame {
 		JButton btnRent = new JButton("Rent");
 		btnRent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO récupérer la ligne sélectionner et voir si il reste des jeux dispo ou pas
 				int index = table.getSelectedRow();
 				if (index == -1) {
 					JOptionPane.showMessageDialog(null, "No row selected, select one to rent it");

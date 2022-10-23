@@ -2,6 +2,7 @@ package be.veltri.POJO;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 import be.veltri.DAO.AbstractDAOFactory;
 import be.veltri.DAO.DAO;
@@ -87,8 +88,23 @@ public class Location implements Serializable {
 		return locationDAO.create(this);
 	}
 	
-	public void CalculateBalance() {
-		// TODO implement here
+	public boolean update () {
+		return locationDAO.update(this);
+	}
+	
+	public int CalculateBalance() {
+		int total = 0;
+		int units = this.getCopy().getGame().getUnits();
+		int days = (int) LocalDate.now().until(this.getDateEndLocation(), ChronoUnit.DAYS);
+		if (days<0)
+			total = units + (days*5)+ this.getTotalUnits();
+		else
+			total = units;
+		return total;
+	}
+	
+	public Location find () {
+		return locationDAO.find(this);
 	}
 
 	public void EndLocation() {

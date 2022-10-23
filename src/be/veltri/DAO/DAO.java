@@ -22,11 +22,11 @@ public abstract class DAO<T> {
 	
 	public abstract String find (int i, String str);
 	
-	public abstract ArrayList<T> getAll (String str1);
+	public abstract ArrayList<T> getAll (String str1, String str2);
 	
 	public abstract ArrayList<String> getAllName (String str1, String str2);
 	
-	public abstract int findIdByName(String str1, String str2, String str3);
+	public abstract int findIdByName(String str1, String str2, String str3, String str4);
 	
 	public abstract int returnUnits (String name);
 	

@@ -65,7 +65,7 @@ public class UserDAO extends DAO<User> {
 	}
 
 	@Override
-	public int findIdByName(String str1, String str2, String str3) {
+	public int findIdByName(String str1, String str2, String str3, String str4) {
 		int id = 0;
 		if (str1.equals("Admin")) {
 			try {
@@ -111,7 +111,7 @@ public class UserDAO extends DAO<User> {
 	}
 
 	@Override
-	public ArrayList<User> getAll(String str1) {
+	public ArrayList<User> getAll(String str1, String str2) {
 		// TODO Auto-generated method stub
 		return null;
 	}

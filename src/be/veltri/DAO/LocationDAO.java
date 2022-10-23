@@ -1,12 +1,15 @@
 package be.veltri.DAO;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import be.veltri.POJO.Copy;
 import be.veltri.POJO.Location;
+import be.veltri.POJO.Player;
 
-public class LocationDAO extends DAO<Location>{
+public class LocationDAO extends DAO<Location> {
 
 	public LocationDAO(Connection conn) {
 		super(conn);
@@ -17,9 +20,14 @@ public class LocationDAO extends DAO<Location>{
 		try {
 			this.connect.createStatement()
 					.executeUpdate("INSERT INTO Location(dateBeginLoc, dateEndLoc, onGoing, totalUnits, idBorrower, "
-							+ "idCopy) Values('" + obj.getDateBeginLocation() + "', '" + obj.getDateEndLocation() + "', '"
-							+ obj.isOnGoing() + "', '" + obj.getTotalUnits() + "', '" + obj.getBorrower().findIdByName()
-							+ "', '"+ obj.getCopy().findIdByName() +"')");
+							+ "idCopy) Values('" + obj.getDateBeginLocation() + "', '" + obj.getDateEndLocation()
+							+ "', '" + obj.isOnGoing() + "', '" + obj.getTotalUnits() + "', '"
+							+ obj.getBorrower().findIdByName() + "', '"
+							+ obj.getCopy().findIdByName(obj.getCopy().getOwner().getUsername(),
+									obj.getCopy().getGame().getNameGame(), obj.getCopy().getGame().getNameVersion(),
+									"CREATE")
+							+ "')");
+
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -35,14 +43,48 @@ public class LocationDAO extends DAO<Location>{
 
 	@Override
 	public boolean update(Location obj) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			int result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+					.executeUpdate("UPDATE Location SET onGoing = 'false', totalUnits = '" + obj.getTotalUnits()
+							+ "' WHERE idCopy = '"
+							+ obj.getCopy().findIdByName(obj.getCopy().getOwner().getUsername(),
+									obj.getCopy().getGame().getNameGame(), obj.getCopy().getGame().getNameVersion(), "UPDATE")
+							+ "' AND onGoing = 'true'");
+			if (result == 1)
+				return true;
+			else
+				return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
 	public Location find(Location obj) {
-		// TODO Auto-generated method stub
-		return null;
+		Location loc = new Location();
+		Player player = new Player();
+		Copy copy = new Copy();
+		try {
+			ResultSet result = this.connect
+					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(
+							"SELECT dateBeginLoc, dateEndLoc, onGoing, totalUnits, idBorrower, idCopy FROM Location "
+									+ "WHERE onGoing = '" + obj.isOnGoing() + "' AND idCopy = '"
+									+ obj.getCopy().findIdByName(obj.getCopy().getOwner().getUsername(),
+											obj.getCopy().getGame().getNameGame(),
+											obj.getCopy().getGame().getNameVersion(), "FIND")
+									+ "'");
+			if (result.first()) {
+				loc = new Location(result.getDate("dateBeginLoc").toLocalDate(),
+						result.getDate("dateEndLoc").toLocalDate(), result.getInt("totalUnits"),
+						result.getBoolean("onGoing"), player.findById(result.getInt("idBorrower")),
+						copy.findById(result.getInt("idCopy")));
+			}
+			return loc;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
@@ -52,7 +94,7 @@ public class LocationDAO extends DAO<Location>{
 	}
 
 	@Override
-	public int findIdByName(String str1, String str2, String str3) {
+	public int findIdByName(String str1, String str2, String str3, String str4) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -70,7 +112,7 @@ public class LocationDAO extends DAO<Location>{
 	}
 
 	@Override
-	public ArrayList<Location> getAll(String str1) {
+	public ArrayList<Location> getAll(String str1, String str2) {
 		// TODO Auto-generated method stub
 		return null;
 	}

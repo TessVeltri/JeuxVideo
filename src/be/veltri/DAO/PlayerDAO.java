@@ -38,8 +38,18 @@ public class PlayerDAO extends DAO<Player> {
 
 	@Override
 	public boolean update(Player obj) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			int result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+					.executeUpdate("UPDATE User SET balance = balance + " + obj.getBalance() + " WHERE userName = '"
+							+ obj.getUsername()+ "'");
+			if (result == 1)
+				return true;
+			else
+				return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
@@ -68,7 +78,7 @@ public class PlayerDAO extends DAO<Player> {
 	}
 
 	@Override
-	public int findIdByName(String str1, String str2, String str3) {
+	public int findIdByName(String str1, String str2, String str3, String str4) {
 		int id = 0;
 		try {
 			ResultSet result = this.connect
@@ -97,7 +107,7 @@ public class PlayerDAO extends DAO<Player> {
 	}
 
 	@Override
-	public ArrayList<Player> getAll(String str1) {
+	public ArrayList<Player> getAll(String str1, String str2) {
 		// TODO Auto-generated method stub
 		return null;
 	}

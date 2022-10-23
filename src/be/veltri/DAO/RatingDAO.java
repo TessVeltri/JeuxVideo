@@ -42,7 +42,7 @@ public class RatingDAO extends DAO<Rating>{
 	}
 
 	@Override
-	public int findIdByName(String str1, String str2, String str3) {
+	public int findIdByName(String str1, String str2, String str3, String str4) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -60,7 +60,7 @@ public class RatingDAO extends DAO<Rating>{
 	}
 
 	@Override
-	public ArrayList<Rating> getAll(String str1) {
+	public ArrayList<Rating> getAll(String str1, String str2) {
 		// TODO Auto-generated method stub
 		return null;
 	}

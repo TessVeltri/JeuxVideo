@@ -67,13 +67,18 @@ public class Player extends User implements Serializable{
 	public boolean create () {
 		return playerDAO.create(this);
 	}
+	
+	public boolean update() {
+		return playerDAO.update(this);
+	}
+	
 	public Player find () {
 		Player player = playerDAO.find(this);
 		return player;
 	}
 	
 	public int findIdByName () {
-		return playerDAO.findIdByName(getUsername(), "", "");
+		return playerDAO.findIdByName(getUsername(), "", "", "");
 	}
 
 	public Player findById(int i) {
@@ -90,13 +95,6 @@ public class Player extends User implements Serializable{
 			return false;
 		else
 			return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Player [username= " + super.getUsername() + ", password=" + super.getPassword() + ", pseudo=" + pseudo
-				+ ", dateOfBirth=" + dateOfBirth + ", dateInscription=" + dateInscription + ", balance=" + balance
-				+ "]";
 	}
 
 	public void AddBirthdayBonus() {

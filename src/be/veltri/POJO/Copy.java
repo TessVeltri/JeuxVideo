@@ -1,6 +1,7 @@
 package be.veltri.POJO;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import be.veltri.DAO.AbstractDAOFactory;
 import be.veltri.DAO.DAO;
@@ -48,12 +49,16 @@ public class Copy implements Serializable{
 		return copyDAO.update(this);
 	}
 	
-	public int findIdByName() {
-		return copyDAO.findIdByName(owner.getUsername(), game.getNameGame(), game.getNameVersion());
+	public int findIdByName(String username, String gameName, String versionName, String method) {
+		return copyDAO.findIdByName(username, gameName, versionName, method);
 	}
 	
 	public Copy find () {
 		return copyDAO.find(this);
+	}
+	
+	public static ArrayList<Copy> getAll (String str){
+		return copyDAO.getAll(str, "");
 	}
 	
 	public void ReleaseCopy() {
@@ -69,12 +74,9 @@ public class Copy implements Serializable{
         	return true;
         else
         	return false;
+    }   
+    public Copy findById (int i) {
+    	return copyDAO.findById(i);
     }
-
-	@Override
-	public String toString() {
-		return "Copy [owner=" + owner + ", game=" + game + "]";
-	}
-    
     
 }
