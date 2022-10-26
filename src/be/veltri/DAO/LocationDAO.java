@@ -67,7 +67,6 @@ public class LocationDAO extends DAO<Location> {
 		Player owner = new Player();
 		Copy copy = new Copy();
 		try {
-			// TODO inner join with copy
 			ResultSet result = this.connect
 			.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(
 					"SELECT dateBeginLoc, dateEndLoc, onGoing, totalUnits, idBorrower, idCopy, idOwner "

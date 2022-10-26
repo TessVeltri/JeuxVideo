@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import be.veltri.POJO.Copy;
@@ -145,9 +146,8 @@ public class AddGameFrame extends JFrame {
 					if (find == null) {
 						boolean createGame = newG.create();
 						if (createGame) {
-							Message msg = new Message(
-									"Check the units of the new game " + newG.getNameGame() + " for " + newG.getNameVersion(), false,
-									player, null);
+							Message msg = new Message("Check the units of the new game " + newG.getNameGame() + " for "
+									+ newG.getNameVersion(), false, player, null);
 							boolean createMsg = msg.create();
 							Copy copy = new Copy(player, newG);
 							boolean createCopy = copy.create();
@@ -217,9 +217,15 @@ public class AddGameFrame extends JFrame {
 		JButton btnAskConsole = new JButton("");
 		btnAskConsole.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String newConsole = JOptionPane.showInputDialog("Name of the console to add : ");
-				if (newConsole != null) {
-					Message msg = new Message("Ask for add a new console : " + newConsole, false, player, null);
+				JTextField newConsole = new JTextField();
+				JTextField newVersion = new JTextField();
+				Object[] message = { "Console:", newConsole, "Version:", newVersion };
+				int option = JOptionPane.showConfirmDialog(null, message, "New console & new version to add",
+						JOptionPane.OK_CANCEL_OPTION);
+				if (option == JOptionPane.OK_OPTION && !newConsole.getText().equals("")
+						&& !newVersion.getText().equals("")) {
+					Message msg = new Message("Ask for add a new console & new version : " + newConsole.getText() + ", "
+							+ newVersion.getText(), false, player, null);
 					boolean createMsg = msg.create();
 					if (createMsg) {
 						JOptionPane.showMessageDialog(null,
