@@ -13,6 +13,7 @@ public class Location implements Serializable {
 	private LocalDate dateEndLocation;
 	private int totalUnits;
 	private boolean onGoing;
+	private Player owner;
 	private Player borrower;
 	private Copy copy;
 
@@ -25,11 +26,12 @@ public class Location implements Serializable {
 
 	// Constructeur avec arguments
 	public Location(LocalDate dateBeginLocation, LocalDate dateEndLocation, int totalUnits, boolean onGoing,
-			Player borrower, Copy copy) {
+			Player owner, Player borrower, Copy copy) {
 		this.dateBeginLocation = dateBeginLocation;
 		this.dateEndLocation = dateEndLocation;
 		this.totalUnits = totalUnits;
 		this.onGoing = onGoing;
+		this.owner = owner;
 		this.borrower = borrower;
 		this.copy = copy;
 	}
@@ -83,13 +85,17 @@ public class Location implements Serializable {
 		this.copy = copy;
 	}
 
+	public Player getOwner() {
+		return owner;
+	}
+
+	public void setOwner(Player owner) {
+		this.owner = owner;
+	}
+
 	// Méthodes
 	public boolean create () {
 		return locationDAO.create(this);
-	}
-	
-	public boolean update () {
-		return locationDAO.update(this);
 	}
 	
 	public int CalculateBalance() {
@@ -107,7 +113,7 @@ public class Location implements Serializable {
 		return locationDAO.find(this);
 	}
 
-	public void EndLocation() {
-		// TODO implement here
+	public boolean endLocation() {
+		return locationDAO.update(this);
 	}
 }

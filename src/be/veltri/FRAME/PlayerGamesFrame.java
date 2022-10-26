@@ -114,12 +114,12 @@ public class PlayerGamesFrame extends JFrame {
 						String versionName = model.getValueAt(index, 3).toString();
 						Game game = new Game (gameName, units, consoleName, versionName);
 						Copy copy = new Copy (player, game);
-						Location loc = new Location(null, null, 0, true, null, copy);
+						Location loc = new Location(null, null, 0, true, player, null, copy);
 						Location location = loc.find();
 						int total = location.CalculateBalance();
 						location.setTotalUnits(total);
 						boolean updateCopy = copy.update();
-						boolean updateLoc = location.update();
+						boolean updateLoc = location.endLocation();
 						player.setBalance(total);
 						boolean updateOwner = player.update();
 						Player borrower = location.getBorrower();

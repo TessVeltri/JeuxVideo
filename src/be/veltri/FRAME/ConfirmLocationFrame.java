@@ -187,7 +187,7 @@ public class ConfirmLocationFrame extends JFrame {
 				if (nbrUnits>player.getBalance()) {
 					JOptionPane.showMessageDialog(null, "You don't have enough units");
 				} else {
-					Location loc = new Location (dateFrom, dateTo, nbrUnits, true, player, copy);
+					Location loc = new Location (dateFrom, dateTo, nbrUnits, true, copy.getOwner(), player, copy);
 					boolean createLoc = loc.create();
 					boolean updateCopy = copy.update();
 					if (createLoc && updateCopy) {

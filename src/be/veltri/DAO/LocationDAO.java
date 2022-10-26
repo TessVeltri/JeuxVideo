@@ -23,11 +23,10 @@ public class LocationDAO extends DAO<Location> {
 							+ "idCopy) Values('" + obj.getDateBeginLocation() + "', '" + obj.getDateEndLocation()
 							+ "', '" + obj.isOnGoing() + "', '" + obj.getTotalUnits() + "', '"
 							+ obj.getBorrower().findIdByName() + "', '"
-							+ obj.getCopy().findIdByName(obj.getCopy().getOwner().getUsername(),
+							+ obj.getCopy().findIdByName(obj.getOwner().getUsername(),
 									obj.getCopy().getGame().getNameGame(), obj.getCopy().getGame().getNameVersion(),
 									"CREATE")
 							+ "')");
-
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -47,8 +46,9 @@ public class LocationDAO extends DAO<Location> {
 			int result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
 					.executeUpdate("UPDATE Location SET onGoing = 'false', totalUnits = '" + obj.getTotalUnits()
 							+ "' WHERE idCopy = '"
-							+ obj.getCopy().findIdByName(obj.getCopy().getOwner().getUsername(),
-									obj.getCopy().getGame().getNameGame(), obj.getCopy().getGame().getNameVersion(), "UPDATE")
+							+ obj.getCopy().findIdByName(obj.getOwner().getUsername(),
+									obj.getCopy().getGame().getNameGame(), obj.getCopy().getGame().getNameVersion(),
+									"UPDATE")
 							+ "' AND onGoing = 'true'");
 			if (result == 1)
 				return true;
@@ -63,22 +63,25 @@ public class LocationDAO extends DAO<Location> {
 	@Override
 	public Location find(Location obj) {
 		Location loc = new Location();
-		Player player = new Player();
+		Player borrower = new Player();
+		Player owner = new Player();
 		Copy copy = new Copy();
 		try {
+			// TODO inner join with copy
 			ResultSet result = this.connect
-					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(
-							"SELECT dateBeginLoc, dateEndLoc, onGoing, totalUnits, idBorrower, idCopy FROM Location "
-									+ "WHERE onGoing = '" + obj.isOnGoing() + "' AND idCopy = '"
-									+ obj.getCopy().findIdByName(obj.getCopy().getOwner().getUsername(),
-											obj.getCopy().getGame().getNameGame(),
-											obj.getCopy().getGame().getNameVersion(), "FIND")
-									+ "'");
+			.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(
+					"SELECT dateBeginLoc, dateEndLoc, onGoing, totalUnits, idBorrower, idCopy, idOwner "
+					+ "FROM Location INNER JOIN Copy ON Location.idCopy = Copy.idCopy "
+					+ "WHERE onGoing = '" + obj.isOnGoing() + "' AND idCopy = '"
+					+ obj.getCopy().findIdByName(obj.getOwner().getUsername(),
+							obj.getCopy().getGame().getNameGame(),
+							obj.getCopy().getGame().getNameVersion(), "FIND")
+					+ "'");
 			if (result.first()) {
 				loc = new Location(result.getDate("dateBeginLoc").toLocalDate(),
 						result.getDate("dateEndLoc").toLocalDate(), result.getInt("totalUnits"),
-						result.getBoolean("onGoing"), player.findById(result.getInt("idBorrower")),
-						copy.findById(result.getInt("idCopy")));
+						result.getBoolean("onGoing"), owner.findById(result.getInt("idOwner")),
+						borrower.findById(result.getInt("idBorrower")), copy.findById(result.getInt("idCopy")));
 			}
 			return loc;
 		} catch (SQLException e) {
