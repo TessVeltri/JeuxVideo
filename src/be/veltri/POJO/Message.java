@@ -1,6 +1,7 @@
 package be.veltri.POJO;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import be.veltri.DAO.AbstractDAOFactory;
 import be.veltri.DAO.DAO;
@@ -16,8 +17,7 @@ public class Message implements Serializable {
 	private static DAO<Message> messageDAO = dao.getMessageDAO();
 
 	// Constructeur par défaut
-	public Message() {
-	}
+	public Message() {}
 
 	// Constructeur avec arguments
 	public Message(String textMessage, boolean read, User sender, User receiver) {
@@ -63,6 +63,14 @@ public class Message implements Serializable {
 	// Méthodes
 	public boolean create () {
 		return messageDAO.create(this);
+	}
+	
+	public boolean update() {
+		return messageDAO.update(this);
+	}
+	
+	public static ArrayList<Message> getAll (String str){
+		return messageDAO.getAll(str, "");
 	}
 	
 }

@@ -1,10 +1,12 @@
 package be.veltri.DAO;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import be.veltri.POJO.Message;
+import be.veltri.POJO.Player;
 import be.veltri.POJO.User;
 
 public class MessageDAO extends DAO<Message> {
@@ -32,16 +34,16 @@ public class MessageDAO extends DAO<Message> {
 			try {
 				this.connect.createStatement()
 						.executeUpdate("INSERT INTO Message(txtMessage, read, idSender, idReceiver) " + "Values('"
-								+ obj.getTextMessage() + "', 'false', '"
-								+ obj.getSender().findIdByName("Admin", "") + "', '"
-								+ obj.getReceiver().findIdByName("Player", obj.getSender().getUsername()) + "')");
+								+ obj.getTextMessage() + "', 'false', '" + obj.getSender().findIdByName("Admin", "")
+								+ "', '" + obj.getReceiver().findIdByName("Player", obj.getSender().getUsername())
+								+ "')");
 				return true;
 			} catch (SQLException e) {
 				e.printStackTrace();
 				return false;
 			}
 		}
-		
+
 	}
 
 	@Override
@@ -52,8 +54,21 @@ public class MessageDAO extends DAO<Message> {
 
 	@Override
 	public boolean update(Message obj) {
-		// TODO Auto-generated method stub
-		return false;
+		int idSender = obj.getSender().findIdByName("", obj.getSender().getUsername());
+		int idReceiver = obj.getReceiver().findIdByName("", obj.getReceiver().getUsername());
+		try {
+			int result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+					.executeUpdate("UPDATE Message SET read = CASE read " + "WHEN 'true' THEN 'false' "
+							+ "WHEN 'false' THEN 'true' " + "END WHERE txtMessage = '" + obj.getTextMessage()
+							+ "' AND idSender = '" + idSender + "' AND idReceiver = '" + idReceiver + "'");
+			if (result == 1)
+				return true;
+			else
+				return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
@@ -86,10 +101,27 @@ public class MessageDAO extends DAO<Message> {
 		return null;
 	}
 
+	// str1 = username, srt2 = ""
 	@Override
 	public ArrayList<Message> getAll(String str1, String str2) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Message> all = new ArrayList<>();
+		Player receiver = new Player();
+		Player sender = new Player();
+		receiver.setUsername(str1);
+		int idReceiver = receiver.findIdByName();
+		try {
+			ResultSet result = this.connect
+					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(
+							"SELECT txtMessage, read, idSender FROM Message WHERE idReceiver = '" + idReceiver + "'");
+			while (result.next()) {
+				all.add(new Message(result.getString("txtMessage"), result.getBoolean("read"),
+						sender.findById(result.getInt("idSender")), receiver.findById(idReceiver)));
+			}
+			return all;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override

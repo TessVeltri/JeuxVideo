@@ -88,7 +88,7 @@ public class PlayerGamesFrame extends JFrame {
 
 		JTable table = new JTable();
 		table.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "Game name", "Units", "Console", "Version", "Used" }));
+				new String[] { "Game name", "Units", "Console", "Version", "Free" }));
 		gameScrollPane.setViewportView(table);
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		ArrayList<Copy> lstCopy = Copy.getAll(player.getUsername());
@@ -104,10 +104,10 @@ public class PlayerGamesFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				int index = table.getSelectedRow();
 				if (index == -1) {
-					JOptionPane.showMessageDialog(null, "No row selected, select one to rent it");
+					JOptionPane.showMessageDialog(null, "No row selected, select one to make it available");
 				} else {
-					String used = model.getValueAt(index, 4).toString();
-					if (used.equals("NO")) {
+					String free = model.getValueAt(index, 4).toString();
+					if (free.equals("NO")) {
 						String gameName = model.getValueAt(index, 0).toString();
 						int units = Integer.parseInt(model.getValueAt(index, 1).toString());
 						String consoleName = model.getValueAt(index, 2).toString();
@@ -118,7 +118,7 @@ public class PlayerGamesFrame extends JFrame {
 						Location location = loc.find();
 						int total = location.CalculateBalance();
 						location.setTotalUnits(total);
-						boolean updateCopy = copy.update();
+						boolean updateCopy = copy.releaseCopy();
 						boolean updateLoc = location.endLocation() ;
 						player.setBalance(total);
 						boolean updateOwner = player.update();

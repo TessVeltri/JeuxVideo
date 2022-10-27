@@ -93,7 +93,7 @@ public class ConnectionFrame extends JFrame {
 				if (username.equals("") || password.equals("")) {
 					JOptionPane.showMessageDialog(null, "Please complete all fields");
 				} else {
-					user = user.find();
+					user = user.login();
 					if (user != null) {
 						if (user instanceof Player) {
 							Player player = (Player) user;

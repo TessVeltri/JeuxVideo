@@ -85,12 +85,7 @@ public class Player extends User implements Serializable{
 		return playerDAO.findById(i);
 	}
 	
-	public boolean LocationAllowed() {
-		// TODO implement here
-		return false;
-	}
-	
-	public boolean checkBalance () {
+	public boolean locationAllowed() {
 		if (this.getBalance()<=0)
 			return false;
 		else

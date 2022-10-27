@@ -61,8 +61,8 @@ public class Copy implements Serializable{
 		return copyDAO.getAll(str, "");
 	}
 	
-	public void ReleaseCopy() {
-        // TODO implement here
+	public boolean releaseCopy() {
+        return this.update();
     }
 
 	public void Borrow() {

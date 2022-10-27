@@ -39,18 +39,16 @@ public class User implements Serializable{
 		this.password = password;
 	}
 
-	// Méthodes
-	public User find () {
-		return userDAO.find(this);
-	}
-	
+	// Méthodes	
 	public int findIdByName(String str1, String str2) {
 		return userDAO.findIdByName(str1, str2, "", "");
 	}
 	
-	public void Login() {
-		// TODO implement here
+	public User login() {
+		return userDAO.find(this);
 	}
-	
+	 public User find () {
+		 return this.login();
+	 }
 
 }
