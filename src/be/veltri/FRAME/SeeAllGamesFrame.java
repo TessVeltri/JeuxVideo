@@ -87,23 +87,6 @@ public class SeeAllGamesFrame extends JFrame {
 		btnDisconnect.setBounds(726, 19, 50, 47);
 		contentPane.add(btnDisconnect);
 		
-		JButton btnAccount = new JButton("");
-		btnAccount.setOpaque(false);
-		btnAccount.setContentAreaFilled(false);
-		btnAccount.setBorderPainted(false);
-		btnAccount.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				AccountPlayerFrame frame = new AccountPlayerFrame(player);
-				frame.setVisible(true);
-				dispose();
-			}
-		});
-		Image imgAccount = new ImageIcon(this.getClass().getResource("/be/veltri/IMG/account.png")).getImage();
-		btnAccount.setIcon(new ImageIcon(imgAccount));
-		btnAccount.setFont(new Font("Stencil", Font.PLAIN, 20));
-		btnAccount.setBounds(666, 19, 50, 50);
-		contentPane.add(btnAccount);
-		
 		JButton btnBack = new JButton("");
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

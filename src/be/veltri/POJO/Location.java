@@ -3,6 +3,7 @@ package be.veltri.POJO;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 
 import be.veltri.DAO.AbstractDAOFactory;
 import be.veltri.DAO.DAO;
@@ -115,5 +116,9 @@ public class Location implements Serializable {
 
 	public boolean endLocation() {
 		return locationDAO.update(this);
+	}
+	
+	public static ArrayList<Location> getAll (String str){
+		return locationDAO.getAll(str, "");
 	}
 }

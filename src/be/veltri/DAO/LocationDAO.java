@@ -3,9 +3,11 @@ package be.veltri.DAO;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import be.veltri.POJO.Copy;
+import be.veltri.POJO.Game;
 import be.veltri.POJO.Location;
 import be.veltri.POJO.Player;
 
@@ -68,14 +70,14 @@ public class LocationDAO extends DAO<Location> {
 		Copy copy = new Copy();
 		try {
 			ResultSet result = this.connect
-			.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(
-					"SELECT dateBeginLoc, dateEndLoc, onGoing, totalUnits, idBorrower, idCopy, idOwner "
-					+ "FROM Location INNER JOIN Copy ON Location.idCopy = Copy.idCopy "
-					+ "WHERE onGoing = '" + obj.isOnGoing() + "' AND idCopy = '"
-					+ obj.getCopy().findIdByName(obj.getOwner().getUsername(),
-							obj.getCopy().getGame().getNameGame(),
-							obj.getCopy().getGame().getNameVersion(), "FIND")
-					+ "'");
+					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+					.executeQuery("SELECT dateBeginLoc, dateEndLoc, onGoing, totalUnits, idBorrower, idCopy, idOwner "
+							+ "FROM Location INNER JOIN Copy ON Location.idCopy = Copy.idCopy " + "WHERE onGoing = '"
+							+ obj.isOnGoing() + "' AND idCopy = '"
+							+ obj.getCopy().findIdByName(obj.getOwner().getUsername(),
+									obj.getCopy().getGame().getNameGame(), obj.getCopy().getGame().getNameVersion(),
+									"FIND")
+							+ "'");
 			if (result.first()) {
 				loc = new Location(result.getDate("dateBeginLoc").toLocalDate(),
 						result.getDate("dateEndLoc").toLocalDate(), result.getInt("totalUnits"),
@@ -113,10 +115,31 @@ public class LocationDAO extends DAO<Location> {
 		return null;
 	}
 
+	// str1 = borrower username
 	@Override
 	public ArrayList<Location> getAll(String str1, String str2) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Location> all = new ArrayList<>();
+		Player player = new Player();
+		player.setUsername(str1);
+		int idBorrower = player.findIdByName();
+		Player borrower = new Player();
+		Copy copy = new Copy();
+		try {
+			ResultSet result = this.connect
+					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+					.executeQuery("SELECT dateBeginLoc, dateEndLoc, totalUnits, idCopy FROM Location "
+							+ "WHERE idBorrower = '" + idBorrower + "' AND onGoing = 'true'");
+			while (result.next()) {
+				copy = copy.findById(result.getInt("idCopy"));
+				all.add(new Location(result.getDate("dateBeginLoc").toLocalDate(),
+						result.getDate("dateEndLoc").toLocalDate(), result.getInt("totalUnits"), true,
+						copy.getOwner(),borrower.findById(idBorrower), copy ));
+			}
+			return all;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
