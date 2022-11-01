@@ -159,7 +159,7 @@ public class GameDAO extends DAO<Game> {
 
 	@Override
 	public int returnUnits(String name) {
-		int units = 0;
+		int units = 1;
 		try {
 			ResultSet result = this.connect
 					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
@@ -170,7 +170,7 @@ public class GameDAO extends DAO<Game> {
 			return units;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return -1;
+			return 1;
 		}
 	}
 

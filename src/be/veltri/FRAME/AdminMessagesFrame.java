@@ -145,6 +145,12 @@ public class AdminMessagesFrame extends JFrame {
 		btnBack.setBorderPainted(false);
 		btnBack.setBounds(32, 389, 50, 47);
 		contentPane.add(btnBack);
+		
+		JLabel image = new JLabel("");
+		Image img = new ImageIcon(this.getClass().getResource("/be/veltri/IMG/background.jpg")).getImage();
+		image.setIcon(new ImageIcon(img));
+		image.setBounds(0, 0, 790, 470);
+		getContentPane().add(image);
 	}
 
 }

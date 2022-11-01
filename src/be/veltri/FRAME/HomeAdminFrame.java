@@ -86,7 +86,7 @@ public class HomeAdminFrame extends JFrame {
 		btnMessages.setBounds(214, 114, 357, 67);
 		contentPane.add(btnMessages);
 		
-		JButton btnAddGameName = new JButton("Add new game category");
+		JButton btnAddGameName = new JButton("Add new game name");
 		btnAddGameName.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AdminAddGameName frame = new AdminAddGameName(admin);
