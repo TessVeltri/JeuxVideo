@@ -127,7 +127,7 @@ public class InscriptionFrame extends JFrame {
 				String confirmPassword = String.valueOf(txtConfirmPassword.getPassword());
 				Date birth = dateOfBirth.getDate();
 				Player player = new Player(username, password, pseudo,
-						null, LocalDate.now(), 10);
+						null, LocalDate.now(), 10, false);
 				Player used = new Player ();
 				used.setUsername(username);
 				String dateString = ((JTextField) dateOfBirth.getDateEditor().getUiComponent()).getText();
@@ -149,6 +149,7 @@ public class InscriptionFrame extends JFrame {
 
 				if (verif) {
 					player.setDateOfBirth(birth.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+					player.addBirthdayBonus();
 					if (player.create()) {
 						JOptionPane.showMessageDialog(null, "Great ! Your sign up is done ");
 						HomePlayerFrame frame = new HomePlayerFrame(player);
@@ -157,7 +158,6 @@ public class InscriptionFrame extends JFrame {
 					} else {
 						JOptionPane.showMessageDialog(null, "An error has occurred, try again");
 					}
-
 				}
 			}
 		});

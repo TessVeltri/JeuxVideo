@@ -120,7 +120,7 @@ public class PlayerGamesFrame extends JFrame {
 						location.setTotalUnits(total);
 						boolean updateCopy = copy.releaseCopy();
 						boolean updateLoc = location.endLocation() ;
-						player.setBalance(total);
+						player.setBalance(player.getBalance()+ total);
 						boolean updateOwner = player.update();
 						Player borrower = location.getBorrower();
 						borrower.setBalance(total*=-1);

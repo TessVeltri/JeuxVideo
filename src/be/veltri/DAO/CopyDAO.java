@@ -141,6 +141,7 @@ public class CopyDAO extends DAO<Copy> {
 		return null;
 	}
 
+	// str1 = ownerUsername
 	@Override
 	public ArrayList<Copy> getAll(String str1, String str2) {
 		ArrayList<Copy> all = new ArrayList<>();

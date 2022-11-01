@@ -97,9 +97,13 @@ public class ConnectionFrame extends JFrame {
 					if (user != null) {
 						if (user instanceof Player) {
 							Player player = (Player) user;
-							HomePlayerFrame frame = new HomePlayerFrame(player);
-							frame.setVisible(true);
-							dispose();
+							player.addBirthdayBonus();
+							boolean update = player.update();
+							if (update) {
+								HomePlayerFrame frame = new HomePlayerFrame(player);
+								frame.setVisible(true);
+								dispose();
+							}
 						} else if (user instanceof Admin) {
 							Admin admin = (Admin) user;
 							HomeAdminFrame frame = new HomeAdminFrame(admin);

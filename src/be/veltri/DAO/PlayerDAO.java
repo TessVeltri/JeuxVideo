@@ -20,9 +20,10 @@ public class PlayerDAO extends DAO<Player> {
 		try {
 			this.connect.createStatement()
 					.executeUpdate("INSERT INTO User(userName, pseudo, password, dateBirth, dateInscription, "
-							+ "balance, discriminator) Values('" + obj.getUsername() + "', '" + obj.getPseudo() + "', '"
-							+ obj.getPassword() + "', '" + obj.getDateOfBirth() + "', '" + obj.getDateInscription()
-							+ "', '10', 'Player')");
+							+ "balance, discriminator, checkBirthDay) Values('" + obj.getUsername() + "', '"
+							+ obj.getPseudo() + "', '" + obj.getPassword() + "', '" + obj.getDateOfBirth() + "', '"
+							+ obj.getDateInscription() + "', '" + obj.getBalance() + "', 'Player', '"
+							+ obj.isCheckBirthDay() + "')");
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -40,8 +41,8 @@ public class PlayerDAO extends DAO<Player> {
 	public boolean update(Player obj) {
 		try {
 			int result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
-					.executeUpdate("UPDATE User SET balance = balance + " + obj.getBalance() + " WHERE userName = '"
-							+ obj.getUsername()+ "'");
+					.executeUpdate("UPDATE User SET balance = " + obj.getBalance() + ", checkBirthDay = '"
+							+ obj.isCheckBirthDay() + "' WHERE userName = '" + obj.getUsername() + "'");
 			if (result == 1)
 				return true;
 			else
@@ -59,11 +60,13 @@ public class PlayerDAO extends DAO<Player> {
 			ResultSet result = this.connect
 					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
 					.executeQuery("SELECT userName, pseudo, password, dateBirth, dateInscription, "
-							+ "balance, discriminator FROM User WHERE userName = '" + obj.getUsername() + "'");
+							+ "balance, discriminator, checkBirthDay FROM User WHERE userName = '" + obj.getUsername()
+							+ "'");
 			if (result.first())
 				player = new Player(result.getString("userName"), result.getString("password"),
 						result.getString("pseudo"), result.getDate("dateBirth").toLocalDate(),
-						result.getDate("dateInscription").toLocalDate(), result.getInt("balance"));
+						result.getDate("dateInscription").toLocalDate(), result.getInt("balance"),
+						result.getBoolean("checkBirthDay"));
 			return player;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -118,13 +121,14 @@ public class PlayerDAO extends DAO<Player> {
 		Player player = null;
 		try {
 			ResultSet result = this.connect
-					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
-					.executeQuery("SELECT username, password, pseudo, dateBirth, dateInscription, balance "
-							+ "FROM User WHERE idUser = '" + i + "'");
+					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(
+							"SELECT username, password, pseudo, dateBirth, dateInscription, balance, checkBirthDay "
+									+ "FROM User WHERE idUser = '" + i + "'");
 			if (result.first()) {
 				player = new Player(result.getString("username"), result.getString("password"),
 						result.getString("pseudo"), result.getDate("dateBirth").toLocalDate(),
-						result.getDate("dateInscription").toLocalDate(), result.getInt("balance"));
+						result.getDate("dateInscription").toLocalDate(), result.getInt("balance"),
+						result.getBoolean("checkBirthDay"));
 			}
 			return player;
 		} catch (SQLException e) {

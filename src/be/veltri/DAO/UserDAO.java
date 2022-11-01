@@ -41,14 +41,15 @@ public class UserDAO extends DAO<User> {
 				ResultSet result = this.connect
 						.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
 						.executeQuery("SELECT userName, pseudo, password, dateBirth, dateInscription, "
-								+ "balance, discriminator FROM User WHERE userName = '" + obj.getUsername() + "' "
+								+ "balance, discriminator, checkBirthDay FROM User WHERE userName = '" + obj.getUsername() + "' "
 								+ "AND password = '" + obj.getPassword() + "'");
 
 				if (result.first())
 					if (result.getString("discriminator").equals("Player")) {
 						user = new Player(result.getString("userName"), result.getString("password"),
 								result.getString("pseudo"), result.getDate("dateBirth").toLocalDate(),
-								result.getDate("dateInscription").toLocalDate(), result.getInt("balance"));
+								result.getDate("dateInscription").toLocalDate(), result.getInt("balance"),
+								result.getBoolean("checkBirthDay"));
 					} else if (result.getString("discriminator").equals("Admin")) {
 						user = new Admin(result.getString("userName"), result.getString("password"));
 					}
@@ -62,13 +63,14 @@ public class UserDAO extends DAO<User> {
 				ResultSet result = this.connect
 						.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
 						.executeQuery("SELECT userName, pseudo, password, dateBirth, dateInscription, "
-								+ "balance, discriminator FROM User WHERE userName = '" + obj.getUsername() + "'");
+								+ "balance, discriminator, checkBirthDay FROM User WHERE userName = '" + obj.getUsername() + "'");
 
 				if (result.first())
 					if (result.getString("discriminator").equals("Player")) {
 						user = new Player(result.getString("userName"), result.getString("password"),
 								result.getString("pseudo"), result.getDate("dateBirth").toLocalDate(),
-								result.getDate("dateInscription").toLocalDate(), result.getInt("balance"));
+								result.getDate("dateInscription").toLocalDate(), result.getInt("balance"),
+								result.getBoolean("checkBirthDay"));
 					} else if (result.getString("discriminator").equals("Admin")) {
 						user = new Admin(result.getString("userName"), result.getString("password"));
 					}
