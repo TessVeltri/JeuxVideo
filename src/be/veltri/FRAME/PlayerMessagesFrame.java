@@ -107,7 +107,7 @@ public class PlayerMessagesFrame extends JFrame {
 				if (index == -1) {
 					JOptionPane.showMessageDialog(null, "No row selected, select one to delete it");
 				} else {
-					int response = JOptionPane.showConfirmDialog(null, "Do you want to delete this row ? ");
+					int response = JOptionPane.showConfirmDialog(null, "Do you want to delete the message ? ");
 					if (response == JOptionPane.YES_OPTION) {
 						String txt = model.getValueAt(index, 0).toString();
 						String from = model.getValueAt(index, 1).toString();
