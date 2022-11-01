@@ -77,6 +77,7 @@ public class PlayerDAO extends DAO<Player> {
 		return null;
 	}
 
+	// str1 = username, str2 = "", str3 = "", str4 = ""
 	@Override
 	public int findIdByName(String str1, String str2, String str3, String str4) {
 		int id = 0;

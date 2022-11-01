@@ -86,7 +86,7 @@ public class UserDAO extends DAO<User> {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	// str1 = discriminator, str2 = username
+	// str1 = discriminator, str2 = username, str3 = "", str4 = ""
 	@Override
 	public int findIdByName(String str1, String str2, String str3, String str4) {
 		int id = 0;

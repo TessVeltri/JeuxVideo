@@ -2,6 +2,7 @@ package be.veltri.POJO;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import be.veltri.DAO.AbstractDAOFactory;
 import be.veltri.DAO.DAO;
@@ -63,6 +64,14 @@ public class Reservation implements Serializable{
 	// Méthodes
 	public boolean create () {
 		return reservationDAO.create(this);
+	}
+	
+	public boolean update () {
+		return reservationDAO.update(this);
+	}
+	
+	public static ArrayList<Reservation> getAll (String str1){
+		return reservationDAO.getAll(str1, "");
 	}
     
     

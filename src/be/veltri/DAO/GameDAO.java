@@ -105,6 +105,9 @@ public class GameDAO extends DAO<Game> {
 		return all;
 	}
 
+	// str1 = "Console" / "Version", str2 = name (console, version)
+	// OR
+	// str1 = gameName, str2 = versionName
 	@Override
 	public int findIdByName(String str1, String str2, String str3, String str4) {
 		int id = 0;

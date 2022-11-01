@@ -1,10 +1,14 @@
 package be.veltri.DAO;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import be.veltri.POJO.Game;
+import be.veltri.POJO.Player;
 import be.veltri.POJO.Reservation;
+import be.veltri.POJO.ReservationStatus;
 
 public class ReservationDAO extends DAO<Reservation> {
 
@@ -17,8 +21,8 @@ public class ReservationDAO extends DAO<Reservation> {
 		try {
 			this.connect.createStatement().executeUpdate(
 					"INSERT INTO Reservation(dateReservation, statusReservation, idBorrower, idGame) Values('"
-							+ obj.getDateReservation() + "', '" + obj.getStatusReservation() + "', '" + obj.getBorrower().findIdByName()
-							+ "', '" + obj.getGame().findIdByName() + "')");
+							+ obj.getDateReservation() + "', '" + obj.getStatusReservation() + "', '"
+							+ obj.getBorrower().findIdByName() + "', '" + obj.getGame().findIdByName() + "')");
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -28,14 +32,27 @@ public class ReservationDAO extends DAO<Reservation> {
 
 	@Override
 	public boolean delete(Reservation obj) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean update(Reservation obj) {
-		// TODO Auto-generated method stub
-		return false;
+		int idBorrower = obj.getBorrower().findIdByName();
+		int idGame = obj.getGame().findIdByName();
+		try {
+			int result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+					.executeUpdate(
+							"UPDATE Reservation SET statusReservation = '" + ReservationStatus.Cancelled.toString()
+									+ "' WHERE dateReservation = '" + obj.getDateReservation() + "' AND idBorrower = '"
+									+ idBorrower + "' AND idGame = '" + idGame + "'");
+			if (result == 1)
+				return true;
+			else
+				return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
@@ -70,8 +87,28 @@ public class ReservationDAO extends DAO<Reservation> {
 
 	@Override
 	public ArrayList<Reservation> getAll(String str1, String str2) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Reservation> all = new ArrayList<>();
+		Player player = new Player();
+		player.setUsername(str1);
+		int idBorrower = player.findIdByName();
+		Player borrower = new Player();
+		Game game = new Game();
+		try {
+			ResultSet result = this.connect
+					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+					.executeQuery("SELECT dateReservation, statusReservation, idGame FROM Reservation "
+							+ "WHERE idBorrower = '" + idBorrower + "' AND statusReservation <> '"
+							+ ReservationStatus.Cancelled + "'");
+			while (result.next()) {
+				all.add(new Reservation(result.getDate("dateReservation").toLocalDate(),
+						result.getString("statusReservation"), borrower.findById(idBorrower),
+						game.findById(result.getInt("idGame"))));
+			}
+			return all;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
