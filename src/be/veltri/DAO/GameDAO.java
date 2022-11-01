@@ -76,8 +76,18 @@ public class GameDAO extends DAO<Game> {
 
 	@Override
 	public boolean update(Game obj) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			int result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+					.executeUpdate("UPDATE Game SET units = '" + obj.getUnits() + "' WHERE gameName = '" + obj.getNameGame()
+							+ "' AND idVersion = '" + this.findIdByName("Version", obj.getNameVersion(), "", "") + "'");
+			if (result == 1)
+				return true;
+			else
+				return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override

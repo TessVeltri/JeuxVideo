@@ -212,7 +212,6 @@ public class SeeAllGamesFrame extends JFrame {
 						dispose();
 					}
 				}
-				
 			}
 		});
 		btnRent.setFont(new Font("Stencil", Font.PLAIN, 20));

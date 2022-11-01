@@ -64,9 +64,15 @@ public class Game implements Serializable{
 	public boolean create() {
 		return gameDAO.create(this);
 	}
+	
+	public boolean update () {
+		return gameDAO.update(this);
+	}
+	
 	public Game find () {
 		return gameDAO.find(this);
 	}
+	
 	public int findIdByName () {
 		return gameDAO.findIdByName(getNameGame(), getNameVersion(), "", "");
 	}
