@@ -86,29 +86,29 @@ public class HomeAdminFrame extends JFrame {
 		btnMessages.setBounds(214, 114, 357, 67);
 		contentPane.add(btnMessages);
 		
-		JButton btnAddGameName = new JButton("Add new game name");
-		btnAddGameName.addActionListener(new ActionListener() {
+		JButton btnManageGameName = new JButton("Manage games");
+		btnManageGameName.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AdminAddGameName frame = new AdminAddGameName(admin);
+				AdminManageGame frame = new AdminManageGame(admin);
 				frame.setVisible(true);
 				dispose();
 			}
 		});
-		btnAddGameName.setFont(new Font("Stencil", Font.PLAIN, 20));
-		btnAddGameName.setBounds(214, 192, 357, 67);
-		contentPane.add(btnAddGameName);
+		btnManageGameName.setFont(new Font("Stencil", Font.PLAIN, 20));
+		btnManageGameName.setBounds(214, 192, 357, 67);
+		contentPane.add(btnManageGameName);
 		
-		JButton btnAddConsoleversion = new JButton("Add new console/version");
-		btnAddConsoleversion.addActionListener(new ActionListener() {
+		JButton btnManageConsoleversion = new JButton("Manage console/version");
+		btnManageConsoleversion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AdminAddConsoleVersion frame = new AdminAddConsoleVersion(admin);
+				AdminManageConsoleVersion frame = new AdminManageConsoleVersion(admin);
 				frame.setVisible(true);
 				dispose();
 			}
 		});
-		btnAddConsoleversion.setFont(new Font("Stencil", Font.PLAIN, 20));
-		btnAddConsoleversion.setBounds(214, 270, 357, 67);
-		contentPane.add(btnAddConsoleversion);
+		btnManageConsoleversion.setFont(new Font("Stencil", Font.PLAIN, 20));
+		btnManageConsoleversion.setBounds(214, 270, 357, 67);
+		contentPane.add(btnManageConsoleversion);
 		
 		JButton btnManageUnits = new JButton("Manage units");
 		btnManageUnits.addActionListener(new ActionListener() {

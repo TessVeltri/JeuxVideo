@@ -233,7 +233,6 @@ public class AddGameFrame extends JFrame {
 					} else {
 						JOptionPane.showMessageDialog(null, "An error has occurred, please try again later :(");
 					}
-
 				}
 			}
 		});
