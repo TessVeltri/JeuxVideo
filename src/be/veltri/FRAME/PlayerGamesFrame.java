@@ -11,6 +11,8 @@ import be.veltri.POJO.Copy;
 import be.veltri.POJO.Game;
 import be.veltri.POJO.Location;
 import be.veltri.POJO.Player;
+import be.veltri.POJO.Reservation;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -126,17 +128,24 @@ public class PlayerGamesFrame extends JFrame {
 						borrower.setBalance(total*=-1);
 						boolean updateBorrower = borrower.update();
 						if (updateCopy && updateLoc && updateOwner && updateBorrower) {
+							// TODO On recherche si il y a des réservations sur le jeu
+							// Si oui, on affecte la location au bon joueur
+							Reservation resTmp = new Reservation (null, "", null, game);
+							//Reservation res = resTmp.find();
+							
 							JOptionPane.showMessageDialog(null, "You make available the game");
-							AccountPlayerFrame frame = new AccountPlayerFrame(player);
+							
+							RatingBorrowerFrame frame = new RatingBorrowerFrame(location);
 							frame.setVisible(true);
 							dispose();
+							
 						}
 					}
 				}
 			}
 		});
 		btnMakeAvailable.setFont(new Font("Stencil", Font.PLAIN, 20));
-		btnMakeAvailable.setBounds(574, 147, 202, 47);
+		btnMakeAvailable.setBounds(574, 159, 202, 47);
 		contentPane.add(btnMakeAvailable);
 
 		JButton btnAddNewGame = new JButton("Add new game");

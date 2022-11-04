@@ -85,6 +85,7 @@ public class ReservationDAO extends DAO<Reservation> {
 		return null;
 	}
 
+	// str1 = username, str2 = ""
 	@Override
 	public ArrayList<Reservation> getAll(String str1, String str2) {
 		ArrayList<Reservation> all = new ArrayList<>();

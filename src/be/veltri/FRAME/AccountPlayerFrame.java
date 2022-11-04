@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import be.veltri.POJO.Player;
+import be.veltri.POJO.Rating;
+
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import java.awt.Font;
@@ -17,6 +19,7 @@ import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class AccountPlayerFrame extends JFrame {
@@ -153,11 +156,33 @@ public class AccountPlayerFrame extends JFrame {
 		btnDisconnect.setBorderPainted(false);
 		btnDisconnect.setBounds(726, 11, 50, 50);
 		contentPane.add(btnDisconnect);
+
+		JLabel lblRating = new JLabel();
+		int averageRating = Rating.getAverage(player.getUsername());
+		lblRating.setText(averageRating + "/5 stars");
+		lblRating.setHorizontalAlignment(SwingConstants.LEFT);
+		lblRating.setFont(new Font("Stencil", Font.PLAIN, 15));
+		lblRating.setBounds(35, 77, 135, 27);
+		contentPane.add(lblRating);	
+		
+		JLabel lblNbrRating = new JLabel();
+		ArrayList<Rating> allRate = Rating.getAll(player.getUsername());
+		if (allRate.size()==0)
+			lblNbrRating.setText("no rating");
+		else 
+			lblNbrRating.setText(allRate.size() + " ratings");
+		
+		lblNbrRating.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNbrRating.setFont(new Font("Stencil", Font.PLAIN, 12));
+		lblNbrRating.setBounds(35, 100, 135, 27);
+		contentPane.add(lblNbrRating);
 		
 		JLabel image = new JLabel("");
 		Image img = new ImageIcon(this.getClass().getResource("/be/veltri/IMG/background.jpg")).getImage();
 		image.setIcon(new ImageIcon(img));
 		image.setBounds(0, 0, 790, 470);
 		getContentPane().add(image);
+
+		
 	}
 }

@@ -1,8 +1,12 @@
 package be.veltri.DAO;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
+import be.veltri.POJO.Copy;
+import be.veltri.POJO.Player;
 import be.veltri.POJO.Rating;
 
 public class RatingDAO extends DAO<Rating>{
@@ -13,8 +17,15 @@ public class RatingDAO extends DAO<Rating>{
 
 	@Override
 	public boolean create(Rating obj) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			this.connect.createStatement()
+					.executeUpdate("INSERT INTO Rating(rate, idUser) " + "Values('"+ obj.getRating() 
+					+ "', '" + obj.getPlayer().findIdByName() + "')");
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
@@ -31,7 +42,6 @@ public class RatingDAO extends DAO<Rating>{
 	
 	@Override
 	public Rating find(Rating obj) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -59,10 +69,25 @@ public class RatingDAO extends DAO<Rating>{
 		return null;
 	}
 
+	// str1 = playerUsername
 	@Override
 	public ArrayList<Rating> getAll(String str1, String str2) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Rating> all = new ArrayList<>();
+		Player player = new Player();
+		player.setUsername(str1);
+		int idUser = player.findIdByName();
+		try {
+			ResultSet result = this.connect
+					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+					.executeQuery("SELECT rate FROM Rating WHERE idUser = '" + idUser + "'");
+			while (result.next()) {
+				all.add(new Rating(result.getInt("rate"),player.findById(idUser)));
+			}
+			return all;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
