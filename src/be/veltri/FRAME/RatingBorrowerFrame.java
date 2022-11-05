@@ -56,9 +56,14 @@ public class RatingBorrowerFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
+		JButton btnStar1 = new JButton("");
+		JButton btnStar2 = new JButton("");
+		JButton btnStar3 = new JButton("");
+		JButton btnStar4 = new JButton("");
+		JButton btnStar5 = new JButton("");
 		Image imgStar = new ImageIcon(this.getClass().getResource("/be/veltri/IMG/star.png")).getImage();
 		Image imgStarFull = new ImageIcon(this.getClass().getResource("/be/veltri/IMG/starFull.png")).getImage();
-		Rating rate = new Rating();
+		Rating rate = new Rating(0, location.getBorrower());
 
 		JLabel lblRatingTheBorrower = new JLabel("Rating the borrower");
 		lblRatingTheBorrower.setHorizontalAlignment(SwingConstants.CENTER);
@@ -98,10 +103,13 @@ public class RatingBorrowerFrame extends JFrame {
 		btnNo.setBounds(51, 384, 50, 47);
 		contentPane.add(btnNo);
 
-		JButton btnStar1 = new JButton("");
 		btnStar1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				btnStar1.setIcon(new ImageIcon(imgStarFull));
+				btnStar2.setIcon(new ImageIcon(imgStar));
+				btnStar3.setIcon(new ImageIcon(imgStar));
+				btnStar4.setIcon(new ImageIcon(imgStar));
+				btnStar5.setIcon(new ImageIcon(imgStar));
 				rate.setRating(1);
 			}
 		});
@@ -114,7 +122,8 @@ public class RatingBorrowerFrame extends JFrame {
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnStar1.setIcon(new ImageIcon(imgStar));
+				if (rate.getRating() == 0)
+					btnStar1.setIcon(new ImageIcon(imgStar));
 			}
 		});
 		btnStar1.setOpaque(false);
@@ -124,11 +133,13 @@ public class RatingBorrowerFrame extends JFrame {
 		btnStar1.setBounds(248, 281, 50, 47);
 		contentPane.add(btnStar1);
 
-		JButton btnStar2 = new JButton("");
 		btnStar2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				btnStar1.setIcon(new ImageIcon(imgStarFull));
 				btnStar2.setIcon(new ImageIcon(imgStarFull));
+				btnStar3.setIcon(new ImageIcon(imgStar));
+				btnStar4.setIcon(new ImageIcon(imgStar));
+				btnStar5.setIcon(new ImageIcon(imgStar));
 				rate.setRating(2);
 			}
 		});
@@ -142,8 +153,15 @@ public class RatingBorrowerFrame extends JFrame {
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnStar1.setIcon(new ImageIcon(imgStar));
-				btnStar2.setIcon(new ImageIcon(imgStar));
+				switch (rate.getRating()) {
+				case 0:
+					btnStar1.setIcon(new ImageIcon(imgStar));
+					btnStar2.setIcon(new ImageIcon(imgStar));
+					break;
+				case 1:
+					btnStar2.setIcon(new ImageIcon(imgStar));
+					break;
+				}
 			}
 		});
 		btnStar2.setOpaque(false);
@@ -153,12 +171,13 @@ public class RatingBorrowerFrame extends JFrame {
 		btnStar2.setBounds(308, 281, 50, 47);
 		contentPane.add(btnStar2);
 
-		JButton btnStar3 = new JButton("");
 		btnStar3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				btnStar1.setIcon(new ImageIcon(imgStarFull));
 				btnStar2.setIcon(new ImageIcon(imgStarFull));
 				btnStar3.setIcon(new ImageIcon(imgStarFull));
+				btnStar4.setIcon(new ImageIcon(imgStar));
+				btnStar5.setIcon(new ImageIcon(imgStar));
 				rate.setRating(3);
 			}
 		});
@@ -173,9 +192,20 @@ public class RatingBorrowerFrame extends JFrame {
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnStar1.setIcon(new ImageIcon(imgStar));
-				btnStar2.setIcon(new ImageIcon(imgStar));
-				btnStar3.setIcon(new ImageIcon(imgStar));
+				switch (rate.getRating()) {
+				case 0:
+					btnStar1.setIcon(new ImageIcon(imgStar));
+					btnStar2.setIcon(new ImageIcon(imgStar));
+					btnStar3.setIcon(new ImageIcon(imgStar));
+					break;
+				case 1:
+					btnStar2.setIcon(new ImageIcon(imgStar));
+					btnStar3.setIcon(new ImageIcon(imgStar));
+					break;
+				case 2:
+					btnStar3.setIcon(new ImageIcon(imgStar));
+					break;
+				}
 			}
 		});
 		btnStar3.setOpaque(false);
@@ -185,13 +215,13 @@ public class RatingBorrowerFrame extends JFrame {
 		btnStar3.setBounds(368, 281, 50, 47);
 		contentPane.add(btnStar3);
 
-		JButton btnStar4 = new JButton("");
 		btnStar4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				btnStar1.setIcon(new ImageIcon(imgStarFull));
 				btnStar2.setIcon(new ImageIcon(imgStarFull));
 				btnStar3.setIcon(new ImageIcon(imgStarFull));
 				btnStar4.setIcon(new ImageIcon(imgStarFull));
+				btnStar5.setIcon(new ImageIcon(imgStar));
 				rate.setRating(4);
 			}
 		});
@@ -207,10 +237,26 @@ public class RatingBorrowerFrame extends JFrame {
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnStar1.setIcon(new ImageIcon(imgStar));
-				btnStar2.setIcon(new ImageIcon(imgStar));
-				btnStar3.setIcon(new ImageIcon(imgStar));
-				btnStar4.setIcon(new ImageIcon(imgStar));
+				switch (rate.getRating()) {
+				case 0:
+					btnStar1.setIcon(new ImageIcon(imgStar));
+					btnStar2.setIcon(new ImageIcon(imgStar));
+					btnStar3.setIcon(new ImageIcon(imgStar));
+					btnStar4.setIcon(new ImageIcon(imgStar));
+					break;
+				case 1:
+					btnStar2.setIcon(new ImageIcon(imgStar));
+					btnStar3.setIcon(new ImageIcon(imgStar));
+					btnStar4.setIcon(new ImageIcon(imgStar));
+					break;
+				case 2:
+					btnStar3.setIcon(new ImageIcon(imgStar));
+					btnStar4.setIcon(new ImageIcon(imgStar));
+					break;
+				case 3:
+					btnStar4.setIcon(new ImageIcon(imgStar));
+					break;
+				}
 			}
 		});
 		btnStar4.setOpaque(false);
@@ -220,7 +266,6 @@ public class RatingBorrowerFrame extends JFrame {
 		btnStar4.setBounds(428, 281, 50, 47);
 		contentPane.add(btnStar4);
 
-		JButton btnStar5 = new JButton("");
 		btnStar5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				btnStar1.setIcon(new ImageIcon(imgStarFull));
@@ -244,11 +289,33 @@ public class RatingBorrowerFrame extends JFrame {
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnStar1.setIcon(new ImageIcon(imgStar));
-				btnStar2.setIcon(new ImageIcon(imgStar));
-				btnStar3.setIcon(new ImageIcon(imgStar));
-				btnStar4.setIcon(new ImageIcon(imgStar));
-				btnStar5.setIcon(new ImageIcon(imgStar));
+				switch (rate.getRating()) {
+				case 0:
+					btnStar1.setIcon(new ImageIcon(imgStar));
+					btnStar2.setIcon(new ImageIcon(imgStar));
+					btnStar3.setIcon(new ImageIcon(imgStar));
+					btnStar4.setIcon(new ImageIcon(imgStar));
+					btnStar5.setIcon(new ImageIcon(imgStar));
+					break;
+				case 1:
+					btnStar2.setIcon(new ImageIcon(imgStar));
+					btnStar3.setIcon(new ImageIcon(imgStar));
+					btnStar4.setIcon(new ImageIcon(imgStar));
+					btnStar5.setIcon(new ImageIcon(imgStar));
+					break;
+				case 2:
+					btnStar3.setIcon(new ImageIcon(imgStar));
+					btnStar4.setIcon(new ImageIcon(imgStar));
+					btnStar5.setIcon(new ImageIcon(imgStar));
+					break;
+				case 3:
+					btnStar4.setIcon(new ImageIcon(imgStar));
+					btnStar5.setIcon(new ImageIcon(imgStar));
+					break;
+				case 4:
+					btnStar5.setIcon(new ImageIcon(imgStar));
+					break;
+				}
 			}
 		});
 		btnStar5.setOpaque(false);
@@ -261,7 +328,6 @@ public class RatingBorrowerFrame extends JFrame {
 		JButton btnSend = new JButton("Send");
 		btnSend.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				rate.setPlayer(location.getBorrower());
 				boolean createRating = rate.create();
 				if (createRating) {
 					JOptionPane.showMessageDialog(null, "You add your rate for " + location.getBorrower().getPseudo());
