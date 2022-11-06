@@ -1,6 +1,8 @@
 package be.veltri.DAO;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import be.veltri.POJO.Admin;
@@ -52,13 +54,26 @@ public class AdminDAO extends DAO<Admin>{
 	}
 
 	@Override
-	public ArrayList<Admin> getAll(String str1, String str2) {
+	public ArrayList<Admin> getAll(String str1, String str2, String tr3) {
 		return null;
 	}
 
 	@Override
 	public Admin findById(int i) {
-		return null;
+		Admin admin = new Admin();
+		try {
+			ResultSet result = this.connect
+					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(
+							"SELECT username, password, pseudo, dateBirth, dateInscription, balance, checkBirthDay "
+									+ "FROM User WHERE idUser = '" + i + "'");
+			if (result.first()) {
+				admin = new Admin(result.getString("username"), result.getString("password"));
+			}
+			return admin;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

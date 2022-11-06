@@ -41,10 +41,9 @@ public class ReservationDAO extends DAO<Reservation> {
 		int idGame = obj.getGame().findIdByName();
 		try {
 			int result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
-					.executeUpdate(
-							"UPDATE Reservation SET statusReservation = '" + ReservationStatus.Cancelled.toString()
-									+ "' WHERE dateReservation = '" + obj.getDateReservation() + "' AND idBorrower = '"
-									+ idBorrower + "' AND idGame = '" + idGame + "'");
+					.executeUpdate("UPDATE Reservation SET statusReservation = '" + obj.getStatusReservation()
+							+ "' WHERE dateReservation = '" + obj.getDateReservation() + "' AND idBorrower = '"
+							+ idBorrower + "' AND idGame = '" + idGame + "'");
 			if (result == 1)
 				return true;
 			else
@@ -57,7 +56,24 @@ public class ReservationDAO extends DAO<Reservation> {
 
 	@Override
 	public Reservation find(Reservation obj) {
-		return null;
+		Reservation res = null;
+		int idBorrower = obj.getBorrower().findIdByName();
+		int idGame = obj.getGame().findIdByName();
+		try {
+			ResultSet result = this.connect
+					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+					.executeQuery("SELECT dateReservation, statusReservation, idBorrower, idGame FROM Reservation "
+							+ "WHERE idBorrower = '" + idBorrower + "' " + "AND idGame = '" + idGame + "' "
+							+ "AND statusReservation = '" + ReservationStatus.InProgress.toString() + "'");
+			if (result.first()) {
+				res = new Reservation(result.getDate("dateReservation").toLocalDate(),
+						result.getString("statusReservation"),obj.getBorrower() , obj.getGame());
+			}
+			return res;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
@@ -80,30 +96,52 @@ public class ReservationDAO extends DAO<Reservation> {
 		return null;
 	}
 
-	// str1 = username, str2 = ""
+	// str1 = username, str2 = gameName, str3 = versionName
 	@Override
-	public ArrayList<Reservation> getAll(String str1, String str2) {
+	public ArrayList<Reservation> getAll(String str1, String str2, String str3) {
 		ArrayList<Reservation> all = new ArrayList<>();
-		Player player = new Player();
-		player.setUsername(str1);
-		int idBorrower = player.findIdByName();
-		Player borrower = new Player();
-		Game game = new Game();
-		try {
-			ResultSet result = this.connect
-					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
-					.executeQuery("SELECT dateReservation, statusReservation, idGame FROM Reservation "
-							+ "WHERE idBorrower = '" + idBorrower + "' AND statusReservation <> '"
-							+ ReservationStatus.Cancelled + "'");
-			while (result.next()) {
-				all.add(new Reservation(result.getDate("dateReservation").toLocalDate(),
-						result.getString("statusReservation"), borrower.findById(idBorrower),
-						game.findById(result.getInt("idGame"))));
+		if (!str1.equals("") && str2.equals("") && str3.equals("")) {
+			Player player = new Player();
+			player.setUsername(str1);
+			int idBorrower = player.findIdByName();
+			Player borrower = new Player();
+			Game game = new Game();
+			try {
+				ResultSet result = this.connect
+						.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+						.executeQuery("SELECT dateReservation, statusReservation, idGame FROM Reservation "
+								+ "WHERE idBorrower = '" + idBorrower + "' AND statusReservation <> '"
+								+ ReservationStatus.Cancelled + "'");
+				while (result.next()) {
+					all.add(new Reservation(result.getDate("dateReservation").toLocalDate(),
+							result.getString("statusReservation"), borrower.findById(idBorrower),
+							game.findById(result.getInt("idGame"))));
+				}
+				return all;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
 			}
-			return all;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
+		} else {
+			Player borrower = new Player();
+			Game game = new Game(str2, 0, "", str3);
+			int idGame = game.findIdByName();
+			try {
+				ResultSet result = this.connect
+						.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+						.executeQuery("SELECT dateReservation, statusReservation, idBorrower FROM Reservation "
+								+ "WHERE idGame = '" + idGame + "' AND statusReservation = '"
+								+ ReservationStatus.InProgress + "'");
+				while (result.next()) {
+					all.add(new Reservation(result.getDate("dateReservation").toLocalDate(),
+							result.getString("statusReservation"), borrower.findById(result.getInt("idBorrower")),
+							game.findById(idGame)));
+				}
+				return all;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
+			}
 		}
 	}
 

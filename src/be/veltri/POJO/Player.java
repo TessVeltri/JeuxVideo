@@ -2,6 +2,8 @@ package be.veltri.POJO;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.Period;
+import java.util.Calendar;
 
 import javax.swing.JOptionPane;
 
@@ -116,6 +118,9 @@ public class Player extends User implements Serializable{
 			this.setCheckBirthDay(false);
 		}
 	}
-
+	
+	public int getAge() {
+		return Period.between(this.getDateOfBirth(), LocalDate.now()).getYears();
+	}
 
 }

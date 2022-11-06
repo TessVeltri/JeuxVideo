@@ -76,7 +76,7 @@ public class PlayerReservationsFrame extends JFrame {
 				new String[] { "Reservation date", "Status", "Game name", "Console", "Version" }));
 		reservScrollPane.setViewportView(table);
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
-		ArrayList<Reservation> lstReserv = Reservation.getAll(player.getUsername());
+		ArrayList<Reservation> lstReserv = Reservation.getAll(player.getUsername(), "", "");
 		for (Reservation r : lstReserv) {
 			Object[] row = new Object[] { r.getDateReservation(), r.getStatusReservation(), 
 					r.getGame().getNameGame(), r.getGame().getNameConsole(), r.getGame().getNameVersion()};
@@ -98,7 +98,7 @@ public class PlayerReservationsFrame extends JFrame {
 						String console = model.getValueAt(index, 3).toString();
 						String version = model.getValueAt(index, 4).toString();
 						Game game = new Game(gameName, 0, console, version);
-						Reservation res = new Reservation (resDate, status, player,game);
+						Reservation res = new Reservation (resDate, ReservationStatus.Cancelled.toString(), player,game);
 						boolean deleteRes = res.update();
 						if (deleteRes) {
 							JOptionPane.showMessageDialog(null, "You delete your reservation");

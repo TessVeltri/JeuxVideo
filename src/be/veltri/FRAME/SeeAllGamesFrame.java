@@ -9,7 +9,10 @@ import javax.swing.table.DefaultTableModel;
 
 import be.veltri.POJO.Copy;
 import be.veltri.POJO.Game;
+import be.veltri.POJO.Location;
 import be.veltri.POJO.Player;
+import be.veltri.POJO.Reservation;
+import be.veltri.POJO.ReservationStatus;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -117,19 +120,25 @@ public class SeeAllGamesFrame extends JFrame {
 		gameScrollPane.setViewportView(table);
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		ArrayList<Game> lstGame = Game.getAll("");
+
 		for (Game g : lstGame) {
-			boolean check = false;
-			for (Copy c : lstCopy) {
-				if (g.getNameGame().equals(c.getGame().getNameGame())
-						&& g.getNameVersion().equals(c.getGame().getNameVersion()) 
-						&& check == false) {
-					check = true;
+			if (Location.getAll(player.getUsername(), g.getNameGame(), g.getNameVersion()).size() > 0) {
+
+			} else {
+				boolean check = false;
+				for (Copy c : lstCopy) {
+					if (g.getNameGame().equals(c.getGame().getNameGame())
+							&& g.getNameVersion().equals(c.getGame().getNameVersion()) && check == false) {
+						check = true;
+					}
+				}
+				if (!check) {
+					Object[] row = new Object[] { g.getNameGame(), g.getUnits(), g.getNameConsole(),
+							g.getNameVersion() };
+					model.addRow(row);
 				}
 			}
-			if (check) {
-				Object[] row = new Object[] { g.getNameGame(), g.getUnits(), g.getNameConsole(), g.getNameVersion() };
-				model.addRow(row);
-			}
+
 		}
 
 		ArrayList<String> lstConsoles = Game.getAllName("Console", "");
@@ -172,17 +181,22 @@ public class SeeAllGamesFrame extends JFrame {
 				if (version.equals("Select a version") && console.equals("Select a console")) {
 					ArrayList<Game> lstGame = Game.getAll("");
 					for (Game g : lstGame) {
-						boolean check = false;
-						for (Copy c : lstCopy) {
-							if (g.getNameGame().equals(c.getGame().getNameGame())
-									&& g.getNameVersion().equals(c.getGame().getNameVersion()) 
-									&& check == false) {
-								check = true;
+						if (Location.getAll(player.getUsername(), g.getNameGame(), g.getNameVersion()).size() > 0) {
+
+						} else {
+
+							boolean check = false;
+							for (Copy c : lstCopy) {
+								if (g.getNameGame().equals(c.getGame().getNameGame())
+										&& g.getNameVersion().equals(c.getGame().getNameVersion()) && check == false) {
+									check = true;
+								}
 							}
-						}
-						if (check) {
-							Object[] row = new Object[] { g.getNameGame(), g.getUnits(), g.getNameConsole(), g.getNameVersion() };
-							model.addRow(row);
+							if (!check) {
+								Object[] row = new Object[] { g.getNameGame(), g.getUnits(), g.getNameConsole(),
+										g.getNameVersion() };
+								model.addRow(row);
+							}
 						}
 					}
 				} else if (version.equals("Select a version")) {
@@ -190,17 +204,22 @@ public class SeeAllGamesFrame extends JFrame {
 				} else {
 					ArrayList<Game> lstGameByVersion = Game.getAll(version);
 					for (Game g : lstGameByVersion) {
-						boolean check = false;
-						for (Copy c : lstCopy) {
-							if (g.getNameGame().equals(c.getGame().getNameGame())
-									&& g.getNameVersion().equals(c.getGame().getNameVersion()) 
-									&& check == false) {
-								check = true;
+						if (Location.getAll(player.getUsername(), g.getNameGame(), g.getNameVersion()).size() > 0) {
+
+						} else {
+
+							boolean check = false;
+							for (Copy c : lstCopy) {
+								if (g.getNameGame().equals(c.getGame().getNameGame())
+										&& g.getNameVersion().equals(c.getGame().getNameVersion()) && check == false) {
+									check = true;
+								}
 							}
-						}
-						if (check) {
-							Object[] row = new Object[] { g.getNameGame(), g.getUnits(), g.getNameConsole(), g.getNameVersion() };
-							model.addRow(row);
+							if (!check) {
+								Object[] row = new Object[] { g.getNameGame(), g.getUnits(), g.getNameConsole(),
+										g.getNameVersion() };
+								model.addRow(row);
+							}
 						}
 					}
 				}
@@ -236,9 +255,17 @@ public class SeeAllGamesFrame extends JFrame {
 						frame.setVisible(true);
 						dispose();
 					} else {
-						ConfirmReservationFrame frame = new ConfirmReservationFrame(game, player);
-						frame.setVisible(true);
-						dispose();
+						Reservation resTmp = new Reservation(null, ReservationStatus.InProgress.toString(), player,
+								game);
+						Reservation res = resTmp.find();
+						if (res != null) {
+							JOptionPane.showMessageDialog(null, "You already reserve this game");
+						} else {
+							ConfirmReservationFrame frame = new ConfirmReservationFrame(game, player);
+							frame.setVisible(true);
+							dispose();
+						}
+
 					}
 				}
 			}

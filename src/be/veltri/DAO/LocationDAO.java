@@ -18,6 +18,7 @@ public class LocationDAO extends DAO<Location> {
 	@Override
 	public boolean create(Location obj) {
 		try {
+
 			this.connect.createStatement()
 					.executeUpdate("INSERT INTO Location(dateBeginLoc, dateEndLoc, onGoing, totalUnits, idBorrower, "
 							+ "idCopy) Values('" + obj.getDateBeginLocation() + "', '" + obj.getDateEndLocation()
@@ -75,6 +76,7 @@ public class LocationDAO extends DAO<Location> {
 									obj.getCopy().getGame().getNameGame(), obj.getCopy().getGame().getNameVersion(),
 									"FIND")
 							+ "'");
+
 			if (result.first()) {
 				loc = new Location(result.getDate("dateBeginLoc").toLocalDate(),
 						result.getDate("dateEndLoc").toLocalDate(), result.getInt("totalUnits"),
@@ -108,31 +110,60 @@ public class LocationDAO extends DAO<Location> {
 		return null;
 	}
 
-	// str1 = borrower username
+	// str1 = borrower username, str2 = gameName, str3 = gameVersion
 	@Override
-	public ArrayList<Location> getAll(String str1, String str2) {
+	public ArrayList<Location> getAll(String str1, String str2, String str3) {
 		ArrayList<Location> all = new ArrayList<>();
-		Player player = new Player();
-		player.setUsername(str1);
-		int idBorrower = player.findIdByName();
-		Player borrower = new Player();
-		Copy copy = new Copy();
-		try {
-			ResultSet result = this.connect
-					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
-					.executeQuery("SELECT dateBeginLoc, dateEndLoc, totalUnits, idCopy FROM Location "
-							+ "WHERE idBorrower = '" + idBorrower + "' AND onGoing = 'true'");
-			while (result.next()) {
-				copy = copy.findById(result.getInt("idCopy"));
-				all.add(new Location(result.getDate("dateBeginLoc").toLocalDate(),
-						result.getDate("dateEndLoc").toLocalDate(), result.getInt("totalUnits"), true,
-						copy.getOwner(),borrower.findById(idBorrower), copy ));
+		if (str2.equals("") && str3.equals("")) {
+			Player player = new Player();
+			player.setUsername(str1);
+			int idBorrower = player.findIdByName();
+			Player borrower = new Player();
+			Copy copy = new Copy();
+			try {
+				ResultSet result = this.connect
+						.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+						.executeQuery("SELECT dateBeginLoc, dateEndLoc, totalUnits, idCopy FROM Location "
+								+ "WHERE idBorrower = '" + idBorrower + "' AND onGoing = 'true'");
+				while (result.next()) {
+					copy = copy.findById(result.getInt("idCopy"));
+					all.add(new Location(result.getDate("dateBeginLoc").toLocalDate(),
+							result.getDate("dateEndLoc").toLocalDate(), result.getInt("totalUnits"), true,
+							copy.getOwner(), borrower.findById(idBorrower), copy));
+				}
+				return all;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
 			}
-			return all;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
+		} else {
+			Player player = new Player();
+			player.setUsername(str1);
+			int idBorrower = player.findIdByName();
+			Player borrower = new Player();
+			Copy copy = new Copy();
+			try {
+				ResultSet result = this.connect
+						.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+						.executeQuery("SELECT dateBeginLoc, dateEndLoc, totalUnits, idCopy " + "FROM Location "
+								+ "INNER JOIN Copy ON Copy.idCopy = Location.idCopy "
+								+ "INNER JOIN Game ON Game.idGame = Copy.idGame "
+								+ "INNER JOIN Version ON Version.idVersion = Game.idVersion " + "WHERE idBorrower = '"
+								+ idBorrower + "' AND onGoing = 'true' " + "AND Game.gameName = '" + str2
+								+ "' AND Version.versionName = '" + str3 + "'");
+				while (result.next()) {
+					copy = copy.findById(result.getInt("idCopy"));
+					all.add(new Location(result.getDate("dateBeginLoc").toLocalDate(),
+							result.getDate("dateEndLoc").toLocalDate(), result.getInt("totalUnits"), true,
+							copy.getOwner(), borrower.findById(idBorrower), copy));
+				}
+				return all;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
+			}
 		}
+
 	}
 
 	@Override

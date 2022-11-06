@@ -141,7 +141,7 @@ public class UserDAO extends DAO<User> {
 	}
 
 	@Override
-	public ArrayList<User> getAll(String str1, String str2) {
+	public ArrayList<User> getAll(String str1, String str2, String tr3) {
 		return null;
 	}
 

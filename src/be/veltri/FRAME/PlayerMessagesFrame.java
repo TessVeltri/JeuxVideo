@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import be.veltri.POJO.Admin;
 import be.veltri.POJO.Copy;
 import be.veltri.POJO.Message;
 import be.veltri.POJO.Player;
@@ -77,8 +78,14 @@ public class PlayerMessagesFrame extends JFrame {
 		ArrayList<Message> lstMessages = Message.getAll(player.getUsername());
 		for (Message m : lstMessages) {
 			if (!m.isRead()) {
-				Object[] row = new Object[] { m.getTextMessage(), m.getSender().getUsername() };
-				model.addRow(row);
+				if(m.getSender() instanceof Admin) {
+					Object[] row = new Object[] { m.getTextMessage(), "Administrator" };
+					model.addRow(row);
+				} else {
+					Object[] row = new Object[] { m.getTextMessage(), ((Player) m.getSender()).getPseudo() };
+					model.addRow(row);
+				}
+				
 			}
 		}
 

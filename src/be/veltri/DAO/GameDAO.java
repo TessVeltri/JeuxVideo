@@ -238,7 +238,7 @@ public class GameDAO extends DAO<Game> {
 	}
 
 	@Override
-	public ArrayList<Game> getAll(String str1, String str2) {
+	public ArrayList<Game> getAll(String str1, String str2, String tr3) {
 		ArrayList<Game> all = new ArrayList<>();
 		if (str1.equals("")) {
 			try {

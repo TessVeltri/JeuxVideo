@@ -128,17 +128,15 @@ public class PlayerGamesFrame extends JFrame {
 						borrower.setBalance(borrower.getBalance() - total);
 						boolean updateBorrower = borrower.update();
 						if (updateCopy && updateLoc && updateOwner && updateBorrower) {
-							// TODO On recherche si il y a des réservations sur le jeu
-							// Si oui, on affecte la location au bon joueur
-							Reservation resTmp = new Reservation (null, "", null, game);
-							//Reservation res = resTmp.find();
-							
 							JOptionPane.showMessageDialog(null, "You make available the game");
-							
+							Copy copyBorrow = new Copy(null, game);
+							boolean borrow = copyBorrow.borrow();
+							if (borrow) {
+								JOptionPane.showMessageDialog(null, "Your game has been rent again");
+							}
 							RatingBorrowerFrame frame = new RatingBorrowerFrame(location);
 							frame.setVisible(true);
 							dispose();
-							
 						}
 					}
 				}

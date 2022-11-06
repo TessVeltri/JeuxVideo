@@ -22,7 +22,7 @@ public abstract class DAO<T> {
 	
 	public abstract String find (int i, String str);
 	
-	public abstract ArrayList<T> getAll (String str1, String str2);
+	public abstract ArrayList<T> getAll (String str1, String str2, String str3);
 	
 	public abstract ArrayList<String> getAllName (String str1, String str2);
 	

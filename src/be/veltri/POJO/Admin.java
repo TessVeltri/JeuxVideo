@@ -20,5 +20,8 @@ public class Admin extends User implements Serializable{
 	}
 	
 	// Méthodes
+	public Admin findById(int i) {
+		return adminDAO.findById(i);	
+	}
 	
 }

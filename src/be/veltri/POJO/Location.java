@@ -125,7 +125,7 @@ public class Location implements Serializable {
 		return locationDAO.update(this);
 	}
 	
-	public static ArrayList<Location> getAll (String str){
-		return locationDAO.getAll(str, "");
+	public static ArrayList<Location> getAll (String str1, String str2, String str3){
+		return locationDAO.getAll(str1, str2, str3);
 	}
 }

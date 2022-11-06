@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import be.veltri.POJO.Admin;
 import be.veltri.POJO.Message;
 import be.veltri.POJO.Player;
 import be.veltri.POJO.User;
@@ -97,19 +98,29 @@ public class MessageDAO extends DAO<Message> {
 
 	// str1 = username, srt2 = ""
 	@Override
-	public ArrayList<Message> getAll(String str1, String str2) {
+	public ArrayList<Message> getAll(String str1, String str2, String tr3) {
 		ArrayList<Message> all = new ArrayList<>();
 		Player receiver = new Player();
-		Player sender = new Player();
+		User sender;
 		receiver.setUsername(str1);
 		int idReceiver = receiver.findIdByName();
 		try {
 			ResultSet result = this.connect
 					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(
-							"SELECT txtMessage, read, idSender FROM Message WHERE idReceiver = '" + idReceiver + "'");
+							"SELECT txtMessage, read, idSender, discriminator "
+							+ "FROM Message "
+							+ "INNER JOIN User ON User.idUser = Message.idSender "
+							+ "WHERE idReceiver = '" + idReceiver + "'");
 			while (result.next()) {
-				all.add(new Message(result.getString("txtMessage"), result.getBoolean("read"),
-						sender.findById(result.getInt("idSender")), receiver.findById(idReceiver)));
+				if (result.getString("discriminator").equals("Admin")){
+					sender = new Admin();
+					all.add(new Message(result.getString("txtMessage"), result.getBoolean("read"),
+							((Admin) sender).findById(result.getInt("idSender")), receiver.findById(idReceiver)));
+				} else {
+					sender = new Player();
+					all.add(new Message(result.getString("txtMessage"), result.getBoolean("read"),
+							((Player) sender).findById(result.getInt("idSender")), receiver.findById(idReceiver)));
+				}	
 			}
 			return all;
 		} catch (SQLException e) {

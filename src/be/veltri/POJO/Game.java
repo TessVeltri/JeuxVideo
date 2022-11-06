@@ -1,6 +1,7 @@
 package be.veltri.POJO;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import be.veltri.DAO.AbstractDAOFactory;
@@ -82,7 +83,7 @@ public class Game implements Serializable{
 	}
 	
 	public static ArrayList<Game> getAll (String str1){
-		return gameDAO.getAll(str1, "");
+		return gameDAO.getAll(str1, "", "");
 	}
 	
 	public Game findById(int i) {
@@ -93,7 +94,79 @@ public class Game implements Serializable{
 		return copy.find();
 	}
 
-	public void selectBooking() {
-		// TODO method selectBooking()
+	public Reservation selectBooking() {
+		ArrayList<Reservation> allRes = Reservation.getAll("", this.getNameGame(),
+				this.getNameVersion());
+		
+		ArrayList<Reservation> lstTmpUnits = new ArrayList<Reservation>();
+		ArrayList<Reservation> lstTmpDate = new ArrayList<Reservation>();
+		ArrayList<Reservation> lstTmpInscription = new ArrayList<Reservation>();
+		ArrayList<Reservation> lstTmpAge = new ArrayList<Reservation>();
+		
+		int unitsTmp = 0;
+		// borrower with the most units
+		for (Reservation r : allRes) {
+			if (r.getBorrower().getBalance() > unitsTmp) {
+				unitsTmp = r.getBorrower().getBalance();
+			}
+		}
+		for (Reservation r : allRes) {
+			if (r.getBorrower().getBalance() == unitsTmp) {
+				lstTmpUnits.add(r);
+			}
+		}
+		if (lstTmpUnits.size() == 1) {
+			return lstTmpUnits.get(0);
+		} else {
+			// oldest reservation 
+			LocalDate dateTmp = LocalDate.now();
+			for (Reservation r : allRes) {
+				if (r.getDateReservation().isBefore(dateTmp)) {
+					dateTmp = r.getDateReservation();
+				}
+			}
+			for (Reservation r : allRes) {
+				if (r.getDateReservation().isEqual(dateTmp)) {
+					lstTmpDate.add(r);
+				}
+			}
+			if (lstTmpDate.size() == 1) {
+				return lstTmpDate.get(0);
+			} else {
+				// oldest borrower's inscription 
+				LocalDate dateInsc = LocalDate.now();
+				for (Reservation r : allRes) {
+					if (r.getBorrower().getDateInscription().isBefore(dateInsc)) {
+						dateTmp = r.getBorrower().getDateInscription();
+					}
+				}
+				for (Reservation r : allRes) {
+					if (r.getBorrower().getDateInscription().isEqual(dateInsc)) {
+						lstTmpInscription.add(r);
+					}
+				}
+				if (lstTmpInscription.size() == 1) {
+					return lstTmpInscription.get(0);
+				} else {
+					// oldest borrower
+					int ageTmp = 0;
+					for (Reservation r : allRes) {
+						if (r.getBorrower().getAge()>ageTmp) {
+							ageTmp = r.getBorrower().getAge();
+						}
+					}
+					for (Reservation r : allRes) {
+						if (r.getBorrower().getAge() == ageTmp) {
+							lstTmpAge.add(r);
+						}
+					}
+					if (lstTmpAge.size() == 1) {
+						return lstTmpAge.get(0);
+					} else {
+						return allRes.get(0);
+					}
+				}
+			}
+		}
 	}
 }
