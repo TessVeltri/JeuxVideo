@@ -3,11 +3,9 @@ package be.veltri.DAO;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.ZoneId;
 import java.util.ArrayList;
 
 import be.veltri.POJO.Player;
-import be.veltri.POJO.User;
 
 public class PlayerDAO extends DAO<Player> {
 
@@ -33,7 +31,6 @@ public class PlayerDAO extends DAO<Player> {
 
 	@Override
 	public boolean delete(Player obj) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -76,7 +73,6 @@ public class PlayerDAO extends DAO<Player> {
 
 	@Override
 	public ArrayList<String> getAllName(String str1, String str2) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -100,19 +96,16 @@ public class PlayerDAO extends DAO<Player> {
 
 	@Override
 	public int returnUnits(String name) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public String find(int i, String str) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public ArrayList<Player> getAll(String str1, String str2) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

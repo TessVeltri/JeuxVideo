@@ -42,6 +42,7 @@ public class Rating implements Serializable{
 		return ratingDAO.create(this);
 	}
 	
+	// str1 = username
 	public static int getAverage(String str1) {
 		ArrayList<Rating> all = Rating.getAll(str1);
 		int total = 0;

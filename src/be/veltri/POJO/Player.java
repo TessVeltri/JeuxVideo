@@ -31,7 +31,7 @@ public class Player extends User implements Serializable{
 		this.dateOfBirth = dateOfBirth;
 		this.dateInscription = dateInscription;
 		this.balance = balance;
-		this.setCheckBirthDay(checkBirthDay);
+		this.checkBirthDay = checkBirthDay;
 	}
 
 	// Getters et Setters

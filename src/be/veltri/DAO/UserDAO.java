@@ -17,19 +17,16 @@ public class UserDAO extends DAO<User> {
 
 	@Override
 	public boolean create(User obj) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean delete(User obj) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean update(User obj) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -85,7 +82,6 @@ public class UserDAO extends DAO<User> {
 
 	@Override
 	public ArrayList<String> getAllName(String str1, String str2) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	// str1 = discriminator, str2 = username, str3 = "", str4 = ""
@@ -136,25 +132,21 @@ public class UserDAO extends DAO<User> {
 
 	@Override
 	public int returnUnits(String name) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public String find(int i, String str) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public ArrayList<User> getAll(String str1, String str2) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public User findById(int i) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

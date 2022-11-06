@@ -95,7 +95,7 @@ public class PlayerGamesFrame extends JFrame {
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		ArrayList<Copy> lstCopy = Copy.getAll(player.getUsername());
 		for (Copy c : lstCopy) {
-			boolean used = c.IsAvailable();
+			boolean used = c.isAvailable();
 			Object[] row = new Object[] { c.getGame().getNameGame(), c.getGame().getUnits(),
 					c.getGame().getNameConsole(), c.getGame().getNameVersion(), used ? "YES" : "NO" };
 			model.addRow(row);
@@ -118,14 +118,14 @@ public class PlayerGamesFrame extends JFrame {
 						Copy copy = new Copy (player, game);
 						Location loc = new Location(null, null, 0, true, player, null, copy);
 						Location location = loc.find();
-						int total = location.CalculateBalance();
+						int total = location.calculateBalance();
 						location.setTotalUnits(total);
 						boolean updateCopy = copy.releaseCopy();
 						boolean updateLoc = location.endLocation() ;
 						player.setBalance(player.getBalance()+ total);
 						boolean updateOwner = player.update();
 						Player borrower = location.getBorrower();
-						borrower.setBalance(total*=-1);
+						borrower.setBalance(borrower.getBalance() - total);
 						boolean updateBorrower = borrower.update();
 						if (updateCopy && updateLoc && updateOwner && updateBorrower) {
 							// TODO On recherche si il y a des réservations sur le jeu

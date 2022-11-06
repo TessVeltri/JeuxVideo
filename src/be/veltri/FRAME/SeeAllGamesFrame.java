@@ -228,10 +228,10 @@ public class SeeAllGamesFrame extends JFrame {
 					String versionName = model.getValueAt(index, 3).toString();
 					Game game = new Game(gameName, units, consoleName, versionName);
 					Copy copy = new Copy(null, game);
-					boolean checkCopy = copy.IsAvailable();
+					boolean checkCopy = copy.isAvailable();
 
 					if (checkCopy) {
-						Copy copyChecked = game.CopyAvailable(copy);
+						Copy copyChecked = game.copyAvailable(copy);
 						ConfirmLocationFrame frame = new ConfirmLocationFrame(copyChecked, player);
 						frame.setVisible(true);
 						dispose();

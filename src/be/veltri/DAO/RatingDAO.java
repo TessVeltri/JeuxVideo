@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import be.veltri.POJO.Copy;
 import be.veltri.POJO.Player;
 import be.veltri.POJO.Rating;
 
@@ -30,13 +29,11 @@ public class RatingDAO extends DAO<Rating>{
 
 	@Override
 	public boolean delete(Rating obj) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean update(Rating obj) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	
@@ -47,25 +44,21 @@ public class RatingDAO extends DAO<Rating>{
 
 	@Override
 	public ArrayList<String> getAllName(String str1, String str2) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public int findIdByName(String str1, String str2, String str3, String str4) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int returnUnits(String name) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public String find(int i, String str) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -92,7 +85,6 @@ public class RatingDAO extends DAO<Rating>{
 
 	@Override
 	public Rating findById(int i) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

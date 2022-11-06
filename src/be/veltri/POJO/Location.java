@@ -99,14 +99,21 @@ public class Location implements Serializable {
 		return locationDAO.create(this);
 	}
 	
-	public int CalculateBalance() {
+	public int calculateBalance() {
 		int total = 0;
+		int daysLoc = (int) this.getDateBeginLocation().until(this.getDateEndLocation(), ChronoUnit.DAYS);
+		int weekLoc = daysLoc/7;
 		int units = this.getCopy().getGame().getUnits();
-		int days = (int) LocalDate.now().until(this.getDateEndLocation(), ChronoUnit.DAYS);
-		if (days<0)
-			total = units + (days*5)+ this.getTotalUnits();
-		else
-			total = units;
+		int days = (int) this.getDateEndLocation().until(LocalDate.now(), ChronoUnit.DAYS);
+		if (days>0) {
+			int week = days/7;
+			int rest = days%7;
+			if (rest==0)
+				total = (units*week) + (days*5) + (units*weekLoc);
+			else 
+				total = units + (units*week) + (days*5) + (units*weekLoc);
+		} else
+			total = units*weekLoc;
 		return total;
 	}
 	

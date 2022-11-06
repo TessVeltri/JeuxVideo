@@ -3,11 +3,9 @@ package be.veltri.DAO;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 import be.veltri.POJO.Copy;
-import be.veltri.POJO.Game;
 import be.veltri.POJO.Location;
 import be.veltri.POJO.Player;
 
@@ -38,7 +36,6 @@ public class LocationDAO extends DAO<Location> {
 
 	@Override
 	public boolean delete(Location obj) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -93,25 +90,21 @@ public class LocationDAO extends DAO<Location> {
 
 	@Override
 	public ArrayList<String> getAllName(String str1, String str2) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public int findIdByName(String str1, String str2, String str3, String str4) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int returnUnits(String name) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public String find(int i, String str) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -144,7 +137,6 @@ public class LocationDAO extends DAO<Location> {
 
 	@Override
 	public Location findById(int i) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

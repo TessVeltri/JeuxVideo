@@ -89,11 +89,11 @@ public class Game implements Serializable{
 		return gameDAO.findById(i);
 	}
 	
-	public Copy CopyAvailable(Copy copy) {
+	public Copy copyAvailable(Copy copy) {
 		return copy.find();
 	}
 
-	public void SelectBooking() {
-		// TODO implement here
+	public void selectBooking() {
+		// TODO method selectBooking()
 	}
 }

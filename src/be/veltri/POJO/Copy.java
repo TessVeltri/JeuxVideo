@@ -49,8 +49,9 @@ public class Copy implements Serializable{
 		return copyDAO.update(this);
 	}
 	
-	public int findIdByName(String username, String gameName, String versionName, String method) {
-		return copyDAO.findIdByName(username, gameName, versionName, method);
+	// str1 = username, str2 = gameName, str3 = versionName, str4 = method
+	public int findIdByName(String str1, String str2, String str3, String str4) {
+		return copyDAO.findIdByName(str1, str2, str3, str4);
 	}
 	
 	public Copy find () {
@@ -65,10 +66,10 @@ public class Copy implements Serializable{
         return this.update();
     }
 
-	public void Borrow() {
-        // TODO implement here
+	public void borrow() {
+        // TODO method borrow()
     }
-    public boolean IsAvailable() {
+    public boolean isAvailable() {
         Copy copy = copyDAO.find(this);
         if(copy != null) 
         	return true;

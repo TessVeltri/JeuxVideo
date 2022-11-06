@@ -30,7 +30,6 @@ public class CopyDAO extends DAO<Copy> {
 
 	@Override
 	public boolean delete(Copy obj) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -131,13 +130,11 @@ public class CopyDAO extends DAO<Copy> {
 
 	@Override
 	public int returnUnits(String name) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public String find(int i, String str) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -166,7 +163,6 @@ public class CopyDAO extends DAO<Copy> {
 
 	@Override
 	public ArrayList<String> getAllName(String str1, String str2) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

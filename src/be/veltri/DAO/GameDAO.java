@@ -70,7 +70,6 @@ public class GameDAO extends DAO<Game> {
 
 	@Override
 	public boolean delete(Game obj) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

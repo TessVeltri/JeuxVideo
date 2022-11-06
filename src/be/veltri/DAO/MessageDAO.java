@@ -48,7 +48,6 @@ public class MessageDAO extends DAO<Message> {
 
 	@Override
 	public boolean delete(Message obj) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -73,31 +72,26 @@ public class MessageDAO extends DAO<Message> {
 
 	@Override
 	public Message find(Message obj) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public ArrayList<String> getAllName(String str1, String str2) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public int findIdByName(String str1, String str2, String str3, String str4) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int returnUnits(String name) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public String find(int i, String str) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -126,7 +120,6 @@ public class MessageDAO extends DAO<Message> {
 
 	@Override
 	public Message findById(int i) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
