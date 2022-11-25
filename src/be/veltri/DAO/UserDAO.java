@@ -45,11 +45,12 @@ public class UserDAO extends DAO<User> {
 
 				if (result.first())
 					if (result.getString("discriminator").equals("Player")) {
-						lstCopy = Copy.getAll(result.getString("userName"));
 						user = new Player(result.getString("userName"), result.getString("password"),
 								result.getString("pseudo"), result.getDate("dateBirth").toLocalDate(),
 								result.getDate("dateInscription").toLocalDate(), result.getInt("balance"),
-								result.getBoolean("checkBirthDay"), lstCopy);
+								result.getBoolean("checkBirthDay"));
+						lstCopy = Copy.getAll((Player) user);
+						((Player)user).setLstCopy(lstCopy);
 					} else if (result.getString("discriminator").equals("Admin")) {
 						user = new Admin(result.getString("userName"), result.getString("password"));
 					}
@@ -67,11 +68,12 @@ public class UserDAO extends DAO<User> {
 
 				if (result.first())
 					if (result.getString("discriminator").equals("Player")) {
-						lstCopy = Copy.getAll(result.getString("userName"));
 						user = new Player(result.getString("userName"), result.getString("password"),
 								result.getString("pseudo"), result.getDate("dateBirth").toLocalDate(),
 								result.getDate("dateInscription").toLocalDate(), result.getInt("balance"),
 								result.getBoolean("checkBirthDay"), lstCopy);
+						lstCopy = Copy.getAll((Player) user);
+						((Player)user).setLstCopy(lstCopy);
 					} else if (result.getString("discriminator").equals("Admin")) {
 						user = new Admin(result.getString("userName"), result.getString("password"));
 					}
@@ -88,6 +90,7 @@ public class UserDAO extends DAO<User> {
 	public ArrayList<String> getAllName(String str1, String str2) {
 		return null;
 	}
+	
 	// str1 = discriminator, str2 = username, str3 = "", str4 = ""
 	@Override
 	public int findIdByName(String str1, String str2, String str3, String str4) {
@@ -145,7 +148,7 @@ public class UserDAO extends DAO<User> {
 	}
 
 	@Override
-	public ArrayList<User> getAll(String str1, String str2, String str3, String str4) {
+	public ArrayList<User> getAll(Object o1, Object o2) {
 		return null;
 	}
 

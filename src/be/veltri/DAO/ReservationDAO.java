@@ -98,13 +98,12 @@ public class ReservationDAO extends DAO<Reservation> {
 		return null;
 	}
 
-	// str1 = username, str2 = gameName, str3 = versionName
+	// o1 = player, o2 = game
 	@Override
-	public ArrayList<Reservation> getAll(String str1, String str2, String str3, String str4) {
+	public ArrayList<Reservation> getAll(Object o1, Object o2) {
 		ArrayList<Reservation> all = new ArrayList<>();
-		if (!str1.equals("") && str2.equals("") && str3.equals("")) {
-			Player player = new Player();
-			player.setUsername(str1);
+		if (o1!=null && o2==null) {
+			Player player = (Player) o1;
 			int idBorrower = player.findIdByName();
 			Player borrower = new Player();
 			Game game = new Game();
@@ -126,7 +125,7 @@ public class ReservationDAO extends DAO<Reservation> {
 			}
 		} else {
 			Player borrower = new Player();
-			Game game = new Game(str2, 0, "", str3);
+			Game game = (Game) o2;
 			int idGame = game.findIdByName();
 			try {
 				ResultSet result = this.connect

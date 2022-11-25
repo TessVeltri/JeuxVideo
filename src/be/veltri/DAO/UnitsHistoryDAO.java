@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import be.veltri.POJO.Copy;
 import be.veltri.POJO.Game;
+import be.veltri.POJO.Location;
 import be.veltri.POJO.UnitsHistory;
 
 public class UnitsHistoryDAO extends DAO<UnitsHistory> {
@@ -54,18 +55,20 @@ public class UnitsHistoryDAO extends DAO<UnitsHistory> {
 		return null;
 	}
 
-	// str1 = beginDate, str2 = endDate, str3 = gameName, str4 = versionName
+	// o1 = location, o2 = game
 	@Override
-	public ArrayList<UnitsHistory> getAll(String str1, String str2, String str3, String str4) {
+	public ArrayList<UnitsHistory> getAll(Object o1, Object o2) {
 		ArrayList<UnitsHistory> all = new ArrayList<>();
-		Game game = new Game(str3, 0, "", str4);
+		Game game = (Game) o2;
 		try {
 			ResultSet result = this.connect
 					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
-					.executeQuery("SELECT dateHistory, units FROM UnitsHistory WHERE idGame = '" + game.findIdByName() + "' AND dateHistory BETWEEN '" + LocalDate.parse(str1) + "'"
-							+ " AND '" + LocalDate.parse(str2) + "'");
+					.executeQuery("SELECT dateHistory, units FROM UnitsHistory WHERE idGame = '" + game.findIdByName()
+							+ "' AND dateHistory BETWEEN '" + ((Location) o1).getDateBeginLocation() + "'" + " AND '"
+							+ LocalDate.now() + "'");
 			while (result.next()) {
-				all.add(new UnitsHistory(result.getDate("dateHistory").toLocalDate(), result.getInt("units"), game.find()));
+				all.add(new UnitsHistory(result.getDate("dateHistory").toLocalDate(), result.getInt("units"),
+						game.find()));
 			}
 			return all;
 		} catch (SQLException e) {

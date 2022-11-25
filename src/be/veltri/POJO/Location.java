@@ -104,9 +104,7 @@ public class Location implements Serializable {
 		int daysLoc = (int) this.getDateBeginLocation().until(this.getDateEndLocation(), ChronoUnit.DAYS);
 		int weekLoc = daysLoc / 7;
 		int units = 0;
-		ArrayList<UnitsHistory> history = UnitsHistory.getAll(this.getDateBeginLocation().toString(),
-				this.getDateEndLocation().toString(), this.getCopy().getGame().getNameGame(),
-				this.getCopy().getGame().getNameVersion());
+		ArrayList<UnitsHistory> history = UnitsHistory.getAll(this, this.getCopy().getGame());
 		// TODO Récupérer l'historique et calculer la balance
 		if (history != null) {
 			for (UnitsHistory u : history) {
@@ -138,7 +136,7 @@ public class Location implements Serializable {
 		return locationDAO.update(this);
 	}
 
-	public static ArrayList<Location> getAll(String str1, String str2, String str3) {
-		return locationDAO.getAll(str1, str2, str3, "");
+	public static ArrayList<Location> getAll(Player player, Game game) {
+		return locationDAO.getAll(player, game);
 	}
 }

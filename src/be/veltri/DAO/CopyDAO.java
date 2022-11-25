@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import be.veltri.POJO.Copy;
 import be.veltri.POJO.Game;
 import be.veltri.POJO.Player;
+import be.veltri.POJO.User;
 
 public class CopyDAO extends DAO<Copy> {
 
@@ -138,17 +139,16 @@ public class CopyDAO extends DAO<Copy> {
 		return null;
 	}
 
-	// str1 = ownerUsername, str2 = "", str3 = ""
+	// o1 = player
 	@Override
-	public ArrayList<Copy> getAll(String str1, String str2, String str3, String str4) {
+	public ArrayList<Copy> getAll(Object o1, Object o2) {
 		ArrayList<Copy> all = new ArrayList<>();
-		Player owner = new Player();
-		owner.setUsername(str1);
+		Player owner = (Player) o1;
 		Game game = new Game();
 		try {
 			ResultSet result = this.connect
 					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
-					.executeQuery("SELECT idGame FROM Copy INNER JOIN User ON Copy.idOwner = User.idUser WHERE userName = '" + str1 + "'");
+					.executeQuery("SELECT idGame FROM Copy INNER JOIN User ON Copy.idOwner = User.idUser WHERE userName = '" + ((Player) o1).getUsername() + "'");
 			while (result.next()) {
 				all.add(new Copy(owner.find(), game.findById(result.getInt("idGame"))));
 			}

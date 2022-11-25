@@ -117,10 +117,10 @@ public class SeeAllGamesFrame extends JFrame {
 
 		gameScrollPane.setViewportView(table);
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
-		ArrayList<Game> lstGame = Game.getAll("");
+		ArrayList<Game> lstGame = Game.getAll(null);
 
 		for (Game g : lstGame) {
-			if (Location.getAll(player.getUsername(), g.getNameGame(), g.getNameVersion()).size() > 0) {
+			if (Location.getAll(player, g).size() > 0) {
 
 			} else {
 				boolean check = false;
@@ -177,9 +177,9 @@ public class SeeAllGamesFrame extends JFrame {
 				String console = cbConsole.getSelectedItem().toString();
 				String version = cbVersion.getSelectedItem().toString();
 				if (version.equals("Select a version") && console.equals("Select a console")) {
-					ArrayList<Game> lstGame = Game.getAll("");
+					ArrayList<Game> lstGame = Game.getAll(null);
 					for (Game g : lstGame) {
-						if (Location.getAll(player.getUsername(), g.getNameGame(), g.getNameVersion()).size() > 0) {
+						if (Location.getAll(player, g).size() > 0) {
 
 						} else {
 
@@ -200,12 +200,12 @@ public class SeeAllGamesFrame extends JFrame {
 				} else if (version.equals("Select a version")) {
 					JOptionPane.showMessageDialog(null, "Select a version to make a research");
 				} else {
-					ArrayList<Game> lstGameByVersion = Game.getAll(version);
+					Game game = new Game("", 0, "", version);
+					ArrayList<Game> lstGameByVersion = Game.getAll(game);
 					for (Game g : lstGameByVersion) {
-						if (Location.getAll(player.getUsername(), g.getNameGame(), g.getNameVersion()).size() > 0) {
+						if (Location.getAll(player,g).size() > 0) {
 
 						} else {
-
 							boolean check = false;
 							for (Copy c : player.getLstCopy()) {
 								if (g.getNameGame().equals(c.getGame().getNameGame())

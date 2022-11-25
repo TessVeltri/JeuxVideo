@@ -96,7 +96,7 @@ public class AdminManageUnits extends JFrame {
 		
 		gameScrollPane.setViewportView(table);
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
-		ArrayList<Game> lstGame = Game.getAll("");
+		ArrayList<Game> lstGame = Game.getAll(null);
 		for (Game g : lstGame) {
 			Object[] row = new Object[] { g.getNameGame(),g.getUnits(), g.getNameConsole(),
 					g.getNameVersion()};
@@ -141,7 +141,7 @@ public class AdminManageUnits extends JFrame {
 				String console = cbConsole.getSelectedItem().toString();
 				String version = cbVersion.getSelectedItem().toString();
 				if (version.equals("Select a version") && console.equals("Select a console")) {
-					ArrayList<Game> lstGame = Game.getAll("");
+					ArrayList<Game> lstGame = Game.getAll(null);
 					for (Game g : lstGame) {
 						Object[] row = new Object[] { g.getNameGame(),g.getUnits(), g.getNameConsole(),
 								g.getNameVersion()};
@@ -150,7 +150,8 @@ public class AdminManageUnits extends JFrame {
 				} else if (version.equals("Select a version")) {
 					JOptionPane.showMessageDialog(null, "Select a version to make a research");
 				} else {
-					ArrayList<Game> lstGameByVersion = Game.getAll(version);
+					Game game = new Game("", 0, "", version);
+					ArrayList<Game> lstGameByVersion = Game.getAll(game);
 					for (Game g : lstGameByVersion) {
 						Object[] row = new Object[] { g.getNameGame(),g.getUnits(), g.getNameConsole(),
 								g.getNameVersion()};

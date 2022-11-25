@@ -69,8 +69,8 @@ public class Message implements Serializable {
 		return messageDAO.update(this);
 	}
 	
-	public static ArrayList<Message> getAll (String str){
-		return messageDAO.getAll(str, "", "", "");
+	public static ArrayList<Message> getAll (User user){
+		return messageDAO.getAll(user, null);
 	}
 	
 }

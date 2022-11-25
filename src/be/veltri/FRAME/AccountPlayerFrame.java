@@ -158,7 +158,7 @@ public class AccountPlayerFrame extends JFrame {
 		contentPane.add(btnDisconnect);
 
 		JLabel lblRating = new JLabel();
-		int averageRating = Rating.getAverage(player.getUsername());
+		int averageRating = Rating.getAverage(player);
 		lblRating.setText(averageRating + "/5 stars");
 		lblRating.setHorizontalAlignment(SwingConstants.LEFT);
 		lblRating.setFont(new Font("Stencil", Font.PLAIN, 15));
@@ -166,7 +166,7 @@ public class AccountPlayerFrame extends JFrame {
 		contentPane.add(lblRating);	
 		
 		JLabel lblNbrRating = new JLabel();
-		ArrayList<Rating> allRate = Rating.getAll(player.getUsername());
+		ArrayList<Rating> allRate = Rating.getAll(player);
 		if (allRate.size()==0)
 			lblNbrRating.setText("no rating");
 		else 

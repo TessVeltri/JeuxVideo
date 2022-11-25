@@ -75,7 +75,7 @@ public class AdminMessagesFrame extends JFrame {
 		messagesScrollPane.setViewportView(table);
 
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
-		ArrayList<Message> lstMessages = Message.getAll(admin.getUsername());
+		ArrayList<Message> lstMessages = Message.getAll(admin);
 		for (Message m : lstMessages) {
 			if (!m.isRead()) {
 				Object[] row = new Object[] { m.getTextMessage(), m.getSender().getUsername() };
@@ -115,7 +115,7 @@ public class AdminMessagesFrame extends JFrame {
 						Player tmp = new Player();
 						tmp.setUsername(from);
 						Player sender = tmp.find();
-						sender.setLstCopy(Copy.getAll(from));
+						sender.setLstCopy(Copy.getAll(sender));
 						Message msg = new Message(txt, false, sender, admin);
 						boolean updateMsg = msg.update();
 						if (updateMsg) {

@@ -62,12 +62,11 @@ public class RatingDAO extends DAO<Rating>{
 		return null;
 	}
 
-	// str1 = playerUsername
+	// o1 = player
 	@Override
-	public ArrayList<Rating> getAll(String str1, String str2, String str3, String str4) {
+	public ArrayList<Rating> getAll(Object o1, Object o2) {
 		ArrayList<Rating> all = new ArrayList<>();
-		Player player = new Player();
-		player.setUsername(str1);
+		Player player = (Player)o1;
 		int idUser = player.findIdByName();
 		try {
 			ResultSet result = this.connect

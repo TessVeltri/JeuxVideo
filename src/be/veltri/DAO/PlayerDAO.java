@@ -64,7 +64,7 @@ public class PlayerDAO extends DAO<Player> {
 				player = new Player(result.getString("userName"), result.getString("password"),
 						result.getString("pseudo"), result.getDate("dateBirth").toLocalDate(),
 						result.getDate("dateInscription").toLocalDate(), result.getInt("balance"),
-						result.getBoolean("checkBirthDay"), null);
+						result.getBoolean("checkBirthDay"));
 			return player;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -106,7 +106,7 @@ public class PlayerDAO extends DAO<Player> {
 	}
 
 	@Override
-	public ArrayList<Player> getAll(String str1, String str2, String str3, String str4) {
+	public ArrayList<Player> getAll(Object o1, Object o2) {
 		return null;
 	}
 
@@ -120,11 +120,12 @@ public class PlayerDAO extends DAO<Player> {
 							"SELECT username, password, pseudo, dateBirth, dateInscription, balance, checkBirthDay "
 									+ "FROM User WHERE idUser = '" + i + "'");
 			if (result.first()) {
-				lstCopy = Copy.getAll(result.getString("userName"));
 				player = new Player(result.getString("username"), result.getString("password"),
 						result.getString("pseudo"), result.getDate("dateBirth").toLocalDate(),
 						result.getDate("dateInscription").toLocalDate(), result.getInt("balance"),
-						result.getBoolean("checkBirthDay"), lstCopy);
+						result.getBoolean("checkBirthDay"));
+				lstCopy = Copy.getAll(player);
+				player.setLstCopy(lstCopy);
 			}
 			return player;
 		} catch (SQLException e) {

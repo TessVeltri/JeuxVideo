@@ -43,8 +43,8 @@ public class Rating implements Serializable{
 	}
 	
 	// str1 = username
-	public static int getAverage(String str1) {
-		ArrayList<Rating> all = Rating.getAll(str1);
+	public static int getAverage(Player player) {
+		ArrayList<Rating> all = Rating.getAll(player);
 		int total = 0;
 		for (Rating r : all)
 			total += r.getRating();		
@@ -55,7 +55,7 @@ public class Rating implements Serializable{
 		}
 	}
 	
-	public static ArrayList<Rating> getAll (String str1){
-		return ratingDAO.getAll(str1, "", "", "");
+	public static ArrayList<Rating> getAll (Player player){
+		return ratingDAO.getAll(player, null);
 	}
 }

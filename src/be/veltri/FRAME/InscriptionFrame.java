@@ -127,7 +127,7 @@ public class InscriptionFrame extends JFrame {
 				String confirmPassword = String.valueOf(txtConfirmPassword.getPassword());
 				Date birth = dateOfBirth.getDate();
 				Player player = new Player(username, password, pseudo,
-						null, LocalDate.now(), 10, false, null);
+						null, LocalDate.now(), 10, false);
 				Player used = new Player ();
 				used.setUsername(username);
 				String dateString = ((JTextField) dateOfBirth.getDateEditor().getUiComponent()).getText();

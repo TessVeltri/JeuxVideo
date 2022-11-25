@@ -82,21 +82,21 @@ public class Game implements Serializable{
 		return gameDAO.getAllName(str1, str2);
 	}
 	
-	public static ArrayList<Game> getAll (String str1){
-		return gameDAO.getAll(str1, "", "", "");
+	public static ArrayList<Game> getAll (Game game){
+		return gameDAO.getAll(game, null);
 	}
 	
 	public Game findById(int i) {
 		return gameDAO.findById(i);
 	}
 	
+	// TODO changer quand liste créée
 	public Copy copyAvailable(Copy copy) {
 		return copy.find();
 	}
 
 	public Reservation selectBooking() {
-		ArrayList<Reservation> allRes = Reservation.getAll("", this.getNameGame(),
-				this.getNameVersion());
+		ArrayList<Reservation> allRes = Reservation.getAll(null, this);
 		
 		ArrayList<Reservation> lstTmpUnits = new ArrayList<Reservation>();
 		ArrayList<Reservation> lstTmpDate = new ArrayList<Reservation>();

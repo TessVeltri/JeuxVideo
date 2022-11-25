@@ -96,14 +96,21 @@ public class MessageDAO extends DAO<Message> {
 		return null;
 	}
 
-	// str1 = username, srt2 = ""
+	// o1 = user
 	@Override
-	public ArrayList<Message> getAll(String str1, String str2, String str3, String str4) {
+	public ArrayList<Message> getAll(Object o1, Object o2) {
 		ArrayList<Message> all = new ArrayList<>();
-		Player receiver = new Player();
+		User receiver;
+		int idReceiver = 0;
+		if (o1 instanceof Player) {
+			receiver = (Player) o1;
+			idReceiver = receiver.findIdByName("Player", receiver.getUsername());
+		} else {
+			receiver = (Admin) o1;
+			idReceiver = receiver.findIdByName("Admin", receiver.getUsername());
+		}
 		User sender;
-		receiver.setUsername(str1);
-		int idReceiver = receiver.findIdByName();
+		
 		try {
 			ResultSet result = this.connect
 					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(
@@ -112,14 +119,20 @@ public class MessageDAO extends DAO<Message> {
 							+ "INNER JOIN User ON User.idUser = Message.idSender "
 							+ "WHERE idReceiver = '" + idReceiver + "'");
 			while (result.next()) {
+				String test = result.getString("discriminator");
 				if (result.getString("discriminator").equals("Admin")){
 					sender = new Admin();
 					all.add(new Message(result.getString("txtMessage"), result.getBoolean("read"),
-							((Admin) sender).findById(result.getInt("idSender")), receiver.findById(idReceiver)));
+							((Admin) sender).findById(result.getInt("idSender")), (Player) o1));
 				} else {
 					sender = new Player();
-					all.add(new Message(result.getString("txtMessage"), result.getBoolean("read"),
-							((Player) sender).findById(result.getInt("idSender")), receiver.findById(idReceiver)));
+					if (o1 instanceof Player) {
+						all.add(new Message(result.getString("txtMessage"), result.getBoolean("read"),
+							((Player) sender).findById(result.getInt("idSender")), (Player) o1));
+					} else {
+						all.add(new Message(result.getString("txtMessage"), result.getBoolean("read"),
+								((Player) sender).findById(result.getInt("idSender")), ((Admin) o1)));
+					}
 				}	
 			}
 			return all;

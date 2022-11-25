@@ -111,6 +111,7 @@ public class GameDAO extends DAO<Game> {
 		}
 	}
 
+	// str1 = "Game/Console/Version", str2 = consoleName
 	@Override
 	public ArrayList<String> getAllName(String str1, String str2) {
 		ArrayList<String> all = new ArrayList<>();
@@ -240,11 +241,11 @@ public class GameDAO extends DAO<Game> {
 		}
 	}
 
-	// str1 = versionName
+	// o1 = game
 	@Override
-	public ArrayList<Game> getAll(String str1, String str2, String str3, String str4) {
+	public ArrayList<Game> getAll(Object o1, Object o2) {
 		ArrayList<Game> all = new ArrayList<>();
-		if (str1.equals("")) {
+		if (o1 == null) {
 			try {
 				ResultSet result = this.connect
 						.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
@@ -264,7 +265,7 @@ public class GameDAO extends DAO<Game> {
 				ResultSet result = this.connect
 						.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
 						.executeQuery("SELECT gameName, units, idVersion FROM Game " + "WHERE idVersion = '"
-								+ this.findIdByName("Version", str1, "", "") + "'");
+								+ this.findIdByName("Version", ((Game) o1).getNameVersion(), "", "") + "'");
 				while (result.next()) {
 					all.add(new Game(result.getString("gameName"), result.getInt("units"),
 							this.find(result.getInt("idVersion"), "Console"),
@@ -278,6 +279,7 @@ public class GameDAO extends DAO<Game> {
 		}
 	}
 
+	// i = idVersion, str = "Console/''"
 	@Override
 	public String find(int i, String str) {
 		String find = "";

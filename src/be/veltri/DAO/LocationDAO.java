@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import be.veltri.POJO.Copy;
+import be.veltri.POJO.Game;
 import be.veltri.POJO.Location;
 import be.veltri.POJO.Player;
 
@@ -110,13 +111,12 @@ public class LocationDAO extends DAO<Location> {
 		return null;
 	}
 
-	// str1 = borrower username, str2 = gameName, str3 = gameVersion
+	// o1 = player, o2 = game
 	@Override
-	public ArrayList<Location> getAll(String str1, String str2, String str3, String str4) {
+	public ArrayList<Location> getAll(Object o1, Object o2) {
 		ArrayList<Location> all = new ArrayList<>();
-		if (str2.equals("") && str3.equals("")) {
-			Player player = new Player();
-			player.setUsername(str1);
+		if (o2 == null) {
+			Player player = (Player) o1;
 			int idBorrower = player.findIdByName();
 			Player borrower = new Player();
 			Copy copy = new Copy();
@@ -137,8 +137,7 @@ public class LocationDAO extends DAO<Location> {
 				return null;
 			}
 		} else {
-			Player player = new Player();
-			player.setUsername(str1);
+			Player player = (Player) o1;
 			int idBorrower = player.findIdByName();
 			Player borrower = new Player();
 			Copy copy = new Copy();
@@ -149,8 +148,8 @@ public class LocationDAO extends DAO<Location> {
 								+ "INNER JOIN Copy ON Copy.idCopy = Location.idCopy "
 								+ "INNER JOIN Game ON Game.idGame = Copy.idGame "
 								+ "INNER JOIN Version ON Version.idVersion = Game.idVersion " + "WHERE idBorrower = '"
-								+ idBorrower + "' AND onGoing = 'true' " + "AND Game.gameName = '" + str2
-								+ "' AND Version.versionName = '" + str3 + "'");
+								+ idBorrower + "' AND onGoing = 'true' " + "AND Game.gameName = '" + ((Game)o2).getNameGame()
+								+ "' AND Version.versionName = '" + ((Game)o2).getNameVersion() + "'");
 				while (result.next()) {
 					copy = copy.findById(result.getInt("idCopy"));
 					all.add(new Location(result.getDate("dateBeginLoc").toLocalDate(),

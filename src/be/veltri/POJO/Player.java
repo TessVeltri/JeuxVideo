@@ -28,6 +28,7 @@ public class Player extends User implements Serializable{
 	}
 
 	// Constructeur avec arguments
+	
 	public Player(String username, String password, String pseudo, LocalDate dateOfBirth, LocalDate dateInscription,
 			int balance, boolean checkBirthDay, ArrayList<Copy> lstCopy) {
 		super(username, password);
@@ -37,6 +38,17 @@ public class Player extends User implements Serializable{
 		this.balance = balance;
 		this.checkBirthDay = checkBirthDay;
 		this.lstCopy = lstCopy;
+	}
+	 
+	public Player(String username, String password, String pseudo, LocalDate dateOfBirth, LocalDate dateInscription,
+			int balance, boolean checkBirthDay) {
+		super(username, password);
+		this.pseudo = pseudo;
+		this.dateOfBirth = dateOfBirth;
+		this.dateInscription = dateInscription;
+		this.balance = balance;
+		this.checkBirthDay = checkBirthDay;
+		this.lstCopy = new ArrayList<>();
 	}
 
 	// Getters et Setters
