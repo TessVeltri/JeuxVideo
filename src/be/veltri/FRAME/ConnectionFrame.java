@@ -89,7 +89,9 @@ public class ConnectionFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String username = txtUsername.getText().trim();
 				String password = String.valueOf(txtPassword.getPassword());
-				User user = new User(username, password);
+				User user = new Player();
+				user.setUsername(username);
+				user.setPassword(password);
 				if (username.equals("") || password.equals("")) {
 					JOptionPane.showMessageDialog(null, "Please complete all fields");
 				} else {

@@ -9,6 +9,7 @@ import javax.swing.table.DefaultTableModel;
 
 import be.veltri.POJO.Admin;
 import be.veltri.POJO.Message;
+import be.veltri.POJO.Player;
 import be.veltri.POJO.User;
 
 import javax.swing.JLabel;
@@ -110,14 +111,14 @@ public class AdminMessagesFrame extends JFrame {
 					if (response == JOptionPane.YES_OPTION) {
 						String txt = model.getValueAt(index, 0).toString();
 						String from = model.getValueAt(index, 1).toString();
-						User tmp = new User();
+						Player tmp = new Player();
 						tmp.setUsername(from);
-						User sender = tmp.find();
+						Player sender = tmp.find();
 						Message msg = new Message(txt, false, sender, admin);
 						boolean updateMsg = msg.update();
 						if (updateMsg) {
 							JOptionPane.showMessageDialog(null, "You delete the row");
-							HomeAdminFrame frame = new HomeAdminFrame(admin);
+							AdminMessagesFrame frame = new AdminMessagesFrame(admin);
 							frame.setVisible(true);
 							dispose();
 						}

@@ -19,13 +19,13 @@ public class MessageDAO extends DAO<Message> {
 	@Override
 	public boolean create(Message obj) {
 		if (obj.getReceiver() == null) {
-			User user = new User();
+			Admin admin = new Admin();
 			try {
 				this.connect.createStatement()
 						.executeUpdate("INSERT INTO Message(txtMessage, read, idSender, idReceiver) " + "Values('"
 								+ obj.getTextMessage() + "', 'false', '"
 								+ obj.getSender().findIdByName("Player", obj.getSender().getUsername()) + "', '"
-								+ user.findIdByName("Admin", "") + "')");
+								+ admin.findIdByName("Admin", "") + "')");
 				return true;
 			} catch (SQLException e) {
 				e.printStackTrace();

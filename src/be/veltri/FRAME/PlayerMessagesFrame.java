@@ -118,14 +118,22 @@ public class PlayerMessagesFrame extends JFrame {
 					if (response == JOptionPane.YES_OPTION) {
 						String txt = model.getValueAt(index, 0).toString();
 						String from = model.getValueAt(index, 1).toString();
-						User tmp = new User();
-						tmp.setUsername(from);
-						User sender = tmp.find();
-						Message msg = new Message(txt, false, sender, player);
+						Message msg = new Message(txt, false, null, player);
+						if (from.equals("Administrator")) {
+							Admin user = new Admin();
+							user.setUsername(from);
+							Admin sender = (Admin) user.find();
+							msg.setSender(sender);
+						} else {
+							Player user = new Player();
+							user.setUsername(from);
+							Player sender = user.find();
+							msg.setSender(sender);
+						}
 						boolean updateMsg = msg.update();
 						if (updateMsg) {
 							JOptionPane.showMessageDialog(null, "You delete the row");
-							AccountPlayerFrame frame = new AccountPlayerFrame(player);
+							PlayerMessagesFrame frame = new PlayerMessagesFrame(player);
 							frame.setVisible(true);
 							dispose();
 						}

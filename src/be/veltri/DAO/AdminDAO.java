@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import be.veltri.POJO.Admin;
+import be.veltri.POJO.Player;
 
 public class AdminDAO extends DAO<Admin>{
 
@@ -30,7 +31,18 @@ public class AdminDAO extends DAO<Admin>{
 
 	@Override
 	public Admin find(Admin obj) {
-		return null;
+		Admin admin = new Admin();
+		try {
+			ResultSet result = this.connect
+					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+					.executeQuery("SELECT userName, password FROM User WHERE discriminator = 'Admin'");
+			if (result.first())
+				admin = new Admin(result.getString("userName"), result.getString("password"));
+			return admin;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
