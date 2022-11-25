@@ -253,7 +253,7 @@ public class SeeAllGamesFrame extends JFrame {
 						frame.setVisible(true);
 						dispose();
 					} else {
-						Reservation resTmp = new Reservation(null, ReservationStatus.InProgress.toString(), player,
+						Reservation resTmp = new Reservation(null, ReservationStatus.InProgress.toString(), 0, player,
 								game);
 						Reservation res = resTmp.find();
 						if (res != null) {

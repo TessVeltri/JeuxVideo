@@ -11,6 +11,7 @@ public class Reservation implements Serializable{
 	private static final long serialVersionUID = 5780975148202725087L;
 	private LocalDate dateReservation;
     private String statusReservation;
+    private int nbrWeeks;
     private Player borrower;
     private Game game;
     
@@ -21,9 +22,10 @@ public class Reservation implements Serializable{
     public Reservation () {}
 	
     // Constructeur avec arguments
-	public Reservation(LocalDate dateReservation, String statusReservation, Player borrower, Game game) {
+	public Reservation(LocalDate dateReservation, String statusReservation, int nbrWeeks, Player borrower, Game game) {
 		this.dateReservation = dateReservation;
 		this.statusReservation = statusReservation;
+		this.setNbrWeeks(nbrWeeks);
 		this.borrower = borrower;
 		this.game = game;
 	}
@@ -43,6 +45,14 @@ public class Reservation implements Serializable{
 
 	public void setStatusReservation(String statusReservation) {
 		this.statusReservation = statusReservation;
+	}
+
+	public int getNbrWeeks() {
+		return nbrWeeks;
+	}
+
+	public void setNbrWeeks(int nbrWeeks) {
+		this.nbrWeeks = nbrWeeks;
 	}
 
 	public Player getBorrower() {

@@ -73,12 +73,12 @@ public class PlayerReservationsFrame extends JFrame {
 		
 		JTable table = new JTable();
 		table.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "Reservation date", "Status", "Game name", "Console", "Version" }));
+				new String[] { "Reservation date", "Nbr weeks", "Status", "Game name", "Console", "Version" }));
 		reservScrollPane.setViewportView(table);
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		ArrayList<Reservation> lstReserv = Reservation.getAll(player.getUsername(), "", "");
 		for (Reservation r : lstReserv) {
-			Object[] row = new Object[] { r.getDateReservation(), r.getStatusReservation(), 
+			Object[] row = new Object[] { r.getDateReservation(), r.getNbrWeeks(), r.getStatusReservation(), 
 					r.getGame().getNameGame(), r.getGame().getNameConsole(), r.getGame().getNameVersion()};
 			model.addRow(row);
 		}
@@ -90,15 +90,16 @@ public class PlayerReservationsFrame extends JFrame {
 				if (index == -1) {
 					JOptionPane.showMessageDialog(null, "No row selected, select one to delete it");
 				} else {
-					String status = model.getValueAt(index, 1).toString();
+					String status = model.getValueAt(index, 2).toString();
 					if (status.equals(ReservationStatus.InProgress.toString())) {
 						String date = model.getValueAt(index, 0).toString();
 						LocalDate resDate = LocalDate.parse(date);
-						String gameName = model.getValueAt(index, 2).toString();
-						String console = model.getValueAt(index, 3).toString();
-						String version = model.getValueAt(index, 4).toString();
+						String nbrWeeks = model.getValueAt(index, 1).toString();
+						String gameName = model.getValueAt(index, 3).toString();
+						String console = model.getValueAt(index, 4).toString();
+						String version = model.getValueAt(index, 5).toString();
 						Game game = new Game(gameName, 0, console, version);
-						Reservation res = new Reservation (resDate, ReservationStatus.Cancelled.toString(), player,game);
+						Reservation res = new Reservation (resDate, ReservationStatus.Cancelled.toString(), Integer.parseInt(nbrWeeks), player,game);
 						boolean deleteRes = res.update();
 						if (deleteRes) {
 							JOptionPane.showMessageDialog(null, "You delete your reservation");

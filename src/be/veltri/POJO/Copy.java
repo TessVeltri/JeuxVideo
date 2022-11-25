@@ -74,7 +74,7 @@ public class Copy implements Serializable {
 			res.setStatusReservation(ReservationStatus.Validated.toString());
 			boolean updateRes = res.update();
 			Copy copy = this.find();
-			Location loc = new Location(LocalDate.now(), LocalDate.now().plusWeeks(1), copy.getGame().getUnits(), true,
+			Location loc = new Location(LocalDate.now(), LocalDate.now().plusWeeks(res.getNbrWeeks()), copy.getGame().getUnits(), true,
 					copy.getOwner(), res.getBorrower(), copy);
 			boolean createLoc = loc.create();
 			boolean updateCopy = copy.releaseCopy();

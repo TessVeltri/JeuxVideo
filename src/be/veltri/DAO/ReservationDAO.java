@@ -20,9 +20,10 @@ public class ReservationDAO extends DAO<Reservation> {
 	public boolean create(Reservation obj) {
 		try {
 			this.connect.createStatement().executeUpdate(
-					"INSERT INTO Reservation(dateReservation, statusReservation, idBorrower, idGame) Values('"
+					"INSERT INTO Reservation(dateReservation, statusReservation, nbrWeeks, idBorrower, idGame) Values('"
 							+ obj.getDateReservation() + "', '" + obj.getStatusReservation() + "', '"
-							+ obj.getBorrower().findIdByName() + "', '" + obj.getGame().findIdByName() + "')");
+							+ obj.getNbrWeeks() + "' ,'" + obj.getBorrower().findIdByName() + "', '"
+							+ obj.getGame().findIdByName() + "')");
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -61,13 +62,14 @@ public class ReservationDAO extends DAO<Reservation> {
 		int idGame = obj.getGame().findIdByName();
 		try {
 			ResultSet result = this.connect
-					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
-					.executeQuery("SELECT dateReservation, statusReservation, idBorrower, idGame FROM Reservation "
-							+ "WHERE idBorrower = '" + idBorrower + "' " + "AND idGame = '" + idGame + "' "
-							+ "AND statusReservation = '" + ReservationStatus.InProgress.toString() + "'");
+					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(
+							"SELECT dateReservation, statusReservation, nbrWeeks, idBorrower, idGame FROM Reservation "
+									+ "WHERE idBorrower = '" + idBorrower + "' " + "AND idGame = '" + idGame + "' "
+									+ "AND statusReservation = '" + ReservationStatus.InProgress.toString() + "'");
 			if (result.first()) {
 				res = new Reservation(result.getDate("dateReservation").toLocalDate(),
-						result.getString("statusReservation"),obj.getBorrower() , obj.getGame());
+						result.getString("statusReservation"), result.getInt("nbrWeeks"), obj.getBorrower(),
+						obj.getGame());
 			}
 			return res;
 		} catch (SQLException e) {
@@ -109,13 +111,13 @@ public class ReservationDAO extends DAO<Reservation> {
 			try {
 				ResultSet result = this.connect
 						.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
-						.executeQuery("SELECT dateReservation, statusReservation, idGame FROM Reservation "
+						.executeQuery("SELECT dateReservation, statusReservation, nbrWeeks, idGame FROM Reservation "
 								+ "WHERE idBorrower = '" + idBorrower + "' AND statusReservation <> '"
 								+ ReservationStatus.Cancelled + "'");
 				while (result.next()) {
 					all.add(new Reservation(result.getDate("dateReservation").toLocalDate(),
-							result.getString("statusReservation"), borrower.findById(idBorrower),
-							game.findById(result.getInt("idGame"))));
+							result.getString("statusReservation"), result.getInt("nbrWeeks"),
+							borrower.findById(idBorrower), game.findById(result.getInt("idGame"))));
 				}
 				return all;
 			} catch (SQLException e) {
@@ -128,14 +130,14 @@ public class ReservationDAO extends DAO<Reservation> {
 			int idGame = game.findIdByName();
 			try {
 				ResultSet result = this.connect
-						.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
-						.executeQuery("SELECT dateReservation, statusReservation, idBorrower FROM Reservation "
-								+ "WHERE idGame = '" + idGame + "' AND statusReservation = '"
-								+ ReservationStatus.InProgress + "'");
+						.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(
+								"SELECT dateReservation, statusReservation, nbrWeeks, idBorrower FROM Reservation "
+										+ "WHERE idGame = '" + idGame + "' AND statusReservation = '"
+										+ ReservationStatus.InProgress + "'");
 				while (result.next()) {
 					all.add(new Reservation(result.getDate("dateReservation").toLocalDate(),
-							result.getString("statusReservation"), borrower.findById(result.getInt("idBorrower")),
-							game.findById(idGame)));
+							result.getString("statusReservation"), result.getInt("nbrWeeks"),
+							borrower.findById(result.getInt("idBorrower")), game.findById(idGame)));
 				}
 				return all;
 			} catch (SQLException e) {
