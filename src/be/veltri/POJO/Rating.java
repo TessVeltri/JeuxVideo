@@ -56,6 +56,6 @@ public class Rating implements Serializable{
 	}
 	
 	public static ArrayList<Rating> getAll (String str1){
-		return ratingDAO.getAll(str1, "", "");
+		return ratingDAO.getAll(str1, "", "", "");
 	}
 }

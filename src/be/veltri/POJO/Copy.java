@@ -61,7 +61,7 @@ public class Copy implements Serializable {
 	}
 
 	public static ArrayList<Copy> getAll(String str) {
-		return copyDAO.getAll(str, "", "");
+		return copyDAO.getAll(str, "", "", "");
 	}
 
 	public boolean releaseCopy() {

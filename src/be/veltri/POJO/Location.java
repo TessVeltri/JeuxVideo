@@ -95,37 +95,50 @@ public class Location implements Serializable {
 	}
 
 	// Méthodes
-	public boolean create () {
+	public boolean create() {
 		return locationDAO.create(this);
 	}
-	
+
 	public int calculateBalance() {
 		int total = 0;
 		int daysLoc = (int) this.getDateBeginLocation().until(this.getDateEndLocation(), ChronoUnit.DAYS);
-		int weekLoc = daysLoc/7;
-		int units = this.getCopy().getGame().getUnits();
+		int weekLoc = daysLoc / 7;
+		int units = 0;
+		ArrayList<UnitsHistory> history = UnitsHistory.getAll(this.getDateBeginLocation().toString(),
+				this.getDateEndLocation().toString(), this.getCopy().getGame().getNameGame(),
+				this.getCopy().getGame().getNameVersion());
+		// TODO Récupérer l'historique et calculer la balance
+		if (history != null) {
+			for (UnitsHistory u : history) {
+				
+			}
+		} else {
+			units = this.getCopy().getGame().getUnits();
+		}
+		// TODO Recalculer
+		// Pénalité
 		int days = (int) this.getDateEndLocation().until(LocalDate.now(), ChronoUnit.DAYS);
-		if (days>0) {
-			int week = days/7;
-			int rest = days%7;
-			if (rest==0)
-				total = (units*week) + (days*5) + (units*weekLoc);
-			else 
-				total = units + (units*week) + (days*5) + (units*weekLoc);
+		if (days > 0) {
+			int week = days / 7;
+			int rest = days % 7;
+			if (rest == 0)
+				total = (units * week) + (days * 5) + (units * weekLoc);
+			else
+				total = units + (units * week) + (days * 5) + (units * weekLoc);
 		} else
-			total = units*weekLoc;
+			total = units * weekLoc;
 		return total;
 	}
-	
-	public Location find () {
+
+	public Location find() {
 		return locationDAO.find(this);
 	}
 
 	public boolean endLocation() {
 		return locationDAO.update(this);
 	}
-	
-	public static ArrayList<Location> getAll (String str1, String str2, String str3){
-		return locationDAO.getAll(str1, str2, str3);
+
+	public static ArrayList<Location> getAll(String str1, String str2, String str3) {
+		return locationDAO.getAll(str1, str2, str3, "");
 	}
 }

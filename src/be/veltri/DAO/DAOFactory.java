@@ -52,4 +52,9 @@ public class DAOFactory extends AbstractDAOFactory {
 	public DAO<User> getUserDAO() {
 		return new UserDAO(conn);
 	}
+
+	@Override
+	public DAO<UnitsHistory> getUnitsHistoryDAO() {
+		return new UnitsHistoryDAO(conn);
+	}
 }

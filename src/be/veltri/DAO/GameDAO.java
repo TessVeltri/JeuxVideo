@@ -21,6 +21,7 @@ public class GameDAO extends DAO<Game> {
 		}
 		if (obj.getNameGame().equals("")) {
 			int idConsole = this.findIdByName("Console", obj.getNameConsole(), "", "");
+			// Creation de version si console existante
 			if (idConsole > 0) {
 				try {
 					this.connect.createStatement().executeUpdate("INSERT INTO Version(versionName, idConsole) "
@@ -30,6 +31,7 @@ public class GameDAO extends DAO<Game> {
 					e.printStackTrace();
 					return false;
 				}
+			// Creation de version et de console
 			} else {
 				try {
 					Statement stmt = this.connect.createStatement();
@@ -54,6 +56,7 @@ public class GameDAO extends DAO<Game> {
 					return false;
 				}
 			}
+		// Creation de jeux
 		} else {
 			try {
 				this.connect.createStatement()
@@ -237,8 +240,9 @@ public class GameDAO extends DAO<Game> {
 		}
 	}
 
+	// str1 = versionName
 	@Override
-	public ArrayList<Game> getAll(String str1, String str2, String tr3) {
+	public ArrayList<Game> getAll(String str1, String str2, String str3, String str4) {
 		ArrayList<Game> all = new ArrayList<>();
 		if (str1.equals("")) {
 			try {

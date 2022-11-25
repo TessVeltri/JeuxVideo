@@ -64,7 +64,7 @@ public class RatingDAO extends DAO<Rating>{
 
 	// str1 = playerUsername
 	@Override
-	public ArrayList<Rating> getAll(String str1, String str2, String tr3) {
+	public ArrayList<Rating> getAll(String str1, String str2, String str3, String str4) {
 		ArrayList<Rating> all = new ArrayList<>();
 		Player player = new Player();
 		player.setUsername(str1);

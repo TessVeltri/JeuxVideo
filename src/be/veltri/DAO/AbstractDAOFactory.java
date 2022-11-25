@@ -23,6 +23,8 @@ public abstract class AbstractDAOFactory {
 	public abstract DAO<Reservation> getReservationDAO();
 
 	public abstract DAO<User> getUserDAO();
+	
+	public abstract DAO<UnitsHistory> getUnitsHistoryDAO();
 
 	public static AbstractDAOFactory getFactory(int type) {
 		switch (type) {

@@ -106,7 +106,7 @@ public class PlayerDAO extends DAO<Player> {
 	}
 
 	@Override
-	public ArrayList<Player> getAll(String str1, String str2, String tr3) {
+	public ArrayList<Player> getAll(String str1, String str2, String str3, String str4) {
 		return null;
 	}
 

@@ -76,7 +76,7 @@ public class Reservation implements Serializable{
 	
 	// str1 = username, str2 = gameName, str3 = versionName
 	public static ArrayList<Reservation> getAll (String str1, String str2, String str3){
-		return reservationDAO.getAll(str1, str2, str3);
+		return reservationDAO.getAll(str1, str2, str3, "");
 	}
     
     

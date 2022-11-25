@@ -112,7 +112,7 @@ public class LocationDAO extends DAO<Location> {
 
 	// str1 = borrower username, str2 = gameName, str3 = gameVersion
 	@Override
-	public ArrayList<Location> getAll(String str1, String str2, String str3) {
+	public ArrayList<Location> getAll(String str1, String str2, String str3, String str4) {
 		ArrayList<Location> all = new ArrayList<>();
 		if (str2.equals("") && str3.equals("")) {
 			Player player = new Player();

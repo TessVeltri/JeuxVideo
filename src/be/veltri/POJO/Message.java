@@ -70,7 +70,7 @@ public class Message implements Serializable {
 	}
 	
 	public static ArrayList<Message> getAll (String str){
-		return messageDAO.getAll(str, "", "");
+		return messageDAO.getAll(str, "", "", "");
 	}
 	
 }

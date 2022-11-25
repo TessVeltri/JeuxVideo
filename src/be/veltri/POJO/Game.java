@@ -83,7 +83,7 @@ public class Game implements Serializable{
 	}
 	
 	public static ArrayList<Game> getAll (String str1){
-		return gameDAO.getAll(str1, "", "");
+		return gameDAO.getAll(str1, "", "", "");
 	}
 	
 	public Game findById(int i) {

@@ -9,6 +9,7 @@ import javax.swing.table.DefaultTableModel;
 
 import be.veltri.POJO.Admin;
 import be.veltri.POJO.Game;
+import be.veltri.POJO.UnitsHistory;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -27,6 +28,7 @@ import javax.swing.JTable;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
@@ -173,14 +175,18 @@ public class AdminManageUnits extends JFrame {
 				if (index == -1) {
 					JOptionPane.showMessageDialog(null, "No row selected, select one to manage the units");
 				} else {
-					String newUnits = JOptionPane.showInputDialog("New Units : ");
+					String newUnits = JOptionPane.showInputDialog("New units : ");
+					if (newUnits == null || newUnits.equals("") || !newUnits.matches("^[12345]*$"))
+						newUnits = JOptionPane.showInputDialog("Only number accepted (1 to 5), new units : ");
 					int units = Integer.parseInt(newUnits);
 					String gameName = model.getValueAt(index, 0).toString();
 					String consoleName = model.getValueAt(index, 2).toString();
 					String versionName = model.getValueAt(index, 3).toString();
 					Game game = new Game (gameName, units, consoleName, versionName);
 					boolean updateGame = game.update();
-					if (updateGame) {
+					UnitsHistory unitH = new UnitsHistory(LocalDate.now(), units, game);
+					boolean createUH = unitH.create();
+					if (updateGame && createUH) {
 						JOptionPane.showMessageDialog(null, "Units update");
 						AdminManageUnits frame = new AdminManageUnits(admin);
 						frame.setVisible(true);

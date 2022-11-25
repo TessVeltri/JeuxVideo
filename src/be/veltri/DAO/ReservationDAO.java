@@ -98,7 +98,7 @@ public class ReservationDAO extends DAO<Reservation> {
 
 	// str1 = username, str2 = gameName, str3 = versionName
 	@Override
-	public ArrayList<Reservation> getAll(String str1, String str2, String str3) {
+	public ArrayList<Reservation> getAll(String str1, String str2, String str3, String str4) {
 		ArrayList<Reservation> all = new ArrayList<>();
 		if (!str1.equals("") && str2.equals("") && str3.equals("")) {
 			Player player = new Player();

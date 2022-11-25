@@ -98,7 +98,7 @@ public class MessageDAO extends DAO<Message> {
 
 	// str1 = username, srt2 = ""
 	@Override
-	public ArrayList<Message> getAll(String str1, String str2, String tr3) {
+	public ArrayList<Message> getAll(String str1, String str2, String str3, String str4) {
 		ArrayList<Message> all = new ArrayList<>();
 		Player receiver = new Player();
 		User sender;

@@ -140,7 +140,7 @@ public class CopyDAO extends DAO<Copy> {
 
 	// str1 = ownerUsername, str2 = "", str3 = ""
 	@Override
-	public ArrayList<Copy> getAll(String str1, String str2, String str3) {
+	public ArrayList<Copy> getAll(String str1, String str2, String str3, String str4) {
 		ArrayList<Copy> all = new ArrayList<>();
 		Player owner = new Player();
 		owner.setUsername(str1);

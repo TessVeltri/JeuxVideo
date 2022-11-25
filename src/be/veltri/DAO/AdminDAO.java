@@ -66,7 +66,7 @@ public class AdminDAO extends DAO<Admin>{
 	}
 
 	@Override
-	public ArrayList<Admin> getAll(String str1, String str2, String tr3) {
+	public ArrayList<Admin> getAll(String str1, String str2, String str3, String str4) {
 		return null;
 	}
 
