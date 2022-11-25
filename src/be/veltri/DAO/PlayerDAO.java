@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import be.veltri.POJO.Copy;
 import be.veltri.POJO.Player;
 
 public class PlayerDAO extends DAO<Player> {
@@ -63,7 +64,7 @@ public class PlayerDAO extends DAO<Player> {
 				player = new Player(result.getString("userName"), result.getString("password"),
 						result.getString("pseudo"), result.getDate("dateBirth").toLocalDate(),
 						result.getDate("dateInscription").toLocalDate(), result.getInt("balance"),
-						result.getBoolean("checkBirthDay"));
+						result.getBoolean("checkBirthDay"), null);
 			return player;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -111,17 +112,19 @@ public class PlayerDAO extends DAO<Player> {
 
 	@Override
 	public Player findById(int i) {
-		Player player = null;
+		Player player = new Player();
+		ArrayList<Copy> lstCopy = new ArrayList<>();
 		try {
 			ResultSet result = this.connect
 					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(
 							"SELECT username, password, pseudo, dateBirth, dateInscription, balance, checkBirthDay "
 									+ "FROM User WHERE idUser = '" + i + "'");
 			if (result.first()) {
+				lstCopy = Copy.getAll(result.getString("userName"));
 				player = new Player(result.getString("username"), result.getString("password"),
 						result.getString("pseudo"), result.getDate("dateBirth").toLocalDate(),
 						result.getDate("dateInscription").toLocalDate(), result.getInt("balance"),
-						result.getBoolean("checkBirthDay"));
+						result.getBoolean("checkBirthDay"), lstCopy);
 			}
 			return player;
 		} catch (SQLException e) {

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import be.veltri.POJO.Admin;
+import be.veltri.POJO.Copy;
 import be.veltri.POJO.Player;
 import be.veltri.POJO.User;
 
@@ -33,6 +34,7 @@ public class UserDAO extends DAO<User> {
 	@Override
 	public User find(User obj) {
 		User user = null;
+		ArrayList<Copy> lstCopy = new ArrayList<>();
 		if (obj.getPassword()!= null) {
 			try {
 				ResultSet result = this.connect
@@ -43,10 +45,11 @@ public class UserDAO extends DAO<User> {
 
 				if (result.first())
 					if (result.getString("discriminator").equals("Player")) {
+						lstCopy = Copy.getAll(result.getString("userName"));
 						user = new Player(result.getString("userName"), result.getString("password"),
 								result.getString("pseudo"), result.getDate("dateBirth").toLocalDate(),
 								result.getDate("dateInscription").toLocalDate(), result.getInt("balance"),
-								result.getBoolean("checkBirthDay"));
+								result.getBoolean("checkBirthDay"), lstCopy);
 					} else if (result.getString("discriminator").equals("Admin")) {
 						user = new Admin(result.getString("userName"), result.getString("password"));
 					}
@@ -64,10 +67,11 @@ public class UserDAO extends DAO<User> {
 
 				if (result.first())
 					if (result.getString("discriminator").equals("Player")) {
+						lstCopy = Copy.getAll(result.getString("userName"));
 						user = new Player(result.getString("userName"), result.getString("password"),
 								result.getString("pseudo"), result.getDate("dateBirth").toLocalDate(),
 								result.getDate("dateInscription").toLocalDate(), result.getInt("balance"),
-								result.getBoolean("checkBirthDay"));
+								result.getBoolean("checkBirthDay"), lstCopy);
 					} else if (result.getString("discriminator").equals("Admin")) {
 						user = new Admin(result.getString("userName"), result.getString("password"));
 					}

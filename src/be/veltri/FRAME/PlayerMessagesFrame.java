@@ -128,6 +128,7 @@ public class PlayerMessagesFrame extends JFrame {
 							Player user = new Player();
 							user.setUsername(from);
 							Player sender = user.find();
+							sender.setLstCopy(Copy.getAll(from));
 							msg.setSender(sender);
 						}
 						boolean updateMsg = msg.update();

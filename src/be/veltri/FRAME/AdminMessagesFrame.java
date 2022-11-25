@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import be.veltri.POJO.Admin;
+import be.veltri.POJO.Copy;
 import be.veltri.POJO.Message;
 import be.veltri.POJO.Player;
 import be.veltri.POJO.User;
@@ -114,6 +115,7 @@ public class AdminMessagesFrame extends JFrame {
 						Player tmp = new Player();
 						tmp.setUsername(from);
 						Player sender = tmp.find();
+						sender.setLstCopy(Copy.getAll(from));
 						Message msg = new Message(txt, false, sender, admin);
 						boolean updateMsg = msg.update();
 						if (updateMsg) {

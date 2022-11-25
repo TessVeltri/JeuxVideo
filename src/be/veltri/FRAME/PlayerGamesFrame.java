@@ -93,8 +93,7 @@ public class PlayerGamesFrame extends JFrame {
 				new String[] { "Game name", "Units", "Console", "Version", "Free" }));
 		gameScrollPane.setViewportView(table);
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
-		ArrayList<Copy> lstCopy = Copy.getAll(player.getUsername());
-		for (Copy c : lstCopy) {
+		for (Copy c : player.getLstCopy()) {
 			boolean used = c.isAvailable();
 			Object[] row = new Object[] { c.getGame().getNameGame(), c.getGame().getUnits(),
 					c.getGame().getNameConsole(), c.getGame().getNameVersion(), used ? "YES" : "NO" };

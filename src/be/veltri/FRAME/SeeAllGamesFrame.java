@@ -107,8 +107,6 @@ public class SeeAllGamesFrame extends JFrame {
 		btnBack.setBounds(37, 405, 50, 47);
 		contentPane.add(btnBack);
 
-		ArrayList<Copy> lstCopy = Copy.getAll(player.getUsername());
-
 		JScrollPane gameScrollPane = new JScrollPane();
 		gameScrollPane.setBounds(69, 134, 495, 261);
 		contentPane.add(gameScrollPane);
@@ -126,7 +124,7 @@ public class SeeAllGamesFrame extends JFrame {
 
 			} else {
 				boolean check = false;
-				for (Copy c : lstCopy) {
+				for (Copy c : player.getLstCopy()) {
 					if (g.getNameGame().equals(c.getGame().getNameGame())
 							&& g.getNameVersion().equals(c.getGame().getNameVersion()) && check == false) {
 						check = true;
@@ -186,7 +184,7 @@ public class SeeAllGamesFrame extends JFrame {
 						} else {
 
 							boolean check = false;
-							for (Copy c : lstCopy) {
+							for (Copy c : player.getLstCopy()) {
 								if (g.getNameGame().equals(c.getGame().getNameGame())
 										&& g.getNameVersion().equals(c.getGame().getNameVersion()) && check == false) {
 									check = true;
@@ -209,7 +207,7 @@ public class SeeAllGamesFrame extends JFrame {
 						} else {
 
 							boolean check = false;
-							for (Copy c : lstCopy) {
+							for (Copy c : player.getLstCopy()) {
 								if (g.getNameGame().equals(c.getGame().getNameGame())
 										&& g.getNameVersion().equals(c.getGame().getNameVersion()) && check == false) {
 									check = true;

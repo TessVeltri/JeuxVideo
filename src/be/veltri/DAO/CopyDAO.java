@@ -138,21 +138,19 @@ public class CopyDAO extends DAO<Copy> {
 		return null;
 	}
 
-	// str1 = ownerUsername
+	// str1 = ownerUsername, str2 = "", str3 = ""
 	@Override
-	public ArrayList<Copy> getAll(String str1, String str2, String tr3) {
+	public ArrayList<Copy> getAll(String str1, String str2, String str3) {
 		ArrayList<Copy> all = new ArrayList<>();
-		Player player = new Player();
-		player.setUsername(str1);
-		int idOwner = player.findIdByName();
 		Player owner = new Player();
+		owner.setUsername(str1);
 		Game game = new Game();
 		try {
 			ResultSet result = this.connect
 					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
-					.executeQuery("SELECT idGame FROM Copy WHERE idOwner = '" + idOwner + "'");
+					.executeQuery("SELECT idGame FROM Copy INNER JOIN User ON Copy.idOwner = User.idUser WHERE userName = '" + str1 + "'");
 			while (result.next()) {
-				all.add(new Copy(owner.findById(idOwner), game.findById(result.getInt("idGame"))));
+				all.add(new Copy(owner.find(), game.findById(result.getInt("idGame"))));
 			}
 			return all;
 		} catch (SQLException e) {

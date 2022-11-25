@@ -3,6 +3,7 @@ package be.veltri.POJO;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import javax.swing.JOptionPane;
@@ -17,6 +18,7 @@ public class Player extends User implements Serializable{
 	private LocalDate dateInscription;
 	private int balance;
 	private boolean checkBirthDay;
+	private ArrayList<Copy> lstCopy = new ArrayList<>();
 	
 	private static AbstractDAOFactory dao = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 	private static DAO<Player> playerDAO = dao.getPlayerDAO();
@@ -27,13 +29,14 @@ public class Player extends User implements Serializable{
 
 	// Constructeur avec arguments
 	public Player(String username, String password, String pseudo, LocalDate dateOfBirth, LocalDate dateInscription,
-			int balance, boolean checkBirthDay) {
+			int balance, boolean checkBirthDay, ArrayList<Copy> lstCopy) {
 		super(username, password);
 		this.pseudo = pseudo;
 		this.dateOfBirth = dateOfBirth;
 		this.dateInscription = dateInscription;
 		this.balance = balance;
 		this.checkBirthDay = checkBirthDay;
+		this.lstCopy = lstCopy;
 	}
 
 	// Getters et Setters
@@ -75,6 +78,14 @@ public class Player extends User implements Serializable{
 
 	public void setCheckBirthDay(boolean checkBirthDay) {
 		this.checkBirthDay = checkBirthDay;
+	}
+
+	public ArrayList<Copy> getLstCopy() {
+		return lstCopy;
+	}
+
+	public void setLstCopy(ArrayList<Copy> lstCopy) {
+		this.lstCopy = lstCopy;
 	}
 
 	// Méthodes
@@ -121,5 +132,6 @@ public class Player extends User implements Serializable{
 	public int getAge() {
 		return Period.between(this.getDateOfBirth(), LocalDate.now()).getYears();
 	}
+
 
 }
