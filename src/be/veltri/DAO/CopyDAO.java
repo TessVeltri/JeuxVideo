@@ -42,8 +42,7 @@ public class CopyDAO extends DAO<Copy> {
 							+ "WHEN 'true' THEN 'false' "
 							+ "WHEN 'false' THEN 'true' "
 							+ "END WHERE idCopy = '"
-							+ findIdByName(obj.getOwner().getUsername(), obj.getGame().getNameGame(),
-									obj.getGame().getNameVersion(), "")+ "'");
+							+ this.findIdByName(obj.getOwner(), obj.getGame(), "")+ "'");
 			if (result == 1)
 				return true;
 			else
@@ -74,16 +73,13 @@ public class CopyDAO extends DAO<Copy> {
 		}
 	}
 
-	// str1 = ownerName, str2 = gameName, str3 = gameVersion, str4=""
+	// o1 = player, o2 = game
 	@Override
-	public int findIdByName(String str1, String str2, String str3, String str4) {
+	public int findIdByName(Object o1, Object o2, String str) {
 		int id = 0;
-		Player owner = new Player();
-		owner.setUsername(str1);
-		Game game = new Game();
-		game.setNameGame(str2);
-		game.setNameVersion(str3);
-		if (str4.equals("CREATE") || str4.equals("UPDATE")) {	// available = true
+		Player owner = (Player)o1;
+		Game game = (Game) o2;
+		if (str.equals("CREATE") || str.equals("UPDATE")) {	// available = true
 			try {
 				ResultSet result = this.connect
 						.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
@@ -97,7 +93,7 @@ public class CopyDAO extends DAO<Copy> {
 				e.printStackTrace();
 				return -1;
 			}
-		} else if (str4.equals("FIND")) {	// available = false
+		} else if (str.equals("FIND")) {	// available = false
 			try {
 				ResultSet result = this.connect
 						.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)

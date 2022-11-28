@@ -25,9 +25,7 @@ public class LocationDAO extends DAO<Location> {
 							+ "idCopy) Values('" + obj.getDateBeginLocation() + "', '" + obj.getDateEndLocation()
 							+ "', '" + obj.isOnGoing() + "', '" + obj.getTotalUnits() + "', '"
 							+ obj.getBorrower().findIdByName() + "', '"
-							+ obj.getCopy().findIdByName(obj.getOwner().getUsername(),
-									obj.getCopy().getGame().getNameGame(), obj.getCopy().getGame().getNameVersion(),
-									"CREATE")
+							+ obj.getCopy().findIdByName(obj.getOwner(), obj.getCopy().getGame(), "CREATE")
 							+ "')");
 			return true;
 		} catch (SQLException e) {
@@ -47,9 +45,7 @@ public class LocationDAO extends DAO<Location> {
 			int result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
 					.executeUpdate("UPDATE Location SET onGoing = 'false', totalUnits = '" + obj.getTotalUnits()
 							+ "' WHERE idCopy = '"
-							+ obj.getCopy().findIdByName(obj.getOwner().getUsername(),
-									obj.getCopy().getGame().getNameGame(), obj.getCopy().getGame().getNameVersion(),
-									"UPDATE")
+							+ obj.getCopy().findIdByName(obj.getOwner(), obj.getCopy().getGame(), "UPDATE")
 							+ "' AND onGoing = 'true'");
 			if (result == 1)
 				return true;
@@ -73,9 +69,7 @@ public class LocationDAO extends DAO<Location> {
 					.executeQuery("SELECT dateBeginLoc, dateEndLoc, onGoing, totalUnits, idBorrower, idCopy, idOwner "
 							+ "FROM Location INNER JOIN Copy ON Location.idCopy = Copy.idCopy " + "WHERE onGoing = '"
 							+ obj.isOnGoing() + "' AND idCopy = '"
-							+ obj.getCopy().findIdByName(obj.getOwner().getUsername(),
-									obj.getCopy().getGame().getNameGame(), obj.getCopy().getGame().getNameVersion(),
-									"FIND")
+							+ obj.getCopy().findIdByName(obj.getOwner(), obj.getCopy().getGame(), "FIND")
 							+ "'");
 
 			if (result.first()) {
@@ -97,7 +91,7 @@ public class LocationDAO extends DAO<Location> {
 	}
 
 	@Override
-	public int findIdByName(String str1, String str2, String str3, String str4) {
+	public int findIdByName(Object o1, Object o2, String str) {
 		return 0;
 	}
 

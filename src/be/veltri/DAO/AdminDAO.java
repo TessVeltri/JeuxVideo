@@ -51,7 +51,7 @@ public class AdminDAO extends DAO<Admin>{
 	}
 
 	@Override
-	public int findIdByName(String str1, String str2, String str3, String str4) {
+	public int findIdByName(Object o1, Object o2, String str) {
 		return 0;
 	}
 

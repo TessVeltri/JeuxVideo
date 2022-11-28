@@ -41,8 +41,8 @@ public abstract class User implements Serializable{
 
 	// Méthodes	
 	// str1 = discriminator, str2 = username
-	public int findIdByName(String str1, String str2) {
-		return userDAO.findIdByName(str1, str2, "", "");
+	public int findIdByName(User user, String str) {
+		return userDAO.findIdByName(user, null, str);
 	}
 	
 	public User login() {

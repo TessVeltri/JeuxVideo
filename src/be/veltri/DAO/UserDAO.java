@@ -91,11 +91,11 @@ public class UserDAO extends DAO<User> {
 		return null;
 	}
 	
-	// str1 = discriminator, str2 = username, str3 = "", str4 = ""
+	// o1 = player, str = discriminator
 	@Override
-	public int findIdByName(String str1, String str2, String str3, String str4) {
+	public int findIdByName(Object o1, Object o2, String str) {
 		int id = 0;
-		if (str1.equals("Admin")) {
+		if (str.equals("Admin")) {
 			try {
 				ResultSet result = this.connect
 						.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
@@ -108,24 +108,11 @@ public class UserDAO extends DAO<User> {
 				e.printStackTrace();
 				return -1;
 			}
-		} else if (str1.equals("Player")) {
-			try {
-				ResultSet result = this.connect
-						.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
-						.executeQuery("SELECT idUser FROM User WHERE userName = '" + str2 + "'");
-				if (result.first()) {
-					id = result.getInt(1);
-				}
-				return id;
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return -1;
-			}
 		} else {
 			try {
 				ResultSet result = this.connect
 						.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
-						.executeQuery("SELECT idUser FROM User WHERE userName = '" + str2 + "'");
+						.executeQuery("SELECT idUser FROM User WHERE userName = '" + ((Player)o1).getUsername() + "'");
 				if (result.first()) {
 					id = result.getInt(1);
 				}

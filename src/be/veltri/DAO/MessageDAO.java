@@ -24,8 +24,8 @@ public class MessageDAO extends DAO<Message> {
 				this.connect.createStatement()
 						.executeUpdate("INSERT INTO Message(txtMessage, read, idSender, idReceiver) " + "Values('"
 								+ obj.getTextMessage() + "', 'false', '"
-								+ obj.getSender().findIdByName("Player", obj.getSender().getUsername()) + "', '"
-								+ admin.findIdByName("Admin", "") + "')");
+								+ obj.getSender().findIdByName(obj.getSender(), "") + "', '"
+								+ admin.findIdByName(null, "Admin") + "')");
 				return true;
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -35,8 +35,8 @@ public class MessageDAO extends DAO<Message> {
 			try {
 				this.connect.createStatement()
 						.executeUpdate("INSERT INTO Message(txtMessage, read, idSender, idReceiver) " + "Values('"
-								+ obj.getTextMessage() + "', 'false', '" + obj.getSender().findIdByName("Admin", "")
-								+ "', '" + obj.getReceiver().findIdByName("Player", obj.getSender().getUsername())
+								+ obj.getTextMessage() + "', 'false', '" + obj.getSender().findIdByName(null, "Admin")
+								+ "', '" + obj.getReceiver().findIdByName(obj.getSender(), "")
 								+ "')");
 				return true;
 			} catch (SQLException e) {
@@ -54,8 +54,8 @@ public class MessageDAO extends DAO<Message> {
 
 	@Override
 	public boolean update(Message obj) {
-		int idSender = obj.getSender().findIdByName("", obj.getSender().getUsername());
-		int idReceiver = obj.getReceiver().findIdByName("", obj.getReceiver().getUsername());
+		int idSender = obj.getSender().findIdByName(obj.getSender(), "");
+		int idReceiver = obj.getReceiver().findIdByName(obj.getReceiver(), "");
 		try {
 			int result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
 					.executeUpdate("UPDATE Message SET read = CASE read " + "WHEN 'true' THEN 'false' "
@@ -82,7 +82,7 @@ public class MessageDAO extends DAO<Message> {
 	}
 
 	@Override
-	public int findIdByName(String str1, String str2, String str3, String str4) {
+	public int findIdByName(Object o1, Object o2, String str) {
 		return 0;
 	}
 
@@ -104,10 +104,10 @@ public class MessageDAO extends DAO<Message> {
 		int idReceiver = 0;
 		if (o1 instanceof Player) {
 			receiver = (Player) o1;
-			idReceiver = receiver.findIdByName("Player", receiver.getUsername());
+			idReceiver = receiver.findIdByName(receiver, "");
 		} else {
 			receiver = (Admin) o1;
-			idReceiver = receiver.findIdByName("Admin", receiver.getUsername());
+			idReceiver = receiver.findIdByName(null, "Admin");
 		}
 		User sender;
 		

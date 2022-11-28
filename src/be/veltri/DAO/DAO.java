@@ -26,7 +26,7 @@ public abstract class DAO<T> {
 	
 	public abstract ArrayList<String> getAllName (String str1, String str2);
 	
-	public abstract int findIdByName(String str1, String str2, String str3, String str4);
+	public abstract int findIdByName(Object o1, Object o2, String str);
 	
 	public abstract int returnUnits (String name);
 	

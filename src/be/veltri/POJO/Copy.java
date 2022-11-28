@@ -51,9 +51,8 @@ public class Copy implements Serializable {
 		return copyDAO.update(this);
 	}
 
-	// str1 = username, str2 = gameName, str3 = versionName, str4 = method
-	public int findIdByName(String str1, String str2, String str3, String str4) {
-		return copyDAO.findIdByName(str1, str2, str3, str4);
+	public int findIdByName(Player player, Game game, String str) {
+		return copyDAO.findIdByName(player, game, str);
 	}
 
 	public Copy find() {

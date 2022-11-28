@@ -75,7 +75,7 @@ public class Game implements Serializable{
 	}
 	
 	public int findIdByName () {
-		return gameDAO.findIdByName(getNameGame(), getNameVersion(), "", "");
+		return gameDAO.findIdByName(this, null, "");
 	}
 	
 	public static ArrayList<String> getAllName (String str1, String str2){
