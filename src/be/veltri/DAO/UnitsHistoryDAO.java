@@ -55,17 +55,16 @@ public class UnitsHistoryDAO extends DAO<UnitsHistory> {
 		return null;
 	}
 
-	// o1 = location, o2 = game
+	// o1 = game
 	@Override
 	public ArrayList<UnitsHistory> getAll(Object o1, Object o2) {
 		ArrayList<UnitsHistory> all = new ArrayList<>();
-		Game game = (Game) o2;
+		Game game = (Game) o1;
 		try {
 			ResultSet result = this.connect
 					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
 					.executeQuery("SELECT dateHistory, units FROM UnitsHistory WHERE idGame = '" + game.findIdByName()
-							+ "' AND dateHistory BETWEEN '" + ((Location) o1).getDateBeginLocation() + "'" + " AND '"
-							+ LocalDate.now() + "'");
+							+ "'");
 			while (result.next()) {
 				all.add(new UnitsHistory(result.getDate("dateHistory").toLocalDate(), result.getInt("units"),
 						game.find()));

@@ -89,7 +89,8 @@ public class RatingBorrowerFrame extends JFrame {
 		JButton btnNo = new JButton("");
 		btnNo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AccountPlayerFrame frame = new AccountPlayerFrame(location.getOwner());
+				Player player = location.getOwner().find();
+				AccountPlayerFrame frame = new AccountPlayerFrame(player);
 				frame.setVisible(true);
 				dispose();
 			}
@@ -331,7 +332,8 @@ public class RatingBorrowerFrame extends JFrame {
 				boolean createRating = rate.create();
 				if (createRating) {
 					JOptionPane.showMessageDialog(null, "You add your rate for " + location.getBorrower().getPseudo());
-					AccountPlayerFrame frame = new AccountPlayerFrame(location.getOwner());
+					Player player = location.getOwner().find();
+					AccountPlayerFrame frame = new AccountPlayerFrame(player);
 					frame.setVisible(true);
 					dispose();
 				}

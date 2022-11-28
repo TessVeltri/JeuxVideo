@@ -104,27 +104,55 @@ public class Location implements Serializable {
 		int daysLoc = (int) this.getDateBeginLocation().until(this.getDateEndLocation(), ChronoUnit.DAYS);
 		int weekLoc = daysLoc / 7;
 		int units = 0;
-		ArrayList<UnitsHistory> history = UnitsHistory.getAll(this, this.getCopy().getGame());
+		int days = 0;
+		ArrayList<UnitsHistory> history = this.getCopy().getGame().getLstUnitsHistory();
 		// TODO Récupérer l'historique et calculer la balance
 		if (history != null) {
 			for (UnitsHistory u : history) {
-				
+				if (u.getDateChange().isBefore(this.getDateBeginLocation()))
+					units = u.getUnits();
+			}
+			for (LocalDate i = this.getDateBeginLocation(); i.isBefore(this.getDateEndLocation()); i = i.plusWeeks(1)) {
+				boolean add = false;
+				for (UnitsHistory u : history) {
+					if ((u.getDateChange().isAfter(i) || u.getDateChange().isEqual(i))
+							&& u.getDateChange().isBefore(i.plusWeeks(1)) && add == false) {
+						total += u.getUnits();
+						units = u.getUnits();
+						add = true;
+					} else if (u.getDateChange().isAfter(i) && add == false) {
+						total += units;
+						add = true;
+					}
+				}
+			}
+
+			// Pénalité
+			days = (int) this.getDateEndLocation().until(LocalDate.now(), ChronoUnit.DAYS);
+			if (days > 0) {
+				int week = days / 7;
+				int rest = days % 7;
+
+				if (rest == 0)
+					total += (units * week) + (days * 5);
+				else
+					total += units + (units * week) + (days * 5);
 			}
 		} else {
 			units = this.getCopy().getGame().getUnits();
+
+			// Pénalité
+			days = (int) this.getDateEndLocation().until(LocalDate.now(), ChronoUnit.DAYS);
+			if (days > 0) {
+				int week = days / 7;
+				int rest = days % 7;
+				if (rest == 0)
+					total = (units * week) + (days * 5) + (units * weekLoc);
+				else
+					total = units + (units * week) + (days * 5) + (units * weekLoc);
+			} else
+				total = units * weekLoc;
 		}
-		// TODO Recalculer
-		// Pénalité
-		int days = (int) this.getDateEndLocation().until(LocalDate.now(), ChronoUnit.DAYS);
-		if (days > 0) {
-			int week = days / 7;
-			int rest = days % 7;
-			if (rest == 0)
-				total = (units * week) + (days * 5) + (units * weekLoc);
-			else
-				total = units + (units * week) + (days * 5) + (units * weekLoc);
-		} else
-			total = units * weekLoc;
 		return total;
 	}
 

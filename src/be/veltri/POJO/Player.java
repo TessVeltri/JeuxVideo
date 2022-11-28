@@ -18,7 +18,7 @@ public class Player extends User implements Serializable{
 	private LocalDate dateInscription;
 	private int balance;
 	private boolean checkBirthDay;
-	private ArrayList<Copy> lstCopy = new ArrayList<>();
+	private ArrayList<Copy> lstCopy;
 	
 	private static AbstractDAOFactory dao = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 	private static DAO<Player> playerDAO = dao.getPlayerDAO();

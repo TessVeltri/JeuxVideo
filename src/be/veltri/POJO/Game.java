@@ -13,6 +13,8 @@ public class Game implements Serializable{
 	private int units;
 	private String nameConsole;
 	private String nameVersion;
+	private ArrayList<Copy> lstCopy;
+	private ArrayList <UnitsHistory> lstUnitsHistory;
 	
 	private static AbstractDAOFactory dao = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 	private static DAO<Game> gameDAO = dao.getGameDAO();
@@ -21,11 +23,23 @@ public class Game implements Serializable{
 	public Game() {}
 
 	// Constructeur avec arguments
+	public Game(String nameGame, int units, String nameConsole, String nameVersion, ArrayList<Copy> lstCopy,
+			ArrayList<UnitsHistory> lstHistory) {
+		this.nameGame = nameGame;
+		this.units = units;
+		this.nameConsole = nameConsole;
+		this.nameVersion = nameVersion;
+		this.lstCopy = lstCopy;
+		this.lstUnitsHistory = lstHistory;
+	}
+	
 	public Game(String nameGame, int units, String nameConsole, String nameVersion) {
 		this.nameGame = nameGame;
 		this.units = units;
 		this.nameConsole = nameConsole;
 		this.nameVersion = nameVersion;
+		this.lstCopy = new ArrayList<>();
+		this.lstUnitsHistory = new ArrayList<>();
 	}
 
 	// Getters et Setters
@@ -59,6 +73,22 @@ public class Game implements Serializable{
 
 	public void setNameVersion(String nameVersion) {
 		this.nameVersion = nameVersion;
+	}
+
+	public ArrayList<Copy> getLstCopy() {
+		return lstCopy;
+	}
+
+	public void setLstCopy(ArrayList<Copy> lstCopy) {
+		this.lstCopy = lstCopy;
+	}
+
+	public ArrayList <UnitsHistory> getLstUnitsHistory() {
+		return lstUnitsHistory;
+	}
+
+	public void setLstUnitsHistory(ArrayList <UnitsHistory> lstUnitsHistory) {
+		this.lstUnitsHistory = lstUnitsHistory;
 	}
 
 	// Méthodes
@@ -105,68 +135,73 @@ public class Game implements Serializable{
 		
 		int unitsTmp = 0;
 		// borrower with the most units
-		for (Reservation r : allRes) {
-			if (r.getBorrower().getBalance() > unitsTmp) {
-				unitsTmp = r.getBorrower().getBalance();
-			}
-		}
-		for (Reservation r : allRes) {
-			if (r.getBorrower().getBalance() == unitsTmp) {
-				lstTmpUnits.add(r);
-			}
-		}
-		if (lstTmpUnits.size() == 1) {
-			return lstTmpUnits.get(0);
-		} else {
-			// oldest reservation 
-			LocalDate dateTmp = LocalDate.now();
+		if (allRes != null && allRes.size() > 0) {
 			for (Reservation r : allRes) {
-				if (r.getDateReservation().isBefore(dateTmp)) {
-					dateTmp = r.getDateReservation();
+				if (r.getBorrower().getBalance() > unitsTmp) {
+					unitsTmp = r.getBorrower().getBalance();
 				}
 			}
 			for (Reservation r : allRes) {
-				if (r.getDateReservation().isEqual(dateTmp)) {
-					lstTmpDate.add(r);
+				if (r.getBorrower().getBalance() == unitsTmp) {
+					lstTmpUnits.add(r);
 				}
 			}
-			if (lstTmpDate.size() == 1) {
-				return lstTmpDate.get(0);
+			if (lstTmpUnits.size() == 1) {
+				return lstTmpUnits.get(0);
 			} else {
-				// oldest borrower's inscription 
-				LocalDate dateInsc = LocalDate.now();
+				// oldest reservation 
+				LocalDate dateTmp = LocalDate.now();
 				for (Reservation r : allRes) {
-					if (r.getBorrower().getDateInscription().isBefore(dateInsc)) {
-						dateTmp = r.getBorrower().getDateInscription();
+					if (r.getDateReservation().isBefore(dateTmp)) {
+						dateTmp = r.getDateReservation();
 					}
 				}
 				for (Reservation r : allRes) {
-					if (r.getBorrower().getDateInscription().isEqual(dateInsc)) {
-						lstTmpInscription.add(r);
+					if (r.getDateReservation().isEqual(dateTmp)) {
+						lstTmpDate.add(r);
 					}
 				}
-				if (lstTmpInscription.size() == 1) {
-					return lstTmpInscription.get(0);
+				if (lstTmpDate.size() == 1) {
+					return lstTmpDate.get(0);
 				} else {
-					// oldest borrower
-					int ageTmp = 0;
+					// oldest borrower's inscription 
+					LocalDate dateInsc = LocalDate.now();
 					for (Reservation r : allRes) {
-						if (r.getBorrower().getAge()>ageTmp) {
-							ageTmp = r.getBorrower().getAge();
+						if (r.getBorrower().getDateInscription().isBefore(dateInsc)) {
+							dateTmp = r.getBorrower().getDateInscription();
 						}
 					}
 					for (Reservation r : allRes) {
-						if (r.getBorrower().getAge() == ageTmp) {
-							lstTmpAge.add(r);
+						if (r.getBorrower().getDateInscription().isEqual(dateInsc)) {
+							lstTmpInscription.add(r);
 						}
 					}
-					if (lstTmpAge.size() == 1) {
-						return lstTmpAge.get(0);
+					if (lstTmpInscription.size() == 1) {
+						return lstTmpInscription.get(0);
 					} else {
-						return allRes.get(0);
+						// oldest borrower
+						int ageTmp = 0;
+						for (Reservation r : allRes) {
+							if (r.getBorrower().getAge()>ageTmp) {
+								ageTmp = r.getBorrower().getAge();
+							}
+						}
+						for (Reservation r : allRes) {
+							if (r.getBorrower().getAge() == ageTmp) {
+								lstTmpAge.add(r);
+							}
+						}
+						if (lstTmpAge.size() == 1) {
+							return lstTmpAge.get(0);
+						} else {
+							return allRes.get(0);
+						}
 					}
 				}
 			}
+		} else {
+			return null;
 		}
+		
 	}
 }

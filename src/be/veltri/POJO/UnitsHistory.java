@@ -51,9 +51,8 @@ public class UnitsHistory implements Serializable{
 		return unitsHistoryDAO.create(this);
 	}
 	
-	// str1 = beginDate, str2 = endDate, str3 = gameName, str4 = versionName
-	public static ArrayList<UnitsHistory> getAll(Location loc, Game game) {
-		return unitsHistoryDAO.getAll(loc, game);
+	public static ArrayList<UnitsHistory> getAll(Game game) {
+		return unitsHistoryDAO.getAll(game, null);
 	}
 
 }
