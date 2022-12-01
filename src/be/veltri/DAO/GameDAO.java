@@ -98,7 +98,6 @@ public class GameDAO extends DAO<Game> {
 	public Game find(Game obj) {
 		Game game = null;
 		ArrayList<Copy> lstCopy = new ArrayList<>();
-		ArrayList<UnitsHistory> lstHistory = new ArrayList<>();
 		try {
 			ResultSet result = this.connect
 					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
@@ -107,17 +106,8 @@ public class GameDAO extends DAO<Game> {
 			if (result.first()) {
 				game = new Game(result.getString("gameName"), result.getInt("units"), obj.getNameConsole(),
 						obj.getNameVersion());
-				boolean finish = false;
-				do {
-					Copy copy = new Copy(null, game);
-					if (copy != null)
-						lstCopy.add(copy.find());
-					else
-						finish = true;
-				} while (finish);
-				lstHistory = UnitsHistory.getAll(game);
+				lstCopy = Copy.getAll(null, game);
 				game.setLstCopy(lstCopy);
-				game.setLstUnitsHistory(lstHistory);
 			}
 			return game;
 		} catch (SQLException e) {
@@ -333,7 +323,6 @@ public class GameDAO extends DAO<Game> {
 	public Game findById(int i) {
 		Game game = null;
 		ArrayList<Copy> lstCopy = new ArrayList<>();
-		ArrayList<UnitsHistory> lstHistory = new ArrayList<>();
 		try {
 			ResultSet result = this.connect
 					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
@@ -342,17 +331,8 @@ public class GameDAO extends DAO<Game> {
 				game = new Game(result.getString("gameName"), result.getInt("units"),
 						this.find(result.getInt("idVersion"), "Console"), this.find(result.getInt("idVersion"), ""));
 			}
-			boolean finish = false;
-			do {
-				Copy copy = new Copy(null, game);
-				if (copy != null)
-					lstCopy.add(copy.find());
-				else
-					finish = true;
-			} while (finish);
-			lstHistory = UnitsHistory.getAll(game);
+			lstCopy = Copy.getAll(null, game);
 			game.setLstCopy(lstCopy);
-			game.setLstUnitsHistory(lstHistory);
 			return game;
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -1,6 +1,5 @@
 package be.veltri.FRAME;
 
-import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -21,6 +20,7 @@ import javax.swing.JTextField;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -191,6 +191,9 @@ public class ConfirmLocationFrame extends JFrame {
 					boolean createLoc = loc.create();
 					boolean updateCopy = copy.update();
 					if (createLoc && updateCopy) {
+						ArrayList<Location> lstLoc = player.getLstLocationBorrower();
+						lstLoc.add(loc);
+						player.setLstLocationBorrower(lstLoc);
 						JOptionPane.showMessageDialog(null, "Congratulation you rent the game for " + txtWeeks.getText() + " weeks !");
 						SeeAllGamesFrame frame = new SeeAllGamesFrame(player);
 						frame.setVisible(true);

@@ -7,7 +7,11 @@ import java.util.ArrayList;
 
 import be.veltri.POJO.Admin;
 import be.veltri.POJO.Copy;
+import be.veltri.POJO.Location;
+import be.veltri.POJO.Message;
 import be.veltri.POJO.Player;
+import be.veltri.POJO.Rating;
+import be.veltri.POJO.Reservation;
 import be.veltri.POJO.User;
 
 public class UserDAO extends DAO<User> {
@@ -35,6 +39,10 @@ public class UserDAO extends DAO<User> {
 	public User find(User obj) {
 		User user = null;
 		ArrayList<Copy> lstCopy = new ArrayList<>();
+		ArrayList<Location> lstLocBorrower = new ArrayList<>();
+		ArrayList<Reservation> lstReservation = new ArrayList<>();
+		ArrayList<Rating> lstRating = new ArrayList<>();
+		ArrayList<Message> lstMessageReceiver = new ArrayList<>();
 		if (obj.getPassword()!= null) {
 			try {
 				ResultSet result = this.connect
@@ -49,10 +57,21 @@ public class UserDAO extends DAO<User> {
 								result.getString("pseudo"), result.getDate("dateBirth").toLocalDate(),
 								result.getDate("dateInscription").toLocalDate(), result.getInt("balance"),
 								result.getBoolean("checkBirthDay"));
-						lstCopy = Copy.getAll((Player) user);
+						lstCopy = Copy.getAll((Player) user, null);
+						lstLocBorrower = Location.getAll((Player)user, null);
+						lstReservation = Reservation.getAll((Player)user, null);
+						lstRating = Rating.getAll((Player)user);
+						lstMessageReceiver = Message.getAll(user);
 						((Player)user).setLstCopy(lstCopy);
+						((Player)user).setLstLocationBorrower(lstLocBorrower);
+						((Player)user).setLstReservation(lstReservation);
+						((Player)user).setLstRating(lstRating);
+						((Player)user).setLstMessageReceiver(lstMessageReceiver);
+						
 					} else if (result.getString("discriminator").equals("Admin")) {
 						user = new Admin(result.getString("userName"), result.getString("password"));
+						lstMessageReceiver = Message.getAll(user);
+						((Admin)user).setLstMessage(lstMessageReceiver);
 					}
 				return user;
 			} catch (SQLException e) {
@@ -71,11 +90,21 @@ public class UserDAO extends DAO<User> {
 						user = new Player(result.getString("userName"), result.getString("password"),
 								result.getString("pseudo"), result.getDate("dateBirth").toLocalDate(),
 								result.getDate("dateInscription").toLocalDate(), result.getInt("balance"),
-								result.getBoolean("checkBirthDay"), lstCopy);
-						lstCopy = Copy.getAll((Player) user);
+								result.getBoolean("checkBirthDay"));
+						lstCopy = Copy.getAll((Player) user, null);
+						lstLocBorrower = Location.getAll((Player)user, null);
+						lstReservation = Reservation.getAll((Player)user, null);
+						lstRating = Rating.getAll((Player)user);
+						lstMessageReceiver = Message.getAll(user);
 						((Player)user).setLstCopy(lstCopy);
+						((Player)user).setLstLocationBorrower(lstLocBorrower);
+						((Player)user).setLstReservation(lstReservation);
+						((Player)user).setLstRating(lstRating);
+						((Player)user).setLstMessageReceiver(lstMessageReceiver);
 					} else if (result.getString("discriminator").equals("Admin")) {
 						user = new Admin(result.getString("userName"), result.getString("password"));
+						lstMessageReceiver = Message.getAll(user);
+						((Admin)user).setLstMessage(lstMessageReceiver);
 					}
 				return user;
 			} catch (SQLException e) {

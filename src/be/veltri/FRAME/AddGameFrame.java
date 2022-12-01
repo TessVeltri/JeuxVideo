@@ -153,6 +153,9 @@ public class AddGameFrame extends JFrame {
 							boolean createCopy = copy.create();
 							if (createCopy && createMsg) {
 								JOptionPane.showMessageDialog(null, "Great! You add a new game for rent to the list");
+								ArrayList<Copy> lstCopy = player.getLstCopy();
+								lstCopy.add(copy);
+								player.setLstCopy(lstCopy);
 								HomePlayerFrame frame = new HomePlayerFrame(player);
 								frame.setVisible(true);
 								dispose();
@@ -168,6 +171,9 @@ public class AddGameFrame extends JFrame {
 						Copy copy = new Copy(player, find);
 						boolean createCopy = copy.create();
 						if (createCopy) {
+							ArrayList<Copy> lstCopy = player.getLstCopy();
+							lstCopy.add(copy);
+							player.setLstCopy(lstCopy);
 							JOptionPane.showMessageDialog(null, "Great! You add a new game for rent to the list");
 							HomePlayerFrame frame = new HomePlayerFrame(player);
 							frame.setVisible(true);

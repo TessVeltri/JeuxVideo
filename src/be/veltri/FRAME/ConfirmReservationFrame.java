@@ -24,6 +24,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 
@@ -140,6 +141,9 @@ public class ConfirmReservationFrame extends JFrame {
 				boolean createReserv = reserv.create();
 				if (createReserv) {
 					JOptionPane.showMessageDialog(null, "You add a new reservation for "+ game.getNameGame() + " !");
+					ArrayList<Reservation> lstReserv = player.getLstReservation();
+					lstReserv.add(reserv);
+					player.setLstReservation(lstReserv);
 					SeeAllGamesFrame frame = new SeeAllGamesFrame(player);
 					frame.setVisible(true);
 					dispose();

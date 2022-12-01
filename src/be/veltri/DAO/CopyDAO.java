@@ -38,11 +38,9 @@ public class CopyDAO extends DAO<Copy> {
 	public boolean update(Copy obj) {
 		try {
 			int result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
-					.executeUpdate("UPDATE Copy SET available = CASE available "
-							+ "WHEN 'true' THEN 'false' "
-							+ "WHEN 'false' THEN 'true' "
-							+ "END WHERE idCopy = '"
-							+ this.findIdByName(obj.getOwner(), obj.getGame(), "")+ "'");
+					.executeUpdate("UPDATE Copy SET available = CASE available " + "WHEN 'true' THEN 'false' "
+							+ "WHEN 'false' THEN 'true' " + "END WHERE idCopy = '"
+							+ this.findIdByName(obj.getOwner(), obj.getGame(), "") + "'");
 			if (result == 1)
 				return true;
 			else
@@ -77,9 +75,9 @@ public class CopyDAO extends DAO<Copy> {
 	@Override
 	public int findIdByName(Object o1, Object o2, String str) {
 		int id = 0;
-		Player owner = (Player)o1;
+		Player owner = (Player) o1;
 		Game game = (Game) o2;
-		if (str.equals("CREATE") || str.equals("UPDATE")) {	// available = true
+		if (str.equals("CREATE") || str.equals("UPDATE")) { // available = true
 			try {
 				ResultSet result = this.connect
 						.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
@@ -93,7 +91,7 @@ public class CopyDAO extends DAO<Copy> {
 				e.printStackTrace();
 				return -1;
 			}
-		} else if (str.equals("FIND")) {	// available = false
+		} else if (str.equals("FIND")) { // available = false
 			try {
 				ResultSet result = this.connect
 						.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
@@ -122,7 +120,7 @@ public class CopyDAO extends DAO<Copy> {
 				return -1;
 			}
 		}
-		
+
 	}
 
 	@Override
@@ -135,24 +133,48 @@ public class CopyDAO extends DAO<Copy> {
 		return null;
 	}
 
-	// o1 = player
+	// o1 = player, o2 = game
 	@Override
 	public ArrayList<Copy> getAll(Object o1, Object o2) {
 		ArrayList<Copy> all = new ArrayList<>();
-		Player owner = (Player) o1;
+		Player owner = new Player();
 		Game game = new Game();
-		try {
-			ResultSet result = this.connect
-					.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
-					.executeQuery("SELECT idGame FROM Copy INNER JOIN User ON Copy.idOwner = User.idUser WHERE userName = '" + ((Player) o1).getUsername() + "'");
-			while (result.next()) {
-				all.add(new Copy(owner.find(), game.findById(result.getInt("idGame"))));
+		if (o2 == null) {
+			owner = (Player) o1;
+			try {
+				ResultSet result = this.connect
+						.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(
+								"SELECT idGame FROM Copy INNER JOIN User ON Copy.idOwner = User.idUser WHERE userName = '"
+										+ owner.getUsername() + "'");
+				while (result.next()) {
+					all.add(new Copy(owner, game.findById(result.getInt("idGame"))));
+				}
+				return all;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
 			}
-			return all;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
+		} else {
+			game = (Game) o2;
+			try {
+				ResultSet result = this.connect
+						.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+						.executeQuery("SELECT idOwner, idGame, userName FROM Copy "
+								+ "INNER JOIN Game ON Copy.idGame = Game.idGame "
+								+ "INNER JOIN Version ON Game.idVersion = Version.idVersion "
+								+ "INNER JOIN User ON Copy.idOwner = User.idUser WHERE gameName = '"
+								+ game.getNameGame() + "' AND versionName = '" + game.getNameVersion() + "'");
+				while (result.next()) {
+					owner.setUsername(result.getString("userName"));
+					all.add(new Copy(owner.find(), game));
+				}
+				return all;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
+			}
 		}
+
 	}
 
 	@Override

@@ -166,7 +166,7 @@ public class AccountPlayerFrame extends JFrame {
 		contentPane.add(lblRating);	
 		
 		JLabel lblNbrRating = new JLabel();
-		ArrayList<Rating> allRate = Rating.getAll(player);
+		ArrayList<Rating> allRate = player.getLstRating();
 		if (allRate.size()==0)
 			lblNbrRating.setText("no rating");
 		else 

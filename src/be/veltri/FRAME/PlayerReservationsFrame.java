@@ -76,7 +76,7 @@ public class PlayerReservationsFrame extends JFrame {
 				new String[] { "Reservation date", "Nbr weeks", "Status", "Game name", "Console", "Version" }));
 		reservScrollPane.setViewportView(table);
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
-		ArrayList<Reservation> lstReserv = Reservation.getAll(player, null);
+		ArrayList<Reservation> lstReserv = player.getLstReservation();
 		for (Reservation r : lstReserv) {
 			Object[] row = new Object[] { r.getDateReservation(), r.getNbrWeeks(), r.getStatusReservation(), 
 					r.getGame().getNameGame(), r.getGame().getNameConsole(), r.getGame().getNameVersion()};

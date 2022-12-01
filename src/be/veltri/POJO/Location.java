@@ -105,7 +105,7 @@ public class Location implements Serializable {
 		int weekLoc = daysLoc / 7;
 		int units = 0;
 		int days = 0;
-		ArrayList<UnitsHistory> history = this.getCopy().getGame().getLstUnitsHistory();
+		ArrayList<UnitsHistory> history = UnitsHistory.getAll(this.getCopy().getGame());
 		// TODO Récupérer l'historique et calculer la balance
 		if (history != null) {
 			for (UnitsHistory u : history) {

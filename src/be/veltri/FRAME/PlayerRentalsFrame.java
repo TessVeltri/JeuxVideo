@@ -70,7 +70,7 @@ public class PlayerRentalsFrame extends JFrame {
 				new String[] { "Begin date", "End date", "Game name", "Units", "Console", "Version" }));
 		rentalsScrollPane.setViewportView(table);
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
-		ArrayList<Location> lstLocation = Location.getAll(player,null);
+		ArrayList<Location> lstLocation = player.getLstLocationBorrower();
 		for (Location l : lstLocation) {
 			Object[] row = new Object[] { l.getDateBeginLocation(), l.getDateEndLocation(), l.getCopy().getGame().getNameGame(), 
 					l.getTotalUnits(), l.getCopy().getGame().getNameConsole(), 

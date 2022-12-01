@@ -124,7 +124,7 @@ public class PlayerDAO extends DAO<Player> {
 						result.getString("pseudo"), result.getDate("dateBirth").toLocalDate(),
 						result.getDate("dateInscription").toLocalDate(), result.getInt("balance"),
 						result.getBoolean("checkBirthDay"));
-				lstCopy = Copy.getAll(player);
+				lstCopy = Copy.getAll(player, null);
 				player.setLstCopy(lstCopy);
 			}
 			return player;

@@ -119,7 +119,6 @@ public class MessageDAO extends DAO<Message> {
 							+ "INNER JOIN User ON User.idUser = Message.idSender "
 							+ "WHERE idReceiver = '" + idReceiver + "'");
 			while (result.next()) {
-				String test = result.getString("discriminator");
 				if (result.getString("discriminator").equals("Admin")){
 					sender = new Admin();
 					all.add(new Message(result.getString("txtMessage"), result.getBoolean("read"),
