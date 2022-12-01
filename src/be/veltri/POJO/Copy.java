@@ -59,8 +59,8 @@ public class Copy implements Serializable {
 		return copyDAO.find(this);
 	}
 
-	public static ArrayList<Copy> getAll(Player p, Game g) {
-		return copyDAO.getAll(p, g);
+	public static ArrayList<Copy> getAll(Player player, Game game) {
+		return copyDAO.getAll(player, game);
 	}
 
 	public boolean releaseCopy() {

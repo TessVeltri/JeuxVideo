@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import be.veltri.POJO.Admin;
-import be.veltri.POJO.Player;
 
 public class AdminDAO extends DAO<Admin>{
 

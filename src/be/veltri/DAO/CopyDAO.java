@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import be.veltri.POJO.Copy;
 import be.veltri.POJO.Game;
 import be.veltri.POJO.Player;
-import be.veltri.POJO.User;
 
 public class CopyDAO extends DAO<Copy> {
 

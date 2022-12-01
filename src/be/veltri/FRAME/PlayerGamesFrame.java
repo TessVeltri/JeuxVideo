@@ -11,7 +11,6 @@ import be.veltri.POJO.Copy;
 import be.veltri.POJO.Game;
 import be.veltri.POJO.Location;
 import be.veltri.POJO.Player;
-import be.veltri.POJO.Reservation;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -26,7 +25,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class PlayerGamesFrame extends JFrame {

@@ -7,7 +7,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import be.veltri.POJO.Copy;
 import be.veltri.POJO.Location;
 import be.veltri.POJO.Player;
 import javax.swing.JLabel;

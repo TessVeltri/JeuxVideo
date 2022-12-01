@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import be.veltri.POJO.Copy;
 import be.veltri.POJO.Game;
-import be.veltri.POJO.UnitsHistory;
 
 public class GameDAO extends DAO<Game> {
 

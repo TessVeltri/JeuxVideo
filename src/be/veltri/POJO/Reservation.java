@@ -84,7 +84,6 @@ public class Reservation implements Serializable{
 		return reservationDAO.find(this);
 	}
 	
-	// str1 = username, str2 = gameName, str3 = versionName
 	public static ArrayList<Reservation> getAll (Player player, Game game){
 		return reservationDAO.getAll(player, game);
 	}

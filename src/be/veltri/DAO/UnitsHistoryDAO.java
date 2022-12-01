@@ -3,12 +3,9 @@ package be.veltri.DAO;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
-import be.veltri.POJO.Copy;
 import be.veltri.POJO.Game;
-import be.veltri.POJO.Location;
 import be.veltri.POJO.UnitsHistory;
 
 public class UnitsHistoryDAO extends DAO<UnitsHistory> {

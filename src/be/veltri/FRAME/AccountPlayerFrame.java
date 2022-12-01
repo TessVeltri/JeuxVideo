@@ -11,7 +11,6 @@ import be.veltri.POJO.Player;
 import be.veltri.POJO.Rating;
 
 import javax.swing.JLabel;
-import javax.swing.JComboBox;
 import java.awt.Font;
 import java.awt.Image;
 

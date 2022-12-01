@@ -11,7 +11,6 @@ import be.veltri.POJO.Admin;
 import be.veltri.POJO.Copy;
 import be.veltri.POJO.Message;
 import be.veltri.POJO.Player;
-import be.veltri.POJO.User;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;

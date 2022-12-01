@@ -120,7 +120,6 @@ public class Game implements Serializable{
 		return gameDAO.findById(i);
 	}
 	
-	// TODO changer quand liste créée
 	public Copy copyAvailable(Copy copy) {
 		return copy.find();
 	}
